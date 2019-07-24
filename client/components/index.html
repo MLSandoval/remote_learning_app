@@ -1,30 +1,77 @@
 <!DOCTYPE html>
 <html>
 
-<script>
-  function showChat(){
-    document.getElementById('chat_embed').hidden = false;
+
+
+<head>
+  <script>
+    function showQueue() {
+      console.log('click');
+      document.getElementById('chat_embed').hidden = true;
+    }
+
+    function showChat(){
+        document.getElementById('chat_embed').hidden = false;
     console.log(event)
-  } 
+    }
   </script>
+
+
+  <style>
+    .question {
+      height: 10%;
+      line-height: 2.4;
+      background-color: azure;
+      border: 1px groove gray;
+    }
+  </style>
+
+  <title>EduAct</title>
+</head>
+
+
+
 
 <body>
   <header style="text-align: center; font-size: 2rem">EduAct</header>
   <div class="container" style="top:10%">
     <div class="sidebar" style="height: 80vh; width: 25vw; display: inline-block; position: absolute; left: 71vw; bottom: 12vh">
-        <div> 
-            <div onclick="showChat()"
-                 style="width: 40%;
-                        height: 60%;
-                        border: 1px solid black;
-                        margin: 0;"
-                        >chat</div>
-          <div style="height: 90%; width: 100%; display: inline-block; position: absolute; top: 8vh">
-            <iframe frameborder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat" height="100%"
-              width="100%">
-            </iframe>
-          </div>
-      </div>
+        <div>
+            <div id="chat_button" style="
+                    height: 10%;
+                    width: 50%;
+                    display: inline-block;
+                    position: absolute;
+                    line-height: 2.6;
+                    text-align: center;
+                    background-color:aqua" onclick="showChat()">Chat
+            </div>
+
+            <div id="queue_button" style="
+                    height: 10%;
+                    width: 50%;
+                    left: 50%;
+                    display: inline-block;
+                    position: absolute;
+                    line-height: 2.6;
+                    text-align: center;
+                    background-color:darkgoldenrod" onclick="showQueue()">Queue
+            </div>
+
+        </div>
+        <div id="queue"
+          style="height: 90%; width: 100%; display: inline-block; position: absolute; top: 8vh; background-color: salmon">
+          <div class="question">What are the values for display?</div>
+          <div class="question">How do you hide an element?</div>
+          <div class="question">Why isn't this working?</div>
+        </div>
+
+        <div id="chat_container" style="height: 90%; width: 100%; display: inline-block; position: absolute; top: 8vh">
+          <iframe frameborder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat" height="100%"
+            width="100%">
+          </iframe>
+        </div>
+
    </div>
 
       <div id="twitch-embed" style="height: 80vh; width: 70vw"></div>
@@ -37,7 +84,15 @@
         channel: "monstercat",
         layout: "video",
         display: "inline-block"
-      });
-  </script>
+      });</script>
+
+        <div></div>
+
+    </div>
+
+
+
+  </div>
 </body>
+
 </html>
