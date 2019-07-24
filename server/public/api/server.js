@@ -1,119 +1,119 @@
 // All code here is copyapastya from the node we built for SGT, before the react-sgt
-//strictly for reference
+// strictly for reference
 
 
 
-// const express = require('express');
-// const fs = require('fs');
-// const mysql = require('mysql');
-// const creds = require('./mysql_credentials.js');
+const express = require('express');
+const fs = require('fs');
+const mysql = require('mysql');
+const creds = require('./mysql_credentials.js');
 
-// const db = mysql.createConnection(creds);
+const db = mysql.createConnection(creds);
 
-// const server = express();
+const server = express();
 
-// //this creates an endpoint that allows us to load all the files from the html folder
-// const htmlDirectory = __dirname + '/html';
-// const staticMiddlewareFunction = express.static(htmlDirectory);
+//this creates an endpoint that allows us to load all the files from the html folder
+const htmlDirectory = __dirname + '/html';
+const staticMiddlewareFunction = express.static(htmlDirectory);
 
-// server.use(express.urlencoded({ extended: false }))
-// server.use(staticMiddlewareFunction);
+server.use(express.urlencoded({ extended: false }))
+server.use(staticMiddlewareFunction);
 
-// server.listen(3001, function () {
-//     console.log('listened to port 3001 successfully.');
-//     //response.send('listened to port 3001 successfully.');
+server.listen(3001, function () {
+    console.log('listened to port 3001 successfully.');
+    //response.send('listened to port 3001 successfully.');
+});
+
+//endpoint training wheels, no real function to this 
+server.get('/myFirstEndpoint', function (request, response) {
+    console.log('this is your endpoint. bro. sick.' + request.url);
+    response.send('this is your endpoint. bro. sick: ' + Date.now());
+});
+
+server.get('/getstudents', function (request, response) {
+    db.connect(function () {
+        var query = "SELECT * FROM `grades`";
+        db.query(query, function (error, data, fields) {
+            if (!error) {
+                response.send({
+                    success: true,
+                    data
+                })
+            } else {
+                console.log('error: ', error);
+            }
+        })
+    });
+    // dummyData example to make endpoint work from local file instead of a database
+    // const data = fs.readFileSync(__dirname + '/dummydata/getstudents.json');
+    // response.send(data);
+});
+//subdomain.domain.tld/path/to/file/filename?a=1&b=2&c=3#somehash
+
+// $.ajax({
+//     url: 'subdomain.domain.tld/path/to/file/filename?a=1&b=2&c=3#somehash',
+//     method: 'put',
+//     data: {
+//         a: 4,
+//         yo: 'heya',
+//         'we rock': 'hell yeah'
+//     }
+// })
+// PUT path / to / file / filename ? a = 1 & b=2 & c=3#somehash
+// Host: subdomain.domain.tld
+// header1: header1value 
+
+// a=4&yo=heya&we%20rock=hell%20yeah
+
+
+// server.read('/readstudents', function(request, response){
+//     const mysql = fs.readFileSync(__dirname + '/')
+//     response.send(data);
 // });
 
-// //endpoint training wheels, no real function to this 
-// server.get('/myFirstEndpoint', function (request, response) {
-//     console.log('this is your endpoint. bro. sick.' + request.url);
-//     response.send('this is your endpoint. bro. sick: ' + Date.now());
-// });
+server.put('/addstudent', function (request, response) {
+    db.connect(function () {
 
-// server.get('/getstudents', function (request, response) {
-//     db.connect(function () {
-//         var query = "SELECT * FROM `grades`";
-//         db.query(query, function (error, data, fields) {
-//             if (!error) {
-//                 response.send({
-//                     success: true,
-//                     data
-//                 })
-//             } else {
-//                 console.log('error: ', error);
-//             }
-//         })
-//     });
-//     // dummyData example to make endpoint work from local file instead of a database
-//     // const data = fs.readFileSync(__dirname + '/dummydata/getstudents.json');
-//     // response.send(data);
-// });
-// //subdomain.domain.tld/path/to/file/filename?a=1&b=2&c=3#somehash
+        console.log('request.query:::::: ', request.body);
 
-// // $.ajax({
-// //     url: 'subdomain.domain.tld/path/to/file/filename?a=1&b=2&c=3#somehash',
-// //     method: 'put',
-// //     data: {
-// //         a: 4,
-// //         yo: 'heya',
-// //         'we rock': 'hell yeah'
-// //     }
-// // })
-// // PUT path / to / file / filename ? a = 1 & b=2 & c=3#somehash
-// // Host: subdomain.domain.tld
-// // header1: header1value 
+        var { name, course, grade } = request.body;
+        // var query = "INSERT INTO `grades` (`name`, `course`, `grade`) VALUES ('" +name+"', "+course+"', '"+grade+"')";
+        var query = "INSERT INTO `grades` SET `name` = '" + name + "', `course` =  '" + course + "', `grade` = '" + grade + "'";
+        console.log(query);
+        db.query(query, function (error, data, fields) {
+            if (!error) {
+                response.send({
+                    success: true,
+                    data: data,
 
-// // a=4&yo=heya&we%20rock=hell%20yeah
+                });
+            } else {
+                console.log('error: ', error);
+            }
+        })
+    });
+});
 
+server.delete('/deletestudent', function (request, response) {
+    db.connect(function () {
 
-// // server.read('/readstudents', function(request, response){
-// //     const mysql = fs.readFileSync(__dirname + '/')
-// //     response.send(data);
-// // });
+        console.log('request.query:::::: ', request.body);
 
-// server.put('/addstudent', function (request, response) {
-//     db.connect(function () {
+        var id = request.body.student_id;
+        var query = "DELETE FROM `grades` WHERE `grades`.`id` = " + id;
 
-//         console.log('request.query:::::: ', request.body);
+        console.log(query);
 
-//         var { name, course, grade } = request.body;
-//         // var query = "INSERT INTO `grades` (`name`, `course`, `grade`) VALUES ('" +name+"', "+course+"', '"+grade+"')";
-//         var query = "INSERT INTO `grades` SET `name` = '" + name + "', `course` =  '" + course + "', `grade` = '" + grade + "'";
-//         console.log(query);
-//         db.query(query, function (error, data, fields) {
-//             if (!error) {
-//                 response.send({
-//                     success: true,
-//                     data: data,
+        db.query(query, function (error, data, fields) {
+            if (!error) {
+                response.send({
+                    success: true,
+                    data: data,
 
-//                 });
-//             } else {
-//                 console.log('error: ', error);
-//             }
-//         })
-//     });
-// });
-
-// server.delete('/deletestudent', function (request, response) {
-//     db.connect(function () {
-
-//         console.log('request.query:::::: ', request.body);
-
-//         var id = request.body.student_id;
-//         var query = "DELETE FROM `grades` WHERE `grades`.`id` = " + id;
-
-//         console.log(query);
-
-//         db.query(query, function (error, data, fields) {
-//             if (!error) {
-//                 response.send({
-//                     success: true,
-//                     data: data,
-
-//                 });
-//             } else {
-//                 console.log('error: ', error);
-//             }
-//         })
-//     });
-// });
+                });
+            } else {
+                console.log('error: ', error);
+            }
+        })
+    });
+});
