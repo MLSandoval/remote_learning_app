@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <html>
 
-<body>
-  <header style="text-align: center; font-size: 2rem">EduAct</header>
-
-  <div class="container" style="top:10%">
-
-    <div class="sidebar" style="height: 80vh; width: 25vw; display: inline-block; position: absolute; left: 71vw; bottom: 12vh">
-        <div></div>
-        <div></div>
-        <div style="height: 90%; width: 100%; display: inline-block; position: absolute; top: 8vh">
-          <iframe frameborder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat" height="100%"
-            width="100%">
-          </iframe>
-        </div>
-    </div>
-
-    <div id="twitch-embed" style="height: 80vh; width: 70vw"></div>
-
-
-
-  </div>
-
-  <script src="https://embed.twitch.tv/embed/v1.js"></script>
-
-  <script type="text/javascript">
-    new Twitch.Embed("twitch-embed", {
-      width: "100%",
-      height: "100%",
-      channel: "monstercat",
-      layout: "video",
-      display: "inline-block"
-    });
+<script>
+  function showChat(){
+    document.getElementById('chat_embed').hidden = false;
+    console.log(event)
+  } 
   </script>
 
+<body>
+  <header style="text-align: center; font-size: 2rem">EduAct</header>
+  <div class="container" style="top:10%">
+    <div class="sidebar" style="height: 80vh; width: 25vw; display: inline-block; position: absolute; left: 71vw; bottom: 12vh">
+        <div> 
+            <div onclick="showChat()"
+                 style="width: 40%;
+                        height: 60%;
+                        border: 1px solid black;
+                        margin: 0;"
+                        >chat</div>
+          <div style="height: 90%; width: 100%; display: inline-block; position: absolute; top: 8vh">
+            <iframe frameborder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat" height="100%"
+              width="100%">
+            </iframe>
+          </div>
+      </div>
+   </div>
 
-
-
+      <div id="twitch-embed" style="height: 80vh; width: 70vw"></div>
+      </div>
+      <script src="https://embed.twitch.tv/embed/v1.js"></script>
+      <script type="text/javascript">
+      new Twitch.Embed("twitch-embed", {
+        width: "100%",
+        height: "100%",
+        channel: "monstercat",
+        layout: "video",
+        display: "inline-block"
+      });
+  </script>
 </body>
-
 </html>
