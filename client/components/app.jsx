@@ -1,5 +1,5 @@
 import React from 'react';
-import Embedded_Video from './video.jsx';
+import Video from './video.jsx';
 import SidePanel from './sidepanel.jsx';
 
 class App extends React.Component{
@@ -9,6 +9,7 @@ class App extends React.Component{
                 <Embedded_Video></Embedded_Video>
                 <SidePanel></SidePanel>
             </div>
+
         )
     }
 }
