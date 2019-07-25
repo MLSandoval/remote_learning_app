@@ -97,7 +97,7 @@ server.put('/addstudent', function (request, response) {
 server.delete('/deletestudent', function (request, response) {
     db.connect(function () {
 
-        console.log('request.query:::::: ', request.body);
+        console.log('request.query', request.body);
 
         var id = request.body.student_id;
         var query = "DELETE FROM `grades` WHERE `grades`.`id` = " + id;

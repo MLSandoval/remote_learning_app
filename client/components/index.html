@@ -71,6 +71,7 @@
             width="100%">
           </iframe>
         </div>
+
    </div>
       <div id="twitch-embed" style="height: 80vh; width: 70vw">    
         <button class="button button4" 
@@ -88,15 +89,9 @@
           display: inline-block;
           font-size: 16px;">click me</button></div>
       </div>
+
       <script src="https://embed.twitch.tv/embed/v1.js"></script>
-      <script type="text/javascript">
-      new Twitch.Embed("twitch-embed", {
-        width: "100%",
-        height: "100%",
-        channel: "monstercat",
-        layout: "video",
-        display: "inline-block" 
-      });</script>
+      <script type="text/javascript">{new Twitch.Embed("twitch-embed", {width: "100%",height: "100%",channel: "monstercat",layout: "video", display: "inline-block" })}</script>
     </div> 
   </div>
 </body>
