@@ -1,3 +1,11 @@
 import React from 'react';
+import Embedded_Video from './video.jsx';
 
-export default 
+class App extends React.Component{
+    render(){
+    return(
+        <Embedded_Video></Embedded_Video>)
+    }
+}
+
+export default App;
