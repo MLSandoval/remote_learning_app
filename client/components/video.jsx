@@ -3,17 +3,18 @@ import React from 'react';
 class Video extends React.Component{
     render(){
         return(
-         <div id="video">
-             <div id="twitch-embed" style={{'height': 80 + 'vh', 'width': 70 + 'vw', 'top': 40 + 'vh'}}>
+         <div className="container float-left" id="video">
+            <div className="row">
+             <div className="col-xl-" 
+                  id="twitch-embed" 
+                  style={{'height': 80 + 'vh', 'width': 70 + 'vw', 'top': 40 + 'vh'}}>
              <iframe
                 src="https://player.twitch.tv/?channel=dallas&muted=true"
                 height="100%"
                 width="100%"
                 frameborder="0"
                 scrolling="no"
-                allowfullscreen="true"
-                style={{'position':'relative',
-                        'top':7 + 'vh'}}>
+                allowfullscreen="true">
              </iframe>
                     <button className="button button4"
                         style={{
@@ -37,7 +38,8 @@ class Video extends React.Component{
                         }}>click me
                 </button>
             </div>
-        </div>)
+        </div>
+    </div>)
     }
 }
 export default Video;
