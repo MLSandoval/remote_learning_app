@@ -6,7 +6,7 @@ class App extends React.Component{
     render(){
         return(
             <div>
-                <Embedded_Video></Embedded_Video>
+                <Video></Video>
                 <SidePanel></SidePanel>
             </div>
 
