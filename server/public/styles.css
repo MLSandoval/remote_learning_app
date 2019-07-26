@@ -1,0 +1,8 @@
+.question {
+  height: 10vh;
+  width: 100%;
+  background-color: antiquewhite;
+  line-height: 3;
+  border: 2px groove grey;
+  padding-left: 1vw;
+}

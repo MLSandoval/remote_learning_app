@@ -52,9 +52,9 @@ export default class SidePanel extends React.Component{
               'position': 'absolute',
               'top': 8 + 'vh',
               'backgroundColor': 'salmon'}}>
-            <div className="question">What are the values for display?</div>
-            <div className="question">How do you hide an element?</div>
-            <div className="question">Why isn't this working?</div>
+            <div className="question">What are the values for display? - Mikey</div>
+            <div className="question">How do you hide an element? - Alex</div>
+            <div className="question">Why isn't this working? - Kyle</div>
           </div>
 
           <div id="chat_container" style={{
