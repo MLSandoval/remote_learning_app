@@ -22,7 +22,7 @@ class App extends React.Component{
     render(){
         return(
             <div id="app">
-                <button onClick={this.switchUser}></button>
+                <button style={{'position':'absolute','height':15 + 'px'}} onClick={this.switchUser}></button>
                 <Video UserType={this.state.UserType}/>
                 <SidePanel UserType={this.state.UserType}/>
             </div>

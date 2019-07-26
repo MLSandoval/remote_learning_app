@@ -16,7 +16,7 @@ export default class SidePanel extends React.Component{
       <div className="container">
         <div className="row fixed-top sidebar" style={{
           'height': 80 + 'vh',
-          'width': 30 + 'vw', 
+          'width': 30 + 'vw',
           'display': 'inline-block',
           'position': 'absolute',
           'left': 71 + 'vw',
