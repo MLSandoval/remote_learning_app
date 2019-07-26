@@ -9,9 +9,9 @@ class Video extends React.Component{
                 src="https://player.twitch.tv/?channel=dallas&muted=true"
                 height="100%"
                 width="100%"
-                frameborder="0"
+                frameBorder="0"
                 scrolling="no"
-                allowfullscreen="true"
+                allowFullScreen={true}
                 style={{'position':'relative',
                         'top':7 + 'vh'}}>
              </iframe>
@@ -20,9 +20,9 @@ class Video extends React.Component{
                             'position': 'absolute',
                             'top': 50 + '%',
                             'right': 96 + '%',
-                            'background-color': '#4CAF50',
+                            'backgroundColor': '#4CAF50',
                             'display': 'inline-block',
-                            'font-size': 16 + 'px'
+                            'fontSize': 16 + 'px'
                         }}>click me
                 </button>
 
@@ -33,7 +33,7 @@ class Video extends React.Component{
                             'right': 96 + '%',
                             'backgroundColor': '#4CAF50',
                             'display': 'inline-block',
-                            'font-size': 16 + 'px'
+                            'fontSize': 16 + 'px'
                         }}>click me
                 </button>
             </div>
