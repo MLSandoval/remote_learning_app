@@ -1,7 +1,19 @@
 import React from 'react';
 
 class Video extends React.Component{
+    constructor(){
+        super();
+        this.state={
+            UserType: 'admin'
+        }
+    }
+
+    componentDidUpdate(){
+        console.log('video state updated')
+    }
+
     render(){
+
         return(
          <div className="container float-left" id="video">
             <div className="row">
@@ -27,19 +39,21 @@ class Video extends React.Component{
                         }}>click me
                 </button>
 
-                <button className="button button4"
-                        style={{
-                            'position': 'absolute',
-                            'top': 40 + '%',
-                            'right': 96 + '%',
-                            'backgroundColor': '#4CAF50',
-                            'display': 'inline-block',
-                            'font-size': 16 + 'px'
-                        }}>click me
+                        <button className="button button4"
+                            style={{
+                                'position': 'absolute',
+                                'top': 40 + '%',
+                                'right': 96 + '%',
+                                'backgroundColor': '#4CAF50',
+                                'display': 'inline-block',
+                                'fontSize': 16 + 'px'
+                            }}>click me
                 </button>
+
             </div>
         </div>
     </div>)
+
     }
 }
 export default Video;
