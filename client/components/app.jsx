@@ -7,7 +7,9 @@ class App extends React.Component{
         super(props);
         this.state = {
             UserType: 'admin',
-            data: [{ id: '1',question: 'Why isn\'t this working?', author: 'Dwight' }, { id: '2', question: 'What does this button do?', author: 'Rex' }, { id: '3', question: 'Do you feel lucky, punk?', author: 'Clint' }]
+            data: [ { id: '1',question: 'Why isn\'t this working?', author: 'Dwight' },
+                    { id: '2', question: 'What does this button do?', author: 'Rex' },
+                    { id: '3', question: 'Do you feel lucky, punk?', author: 'Clint' }]
             }
         this.switchUser = this.switchUser.bind(this);
 
