@@ -6,10 +6,13 @@ class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            UserType: 'admin'
-        };
+            UserType: 'admin',
+            data: [{ question: 'Why isn\'t this working?', author: 'Dwight' }, { question: 'What does this button do?', author: 'Rex' }, { question: 'Why isn\'t this working?', author: 'Dwight' }]
+            }
         this.switchUser = this.switchUser.bind(this);
-    }
+
+        };
+
 
     switchUser(){
         if (this.state.UserType === 'admin'){
@@ -24,7 +27,7 @@ class App extends React.Component{
             <div id="app">
                 <button style={{'position':'absolute','height':15 + 'px'}} onClick={this.switchUser}></button>
                 <Video UserType={this.state.UserType}/>
-                <SidePanel UserType={this.state.UserType}/>
+                <SidePanel UserType={this.state.UserType} data={this.state.data}/>
             </div>
 
         )

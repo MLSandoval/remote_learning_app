@@ -11,7 +11,15 @@ export default class SidePanel extends React.Component{
   document.getElementById('chat_embed').hidden = false;
 }
 
+
+
   render(){
+    console.log('sidepanel props: ',this.props);
+
+    var questionDivs = this.props.data.map(x =>
+      <div className="question">{x.question} - {x.author}</div>
+    )
+
     return(
       <div className="container">
         <div className="row fixed-top sidebar" style={{
@@ -52,9 +60,8 @@ export default class SidePanel extends React.Component{
               'position': 'absolute',
               'top': 8 + 'vh',
               'backgroundColor': 'salmon'}}>
-            <div className="question">What are the values for display? - Mikey</div>
-            <div className="question">How do you hide an element? - Alex</div>
-            <div className="question">Why isn't this working? - Kyle</div>
+
+            {questionDivs}
           </div>
 
           <div id="chat_container" style={{
