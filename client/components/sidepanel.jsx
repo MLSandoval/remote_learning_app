@@ -3,6 +3,13 @@ import ReactDOM from 'react-dom';
 
 export default class SidePanel extends React.Component{
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      questions: this.props.data
+    }
+  }
+
   showQueue() {
   document.getElementById('chat_embed').hidden = true;
 }
@@ -14,9 +21,9 @@ export default class SidePanel extends React.Component{
 
 
   render(){
-    console.log('sidepanel props: ',this.props);
+    console.log('sidepanel props: ',this.state);
 
-    var questionDivs = this.props.data.map(x =>
+    var questionDivs = this.state.questions.map(x =>
       <div className="question">{x.question} - {x.author}</div>
     )
 
