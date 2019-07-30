@@ -5,16 +5,14 @@ export default class SidePanel extends React.Component{
 
   constructor(props) {
     super(props);
-    this.state = {
-      questions: this.props.data
-    }
-    this.addQuestion = this.addQuestion.bind(this);
+
+    this.appendQuestionDivs = this.appendQuestionDivs.bind(this);
   }
 
   componentDidUpdate() {
-    console.log('sidepanel state: ', this.state.questions);
+     console.log('1)sidepanel state: ', this.props.data);
   }
-
+  
   showQueue() {
   document.getElementById('chat_embed').hidden = true;
 }
@@ -23,25 +21,27 @@ export default class SidePanel extends React.Component{
   document.getElementById('chat_embed').hidden = false;
 }
 
-  addQuestion() {
-
-    var newQuestion = { 'id': '4', 'question': document.getElementById('question').value, 'author': 'Guest' };
-    this.setState({ questions: this.state.questions.concat(newQuestion)})
-
-    console.log('sidepanel state: ', this.state.questions);
-
+  appendQuestionDivs(){
+    let deleteQuestion = this.props.delete;
+    if(this.props.userType === 'student') {
+          var questionDivs = this.props.data.map(x =>
+            <div className="question" key={x.id}>
+            {x.question} - {x.author}
+            </div>)
+            return questionDivs;
+    } else {
+        var questionDivs = this.props.data.map(x =>
+        <div className="question" key={x.id}>{x.question} - {x.author}
+          <i className="fas fa-times" onClick={()=>{deleteQuestion(x.id)}}></i>
+        </div>)
+        return questionDivs;
+    }
   }
 
 
-
   render(){
-
-    console.log('sidepanel state: ', this.state.questions);
-
-    var questionDivs = this.state.questions.map(x =>
-      <div className="question">{x.question} - {x.author}</div>
-    )
-      if (this.props.UserType === 'student') {
+    console.log("User Type: ", this.props.data);
+      if (this.props.userType === 'student') {
         return (
           <div className="container">
             <div className="row fixed-top sidebar" style={{
@@ -62,7 +62,7 @@ export default class SidePanel extends React.Component{
                   'textAlign': 'center',
                   'backgroundColor': 'aqua'
                 }} onClick={this.showChat}>Chat
-              </div>
+                </div>
 
                 <div id="queue_button" style={{
                   'height': 10 + '%',
@@ -77,15 +77,13 @@ export default class SidePanel extends React.Component{
               </div>
 
               </div>
-
-
-              <div id="chat_container" style={{
-                'height': 90 + '%',
-                'width': 100 + '%',
-                'display': 'inline-block',
-                'position': 'absolute',
-                'top': 8 + 'vh'
-              }}>
+                <div id="chat_container" style={{
+                  'height': 90 + '%',
+                  'width': 100 + '%',
+                  'display': 'inline-block',
+                  'position': 'absolute',
+                  'top': 8 + 'vh'
+                }}>
                 <iframe frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat" height="100%"
                   width="100%">
                 </iframe>
@@ -101,13 +99,13 @@ export default class SidePanel extends React.Component{
                   'backgroundColor': 'salmon'
                 }}>
 
-                {questionDivs}
+                  <div>{this.appendQuestionDivs()}</div>
+                    <input type="text" name="question" id="question"></input> 
+                    <input type="submit" value="&gt;" onClick={()=> {
+                      let questionInput = document.getElementById("question").value
+                      this.props.add(questionInput)}}></input>
 
-                <input type="text" name="question" id="question"></input>
-                <input type="submit" value="&gt;" onClick={this.addQuestion}></input>
-
-
-              </div>
+                 </div>
 
             </div>
           </div>
@@ -144,7 +142,8 @@ export default class SidePanel extends React.Component{
                   'lineHeight': 2.6,
                   'textAlign': 'center',
                   'backgroundColor': 'darkgoldenrod'
-                }} onClick={this.showQueue}>Queue
+                }} onClick={this.showQueue}>
+                Queue
               </div>
 
               </div>
@@ -153,12 +152,12 @@ export default class SidePanel extends React.Component{
                   'height': 90 + '%',
                   'width': 100 + '%',
                   'display': 'inline-block',
-                  'position': 'absolute',
+                  'position': 'relative',
                   'top': 8 + 'vh',
                   'backgroundColor': 'salmon'
                 }}>
 
-                {questionDivs}
+                <div>{this.appendQuestionDivs()}</div>
 
               </div>
 
@@ -169,6 +168,7 @@ export default class SidePanel extends React.Component{
                 'position': 'absolute',
                 'top': 8 + 'vh'
               }}>
+
                 <iframe frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat" height="100%"
                   width="100%">
                 </iframe>
