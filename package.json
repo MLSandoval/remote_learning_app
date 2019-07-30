@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.js",
+    "start": "node ./server/index.js",
+    "nodemon": "nodemon ./server/index.js",
     "dev": "webpack-dev-server",
     "build": "webpack --mode=production"
   },
@@ -21,6 +22,8 @@
   },
   "homepage": "https://github.com/Learning-Fuze/519_student_teacher_interactivity#readme",
   "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.17.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
@@ -28,6 +31,7 @@
     "@babel/core": "^7.5.5",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
     "babel-loader": "^8.0.6",
+    "nodemon": "^1.19.1",
     "webpack": "^4.36.1",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.7.2"

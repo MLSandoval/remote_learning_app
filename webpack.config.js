@@ -29,12 +29,12 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     host: '0.0.0.0',
-    port: 3000,
+    port: 3003,
     contentBase: publicPath,
     watchContentBase: true,
     stats: 'minimal',
     proxy: {
-      '/api': 'http://localhost:3001'
+      '/api': 'http://localhost:3003'
     }
   }
 };
