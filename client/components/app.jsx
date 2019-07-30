@@ -6,12 +6,14 @@ class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            UserType: 'admin',
+            userType: 'admin',
             data: [ { id: '1',question: 'Why isn\'t this working?', author: 'Dwight' },
                     { id: '2', question: 'What does this button do?', author: 'Rex' },
                     { id: '3', question: 'Do you feel lucky, punk?', author: 'Clint' }]
             }
         this.switchUser = this.switchUser.bind(this);
+        this.addQuestion = this.addQuestion.bind(this);
+        this.deleteQuestion = this.deleteQuestion.bind(this);
 
         };
 
@@ -22,14 +24,31 @@ class App extends React.Component{
         } else {
             this.setState({ UserType: 'admin' })
         }
-
     }
+
+    addQuestion(question) {
+        let newQuestion = [{ 'id': '4', 'question': question, 'author': 'Guest' }];
+        this.setState({ data: this.state.data.concat(newQuestion)})
+    
+         console.log('New Question', newQuestion);
+      }
+
+    deleteQuestion(id){
+        let questionArr = this.state.data.filter(questionObj =>{
+             return questionObj.id !== id;
+        })
+           this.setState({data:questionArr})
+        }
+    
     render(){
         return(
             <div id="app">
                 <button style={{'position':'absolute','height':15 + 'px'}} onClick={this.switchUser}></button>
-                <Video UserType={this.state.UserType}/>
-                <SidePanel UserType={this.state.UserType} data={this.state.data}/>
+                <Video UserType={this.state.userType}/>
+                <SidePanel userType={this.state.UserType}
+                            add={this.addQuestion}
+                            delete={this.deleteQuestion}  
+                            data={this.state.data}/>
             </div>
 
         )
