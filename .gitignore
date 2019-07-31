@@ -3,3 +3,4 @@
 .DS_Store
 node_modules/
 server/public/api/dbConnection.js
+mysql_credentials.js
