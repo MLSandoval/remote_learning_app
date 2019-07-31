@@ -29,7 +29,7 @@ class App extends React.Component{
     addQuestion(question) {
         let newQuestion = [{ 'id': '4', 'question': question, 'author': 'Guest' }];
         this.setState({ data: this.state.data.concat(newQuestion)})
-    
+
          console.log('New Question', newQuestion);
       }
 
@@ -39,16 +39,18 @@ class App extends React.Component{
         })
            this.setState({data:questionArr})
         }
-    
+
     render(){
         return(
-            <div id="app">
-                <button style={{'position':'absolute','height':15 + 'px'}} onClick={this.switchUser}></button>
-                <Video UserType={this.state.userType}/>
-                <SidePanel userType={this.state.UserType}
-                            add={this.addQuestion}
-                            delete={this.deleteQuestion}  
-                            data={this.state.data}/>
+            <div id="app" className="container-fluid nopadding">
+                <div className="row" style={{'height':101 + 'vh'}}>
+                    <button style={{ 'position': 'absolute', 'height': 15 + 'px' }} onClick={this.switchUser}></button>
+                    <Video UserType={this.state.userType} />
+                    <SidePanel userType={this.state.UserType}
+                        add={this.addQuestion}
+                        delete={this.deleteQuestion}
+                        data={this.state.data} />
+                </div>
             </div>
 
         )

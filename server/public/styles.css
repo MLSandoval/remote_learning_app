@@ -1,9 +1,9 @@
 .question {
   height: 10vh;
   width: 100%;
-  background-color: antiquewhite;
+  background-color: whitesmoke;
   line-height: 3;
-  border: 2px groove grey;
+  border:3px groove grey;
   padding-left: 1vw;
 }
 
@@ -14,4 +14,28 @@ i {
   position: absolute;
   right: 10%;
   cursor: pointer;
+}
+
+.nopadding {
+  padding: 0;
+}
+
+.margin {
+  margin: 3vw;
+}
+
+.fullheight {
+  height: 101vh;
+}
+
+body {
+  overflow: hidden;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.border {
+  border: 1 px solid black;
 }
