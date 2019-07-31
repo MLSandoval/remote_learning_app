@@ -7,19 +7,17 @@ export default class SidePanel extends React.Component{
     super(props);
 
     this.appendQuestionDivs = this.appendQuestionDivs.bind(this);
+
+    this.state = {visible: 'chat'}
   }
 
-  componentDidUpdate() {
-     console.log('1)sidepanel state: ', this.props.data);
+  setView(nextActive){
+    console.log('click');
+    if(['chat', 'queue'].indexOf(nextActive) >= 0){
+      this.setState({ visible: nextActive });
+    }
   }
 
-  showQueue() {
-  document.getElementById('chat_embed').hidden = true;
-}
-
-  showChat() {
-  document.getElementById('chat_embed').hidden = false;
-}
 
   appendQuestionDivs(){
     let deleteQuestion = this.props.delete;
@@ -40,40 +38,77 @@ export default class SidePanel extends React.Component{
 
 
   render(){
-    return (
-      <div id="sidepanel" className="col-lg-3 container-fluid nopadding" style={{'height':100 + 'vh'}}>
+    console.log('this.state: ',this.state);
+    const { visible } = this.state;
+    if (this.props.userType === 'student') {
+      return (
+        <div id="sidepanel" className="col-lg-3 container-fluid nopadding" style={{'height':100 + 'vh'}}>
+
+
+            <div className="row nopadding" style={{ 'height': 8 + 'vh' }}>
+              <div id="chat_button" className="col-lg-6 clickable border" onClick={() => this.setView('chat')}>Chat</div>
+              <div id="queue_button" className="col-lg-6 clickable border" onClick={() => this.setView('queue')}>Queue</div>
+            </div>
+
+
+          <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding' : 'hide'}>
+                <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat">
+                </iframe>
+              </div>
+
+          <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
+            <div className="row col-lg-12 container-fluid nopadding">
+
+                  <div className="col-lg-12 nopadding" style={{'height': 50 + 'vh', 'overflow':'scroll'}}>{
+                    this.appendQuestionDivs()}
+                  </div>
+
+
+                  <div className="col-lg-12 row">
+                    <input className="col-lg-11 nopadding" id="question" type="text" name="question"></input>
+                    <input className="col-lg-1 nopadding" type="submit" value="&gt;" onClick={() => {
+                      let questionInput = document.getElementById("question").value
+                      this.props.add(questionInput)
+                    }}></input>
+                  </div>
+
+              </div>
+            </div>
+
+      </div>
+    )
+  } else {
+      return (
+        <div id="sidepanel" className="col-lg-3 container-fluid nopadding" style={{ 'height': 100 + 'vh' }}>
 
 
           <div className="row nopadding" style={{ 'height': 8 + 'vh' }}>
-            <div id="chat_button" className="col-lg-6 clickable border" onClick={this.showChat}>Chat</div>
-
-            <div id="queue_button" className="col-lg-6 clickable border" onClick={this.showQueue}>Queue</div>
+            <div id="chat_button" className="col-lg-6 clickable border" onClick={() => this.setView('chat')}>Chat</div>
+            <div id="queue_button" className="col-lg-6 clickable border" onClick={() => this.setView('queue')}>Queue</div>
           </div>
 
 
-          <div id="chat_container" className="row col-lg-12 nopadding">
+          <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding' : 'hide'}>
             <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat">
             </iframe>
           </div>
 
-          <div id="queue" className="row col-lg-12 container-fluid nopadding">
+          <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
+            <div className="row col-lg-12 container-fluid nopadding">
 
-              <div className="col-lg-12 nopadding" style={{'height': 74 + 'vh', 'overflow':'scroll'}}>{
+              <div className="col-lg-12 nopadding" style={{ 'height': 50 + 'vh', 'overflow': 'scroll' }}>{
                 this.appendQuestionDivs()}
               </div>
 
 
               <div className="col-lg-12 row">
-                <input className="col-lg-11 nopadding" id="question" type="text" name="question"></input>
-                <input className="col-lg-1 nopadding" type="submit" value="&gt;" onClick={() => {
-                  let questionInput = document.getElementById("question").value
-                  this.props.add(questionInput)
-                }}></input>
               </div>
 
+            </div>
           </div>
 
-      </div>
-    )
+        </div>
+      )
+    }
   }
 }

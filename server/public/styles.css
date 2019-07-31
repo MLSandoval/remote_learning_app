@@ -7,7 +7,7 @@
   padding-left: 1vw;
 }
 
-.hidden {display: hidden;}
+.hide {display: none !important;}
 
 
 i {
