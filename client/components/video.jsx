@@ -1,23 +1,10 @@
 import React from 'react';
-import AdminButton from './adminbutton.jsx';
 
 export default class Video extends React.Component{
 
     render(){
+        console.log('video.jsx: ',this.props.userType)
         if (this.props.userType === 'admin') {
-            return (
-                <div id="video" className="col-lg-9">
-                    <iframe
-                        src="https://player.twitch.tv/?channel=dallas&muted=true"
-                        height="100%"
-                        width="100%"
-                        frameBorder="0"
-                        scrolling="no"
-                        allowFullScreen={true}>
-                    </iframe>
-                </div>
-            )
-        } else {
             return (
                 <div id="video" className="col-lg-9">
                     <iframe
@@ -48,6 +35,19 @@ export default class Video extends React.Component{
                             'fontSize': 16 + 'px'
                         }}>click me
                     </button>
+                </div>
+            )
+        } else {
+            return (
+                <div id="video" className="col-lg-9">
+                    <iframe
+                        src="https://player.twitch.tv/?channel=dallas&muted=true"
+                        height="100%"
+                        width="100%"
+                        frameBorder="0"
+                        scrolling="no"
+                        allowFullScreen={true}>
+                    </iframe>
                 </div>)
         }
     }

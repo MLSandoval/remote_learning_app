@@ -8,7 +8,21 @@ export default class SidePanel extends React.Component{
 
     this.appendQuestionDivs = this.appendQuestionDivs.bind(this);
 
-    this.state = {visible: 'chat'}
+    this.state = {visible: 'chat',
+                  value: ''}
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+
+
+  handleChange(event) {
+    this.setState({ value: event.target.value })
+    console.log('handleChange state: ', this.state.value);
   }
 
   setView(nextActive){
@@ -64,13 +78,16 @@ export default class SidePanel extends React.Component{
                   </div>
 
 
-                  <div className="col-lg-12 row">
-                    <input className="col-lg-11 nopadding" id="question" type="text" name="question"></input>
-                    <input className="col-lg-1 nopadding" type="submit" value="&gt;" onClick={() => {
-                      let questionInput = document.getElementById("question").value
-                      this.props.add(questionInput)
-                    }}></input>
-                  </div>
+              <form className="col-lg-12 row" onSubmit={this.handleSubmit}>
+                <label>
+                  <input type="text"
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                    placeholder="Enter question" />
+                </label>
+                <input type="submit"
+                  value="submit" onClick={() => this.props.add(this.state.value)} />
+              </form>
 
               </div>
             </div>

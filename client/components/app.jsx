@@ -24,7 +24,6 @@ class App extends React.Component{
         } else {
             this.setState({ userType: 'admin' })
         }
-        console.log("this.setState: ", this.state.userType);
     }
 
     addQuestion(question) {
@@ -42,12 +41,13 @@ class App extends React.Component{
         }
 
     render(){
+        console.log("this.State: ", this.state.userType);
         return(
             <div id="app" className="container-fluid nopadding">
                 <div className="row" style={{'height':101 + 'vh'}}>
                     <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
-                    <Video UserType={this.state.userType} />
-                    <SidePanel userType={this.state.UserType}
+                    <Video userType={this.state.userType} />
+                    <SidePanel userType={this.state.userType}
                         add={this.addQuestion}
                         delete={this.deleteQuestion}
                         data={this.state.data} />
