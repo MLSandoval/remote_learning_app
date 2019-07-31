@@ -19,11 +19,12 @@ class App extends React.Component{
 
 
     switchUser(){
-        if (this.state.UserType === 'admin'){
-            this.setState({ UserType: 'student' })
+        if (this.state.userType === 'admin'){
+            this.setState({ userType: 'student' })
         } else {
-            this.setState({ UserType: 'admin' })
+            this.setState({ userType: 'admin' })
         }
+        console.log("this.setState: ", this.state.userType);
     }
 
     addQuestion(question) {
@@ -43,9 +44,11 @@ class App extends React.Component{
     render(){
         return(
             <div id="app">
-                <button style={{'position':'absolute','height':15 + 'px'}} onClick={this.switchUser}></button>
-                <Video UserType={this.state.userType}/>
-                <SidePanel userType={this.state.UserType}
+                <button style={{'position':'absolute','height':15 + 'px'}} 
+                        onClick={this.switchUser}>
+                </button>
+                <Video userType={this.state.userType}/>
+                <SidePanel userType={this.state.userType}
                             add={this.addQuestion}
                             delete={this.deleteQuestion}  
                             data={this.state.data}/>

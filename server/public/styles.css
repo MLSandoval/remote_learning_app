@@ -11,7 +11,50 @@
 
 
 i {
-  position: absolute;
-  right: 10%;
+  position: relative;
+  left: 27%;
   cursor: pointer;
+  padding: 6.5%;
+}
+
+#chat_button {
+height: 10%;
+width: 50%;
+display: inline-block;
+/* position: absolute; */
+line-height: 2.6;
+text-align: center;
+background-color: aqua;
+cursor: pointer;
+}
+
+#queue_button {
+  height: 10%;
+  width: 50%;
+  left: 50%;
+  display: inline-block;
+  /* position: absolute; */
+  line-height: 2.6;
+  text-align: center;
+  background-color: darkgoldenrod;
+}
+
+#chat_container {
+  height: 90%;
+  width: 100%;
+  display: inline-block;
+  position: absolute;
+  top: 8vh;
+}
+#queue{
+  height: 100%;
+  /* width: 100%; */
+  /* display: inline-block; */
+  /* position: relative; */
+  /* top: 8vh; */
+  background-color: salmon;
+}
+
+.hide {
+  display: none !important;
 }

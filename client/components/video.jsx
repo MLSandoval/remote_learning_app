@@ -3,8 +3,7 @@ import React from 'react';
 class Video extends React.Component{
 
     render(){
-
-        if(this.props.UserType === 'admin'){
+        if(this.props.userType === 'admin'){
             return (
                 <div className="float-left" id="video">
                     <div className="row">

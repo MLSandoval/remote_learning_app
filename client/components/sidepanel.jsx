@@ -7,19 +7,28 @@ export default class SidePanel extends React.Component{
     super(props);
 
     this.appendQuestionDivs = this.appendQuestionDivs.bind(this);
+    this.toggleView = this.toggleView.bind(this);
+
+    this.state = {visible: 'chat'}
   }
 
-  componentDidUpdate() {
-     console.log('1)sidepanel state: ', this.props.data);
+  setView(nextActive){
+    if(['chat', 'queue'].indexOf(nextActive) >= 0){
+      this.setState({ visible: nextActive });
+    }
+  }
+
+  toggleView(){
+    const { visible } = this.state;
+    let nextState = 'chat';
+
+    if(visible === nextState){
+      nextState = 'queue';
+    }
+
+    this.setState({ visible: nextState });
   }
   
-  showQueue() {
-  document.getElementById('chat_embed').hidden = true;
-}
-
-  showChat() {
-  document.getElementById('chat_embed').hidden = false;
-}
 
   appendQuestionDivs(){
     let deleteQuestion = this.props.delete;
@@ -40,138 +49,78 @@ export default class SidePanel extends React.Component{
 
 
   render(){
-    console.log("User Type: ", this.props.data);
+    const { visible } = this.state;
       if (this.props.userType === 'student') {
         return (
           <div className="container">
-            <div className="row fixed-top sidebar" style={{
-              'height': 80 + 'vh',
-              'width': 30 + 'vw',
-              'display': 'inline-block',
-              'position': 'absolute',
-              'left': 71 + 'vw',
-              'bottom': 12 + 'vh'
-            }}>
+            <div className="row fixed-top sidebar" 
+                 style={{
+                    'height': 80 + 'vh',
+                    'width': 30 + 'vw',
+                    'display': 'inline-block',
+                    'position': 'absolute',
+                    'left': 71 + 'vw',
+                    'bottom': 12 + 'vh'}}>
+
               <div>
-                <div id="chat_button" style={{
-                  'height': 10 + '%',
-                  'width': 50 + '%',
-                  'display': 'inline-block',
-                  'position': 'absolute',
-                  'lineHeight': 2.6,
-                  'textAlign': 'center',
-                  'backgroundColor': 'aqua'
-                }} onClick={this.showChat}>Chat
-                </div>
-
-                <div id="queue_button" style={{
-                  'height': 10 + '%',
-                  'width': 50 + '%',
-                  'left': 50 + '%',
-                  'display': 'inline-block',
-                  'position': 'absolute',
-                  'lineHeight': 2.6,
-                  'textAlign': 'center',
-                  'backgroundColor': 'darkgoldenrod'
-                }} onClick={this.showQueue}>Queue
+                <div id="chat_button" onClick={() => this.setView('chat')}>Chat</div>
+                <div id="queue_button" onClick={() => this.setView('queue')}>Queue</div>
               </div>
 
-              </div>
-                <div id="chat_container" style={{
-                  'height': 90 + '%',
-                  'width': 100 + '%',
-                  'display': 'inline-block',
-                  'position': 'absolute',
-                  'top': 8 + 'vh'
-                }}>
-                <iframe frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat" height="100%"
-                  width="100%">
-                </iframe>
-              </div>
-
-              <div id="queue"
-                style={{
-                  'height': 90 + '%',
-                  'width': 100 + '%',
-                  'display': 'inline-block',
-                  'position': 'absolute',
-                  'top': 8 + 'vh',
-                  'backgroundColor': 'salmon'
-                }}>
-
-                  <div>{this.appendQuestionDivs()}</div>
-                    <input type="text" name="question" id="question"></input> 
-                    <input type="submit" value="&gt;" onClick={()=> {
-                      let questionInput = document.getElementById("question").value
-                      this.props.add(questionInput)}}></input>
-
-                 </div>
-
-            </div>
-          </div>
-        )
-      } else {
-        return (
-          <div className="container">
-            <div className="row fixed-top sidebar" style={{
-              'height': 80 + 'vh',
-              'width': 30 + 'vw',
-              'display': 'inline-block',
-              'position': 'absolute',
-              'left': 71 + 'vw',
-              'bottom': 12 + 'vh'
-            }}>
-              <div>
-                <div id="chat_button" style={{
-                  'height': 10 + '%',
-                  'width': 50 + '%',
-                  'display': 'inline-block',
-                  'position': 'absolute',
-                  'lineHeight': 2.6,
-                  'textAlign': 'center',
-                  'backgroundColor': 'aqua'
-                }} onClick={this.showChat}>Chat
-              </div>
-
-                <div id="queue_button" style={{
-                  'height': 10 + '%',
-                  'width': 50 + '%',
-                  'left': 50 + '%',
-                  'display': 'inline-block',
-                  'position': 'absolute',
-                  'lineHeight': 2.6,
-                  'textAlign': 'center',
-                  'backgroundColor': 'darkgoldenrod'
-                }} onClick={this.showQueue}>
-                Queue
-              </div>
-
-              </div>
-              <div id="queue"
-                style={{
-                  'height': 90 + '%',
-                  'width': 100 + '%',
-                  'display': 'inline-block',
-                  'position': 'relative',
-                  'top': 8 + 'vh',
-                  'backgroundColor': 'salmon'
-                }}>
-
+              <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
                 <div>{this.appendQuestionDivs()}</div>
 
+                    <input type="text" name="question" id="question" autoComplete="off"/> 
+                    <input type="submit" value="Submit" 
+                      onClick={()=> {
+                      let questionInput = document.getElementById("question").value;
+                      this.props.add(questionInput)}}
+                      />
+              </div>
+                    
+                <div id="chat_container" className={visible === 'chat' ? '' : 'hide'}>
+                  <iframe frameBorder="0" 
+                          scrolling="no" 
+                          id="chat_embed" 
+                          src="https://www.twitch.tv/embed/hebo/chat" 
+                          height="100%"
+                          width="100%">
+                    </iframe>
+                  </div>
+                </div>
+          </div>
+        )
+
+      } else {
+        
+        return (
+          <div className="container">
+            <div className="row fixed-top sidebar"
+                 style={{
+                    'height': 80 + 'vh',
+                    'width': 30 + 'vw',
+                    'display': 'inline-block',
+                    'position': 'absolute',
+                    'left': 71 + 'vw',
+                    'bottom': 12 + 'vh'}}>
+
+              <div>
+                <div id="chat_button" onClick={() => this.setView('chat')}>Chat</div>
+                <div id="queue_button" onClick={() => this.setView('queue')}>Queue</div>
               </div>
 
-              <div id="chat_container" style={{
-                'height': 90 + '%',
-                'width': 100 + '%',
-                'display': 'inline-block',
-                'position': 'absolute',
-                'top': 8 + 'vh'
-              }}>
+              <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
+                <div>{this.appendQuestionDivs()}</div>
+              </div>
 
-                <iframe frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat" height="100%"
-                  width="100%">
-                </iframe>
+              <div id="chat_container" className={visible === 'chat' ? '' : 'hide'}>
+                <iframe frameBorder="0" 
+                        scrolling="no" 
+                        id="chat_embed" 
+                        src="https://www.twitch.tv/embed/hebo/chat" 
+                        height="100%"
+                         width="100%">
+                  </iframe>
               </div>
             </div>
           </div>
