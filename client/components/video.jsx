@@ -2,6 +2,20 @@ import React from 'react';
 
 class Video extends React.Component{
 
+    fakeFetch(){
+        fetch('/test', {
+            method: 'get'
+        })
+        .then(res=> res.json())
+        .then(res=>{
+            console.log('fakeFetch Success, res: ', res);
+        })
+        .catch(err=>{
+            console.log('fakeFetch error: ', err);
+        })
+
+    }
+
     render(){
 
         if(this.props.UserType === 'admin'){
@@ -12,7 +26,7 @@ class Video extends React.Component{
                             id="twitch-embed"
                             style={{ 'height': 80 + 'vh', 'width': 72 + 'vw', 'top': 40 + 'vh' }}>
                             <iframe
-                                src="https://player.twitch.tv/?channel=dallas&muted=true"
+                                src="https://player.twitch.tv/?channel=shroud&muted=true"
                                 height="100%"
                                 width="100%"
                                 frameBorder="0"
@@ -51,7 +65,7 @@ class Video extends React.Component{
                             id="twitch-embed"
                             style={{ 'height': 80 + 'vh', 'width': 72 + 'vw', 'top': 40 + 'vh' }}>
                             <iframe
-                                src="https://player.twitch.tv/?channel=dallas&muted=true"
+                                src="https://player.twitch.tv/?channel=shroud&muted=true"
                                 height="100%"
                                 width="100%"
                                 frameBorder="0"

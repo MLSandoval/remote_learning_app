@@ -9,7 +9,7 @@ const path = require('path')
 const mysql = require('mysql');
 const creds = require('./mysql_credentials.js');
 
-// const db = mysql.createConnection(creds);
+const db = mysql.createConnection(creds);
 
 const server = express();
 
@@ -21,7 +21,7 @@ server.use(express.urlencoded({ extended: false }))
 server.use(staticMiddlewareFunction);
 
 server.listen(3002, function () {
-    console.log('Listened to port 3002 successfully.');
+    console.log('Listened to port 3002 successfully. must use 3002 outside the dev environment, set listen to 3001 for using dev environment.');
 });
 
 //endpoint training wheels, no real function to this 
@@ -30,9 +30,79 @@ server.get('/test', function (request, response) {
     response.send('this is your test endpoint. bro. sick: ' + Date.now());
 });
 
-server.get('/getstudents', function (request, response) {
+
+// $query = "SELECT  a.id,  a.name,  a.price,  a.shortDescription,  p.site,  p.longDescription,
+//     GROUP_CONCAT( i.imgUrl) AS imgUrl
+//     FROM products AS p 
+//     JOIN images AS  i 
+//       ON p.id = i.productId
+//     $whereClause     "WHERE p.id = $id";
+//     GROUP BY p.id";
+
+//grabs admin and their first question, but beyond that we need to get individual questions
+// SELECT a.id, a.channelName, a.twitchUser_id, q.question, q.id, q.questionOwner_id, ao.question_id,
+//     GROUP_CONCAT(ao.answer) AS answers
+// FROM adminUsers AS a
+// JOIN questionsAdmin AS q
+// ON a.id = q.questionOwner_id
+// JOIN answerOptions AS ao
+// ON q.id = ao.question_id
+// WHERE a.id = 2
+
+
+//
+// SELECT a.id, a.channelName, a.twitchUser_id, q.question, q.id, ao.question_id,
+//     GROUP_CONCAT(ao.answer) AS answers
+// FROM adminUsers AS a
+// JOIN questionsAdmin AS q
+// ON a.id = q.questionOwner_id
+// JOIN answerOptions AS ao
+// ON q.id = ao.question_id
+// WHERE a.id = 1 AND q.id = 2
+// GROUP BY q.id
+
+
+//single question query by question ID
+// SELECT a.id, a.channelName, a.twitchUser_id, q.question, q.questionOwner_id, ao.question_id,
+// GROUP_CONCAT(ao.answer) AS answers
+// FROM adminUsers AS a
+// JOIN questionsAdmin AS q
+// ON a.id = q.questionOwner_id
+// JOIN answerOptions AS ao
+// ON q.id = ao.question_id AND a.id = q.questionOwner_id
+// WHERE q.id = 4
+
+//grab all questions for an admin user
+// SELECT a.id, a.channelName, a.twitchUser_id, q.questionOwner_id, q.questionOwner_id,
+//     GROUP_CONCAT(q.question) AS questions
+// FROM adminUsers AS a
+// JOIN questionsAdmin AS q
+// ON a.id = q.questionOwner_id
+// WHERE a.id = 1
+
+// SELECT a.id, a.channelName, a.twitchUser_id, q.questionOwner_id, GROUP_CONCAT(q.id) AS questionID,
+//     GROUP_CONCAT(q.question) AS questions
+// FROM adminUsers AS a
+// JOIN questionsAdmin AS q
+// ON a.id = q.questionOwner_id
+
+// WHERE a.id = 1
+
+
+
+server.get(`/getAllAdminQuestions/$id`, function (request, response) {
     db.connect(function () {
-        var query = "SELECT * FROM `grades`";
+        var query = 
+            `SELECT a.id, a.channelName, a.twitchUser_id, q.question,  q.id, q.questionOwner_id, ao.answer, ao.question_id,
+                GROUP_CONCAT( ao.answer) AS answers
+                FROM adminUsers AS a
+                JOIN questionsAdmin AS q
+                    ON a.id = q.questionOwner_id
+                JOIN answerOptions AS ao
+                    ON q.id = ao.question_id
+                WHERE a.id = 1 
+                GROUP BY q.id`; //need to add variable inthe the where clause to account for the id being searched for
+        
         db.query(query, function (error, data, fields) {
             if (!error) {
                 response.send({
