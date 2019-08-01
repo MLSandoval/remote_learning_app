@@ -36,7 +36,7 @@ export default class SidePanel extends React.Component{
   appendQuestionDivs(){
     let deleteQuestion = this.props.delete;
     if(this.props.userType === 'student') {
-          var questionDivs = this.props.data.map(x =>
+          var questionDivs = this.props.data.map(x =>  // change these variable names
             <div className="question" key={x.id}>
             {x.question} - {x.author}
             </div>)

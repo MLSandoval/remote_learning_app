@@ -9,7 +9,7 @@ const path = require('path')
 const mysql = require('mysql');
 const creds = require('./mysql_credentials.js');
 
-// const db = mysql.createConnection(creds);
+const db = mysql.createConnection(creds);
 
 const server = express();
 
@@ -20,8 +20,28 @@ const staticMiddlewareFunction = express.static(pubDirectory);
 server.use(express.urlencoded({ extended: false }))
 server.use(staticMiddlewareFunction);
 
-server.listen(3002, function () {
-    console.log('Listened to port 3002 successfully.');
+server.listen(3001, function () {
+    console.log('Listened to port 3001 successfully.');
+});
+
+
+server.get('/getStudentsQuestions', function (request, response) { // endpoint to get student Questions
+  console.log('/getStudentsQuestions started');
+  // console.log('what is db:', db);
+  db.connect(function () {
+    const query = `SELECT questionsQueue.id, questionsQueue.question, studentUsers.twitchUserName as author
+                   FROM questionsQueue
+                   JOIN studentUsers
+                   ON questionsQueue.studentUser_id = studentUsers.id`;
+    db.query(query, function (error, data) {
+      if (!error) {
+        response.send({
+          success: true,
+          data
+        });
+      }
+    })
+  });
 });
 
 //endpoint training wheels, no real function to this 

@@ -16,8 +16,15 @@ class App extends React.Component{
         this.deleteQuestion = this.deleteQuestion.bind(this);
 
         };
-
-
+        componentDidMount() {
+          fetch('/getStudentsQuestions')
+          .then(promiseObj => promiseObj.json())
+          .then(successObj => 
+            {
+            this.setState({ data: successObj.data })
+          }
+          );
+        }
     switchUser(){
         if (this.state.userType === 'admin'){
             this.setState({ userType: 'student' })
