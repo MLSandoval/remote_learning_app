@@ -14,7 +14,11 @@ server.use(express.urlencoded({ extended: false }))
 server.use(staticMiddlewareFunction);
 
 server.listen(3001, function () {
+<<<<<<< HEAD
     console.log('Listened to port 3001 successfully. must use 3002 outside the dev environment, set listen to 3001 for using dev environment.');
+=======
+    console.log('Listened to port 3001 successfully.');
+>>>>>>> 4217d071fb26f1b5f419f3a0a0e6ce3b288ccb9a
 });
 
 server.get('/test', function (request, response) {

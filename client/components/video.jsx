@@ -22,7 +22,7 @@ export default class Video extends React.Component{
             return (
                 <div id="video" className="col-lg-9">
                     <iframe
-                        src="https://player.twitch.tv/?channel=dallas&muted=true"
+                        src="https://player.twitch.tv/?channel=shroud&muted=true"
                         height="100%"
                         width="100%"
                         frameBorder="0"
@@ -55,7 +55,7 @@ export default class Video extends React.Component{
             return (
                 <div id="video" className="col-lg-9">
                     <iframe
-                        src="https://player.twitch.tv/?channel=dallas&muted=true"
+                        src="https://player.twitch.tv/?channel=shroud&muted=true"
                         height="100%"
                         width="100%"
                         frameBorder="0"
