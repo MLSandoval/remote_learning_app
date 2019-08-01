@@ -20,8 +20,8 @@ const staticMiddlewareFunction = express.static(pubDirectory);
 server.use(express.urlencoded({ extended: false }))
 server.use(staticMiddlewareFunction);
 
-server.listen(3002, function () {
-    console.log('Listened to port 3002 successfully.');
+server.listen(3001, function () {
+    console.log('Listened to port 3001 successfully.');
 });
 
 //endpoint training wheels, no real function to this 
