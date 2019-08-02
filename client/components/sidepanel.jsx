@@ -22,11 +22,9 @@ export default class SidePanel extends React.Component{
 
   handleChange(event) {
     this.setState({ value: event.target.value })
-    console.log('handleChange state: ', this.state.value);
   }
 
   setView(nextActive){
-    console.log('click');
     if(['chat', 'queue'].indexOf(nextActive) >= 0){
       this.setState({ visible: nextActive });
     }
@@ -43,7 +41,8 @@ export default class SidePanel extends React.Component{
             return questionDivs;
     } else {
         var questionDivs = this.props.data.map(x =>
-          <div className="question nopadding" style={{ 'height': 10 + 'vh' }} key={x.id}>{x.question} - {x.author}
+          <div className="question nopadding" style={{ 'height': 10 + 'vh' }} key={x.id}>
+          {x.question} - {x.author}
           <i className="fas fa-times" onClick={()=>{deleteQuestion(x.id)}}></i>
         </div>)
         return questionDivs;
@@ -52,7 +51,6 @@ export default class SidePanel extends React.Component{
 
 
   render(){
-    console.log('this.state: ',this.state);
     const { visible } = this.state;
     if (this.props.userType === 'student') {
       return (
@@ -66,15 +64,15 @@ export default class SidePanel extends React.Component{
 
 
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
-                <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat">
-                </iframe>
+                {/* <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat">
+                </iframe> */}
               </div>
 
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">
 
-                  <div className="col-lg-12 nopadding" style={{'height': 85 + 'vh', 'overflow':'scroll'}}>{
-                    this.appendQuestionDivs()}
+                  <div className="col-lg-12 nopadding" style={{'height': 85 + 'vh', 'overflow':'scroll'}}>
+                    {this.appendQuestionDivs()}
                   </div>
 
 
@@ -106,8 +104,8 @@ export default class SidePanel extends React.Component{
 
 
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
-            <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat">
-            </iframe>
+            {/* <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat">
+            </iframe> */}
           </div>
 
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>

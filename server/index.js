@@ -1,29 +1,22 @@
-// All code here is copyapastya from the node we built for SGT, before the react-sgt
-// strictly for reference
-
-
 
 const express = require('express');
-// const fs = require('fs');
+const server = express();
 const path = require('path')
 const mysql = require('mysql');
 const creds = require('./mysql_credentials.js');
-
 const db = mysql.createConnection(creds);
-
-const server = express();
-
-//this creates an endpoint that allows us to load all the files from the html folder
 const pubDirectory = path.join(__dirname, '/public');
-const staticMiddlewareFunction = express.static(pubDirectory);
 
-server.use(express.urlencoded({ extended: false }));
-server.use(staticMiddlewareFunction);
-
+server.use(express.urlencoded({ extended: false }))
+server.use(express.static(pubDirectory));
+server.use(express.json());
 server.listen(3001, function () {
     console.log('Listened to port 3001 successfully.');
 });
 
+server.listen(3001, function () {
+    console.log('Listened to port 3001 successfully.');
+});
 
 server.get('/getStudentsQuestions', function (request, response) { // endpoint to get student Questions
   console.log('/getStudentsQuestions started');
@@ -93,29 +86,94 @@ server.delete('/adminQuestion', function (request, response) {
       }
     });
   });
-});
 
-//endpoint training wheels, no real function to this 
+
+
+
 server.get('/test', function (request, response) {
     console.log('this is your test endpoint. bro. sick.');
     response.send('this is your test endpoint. bro. sick: ' + Date.now());
 });
 
-server.get('/getstudents', function (request, response) {
-    db.connect(function () {
-        var query = "SELECT * FROM `grades`";
-        db.query(query, function (error, data, fields) {
-            if (!error) {
-                response.send({
-                    success: true,
-                    data
-                })
-            } else {
-                console.log('error: ', error);
+server.post('/addAdminQuestion', (req,res)=>{
+    console.log('req.body:  ', req.body);
+    let {correctAnswer, adminID, question} = req.body;
+    let [ans0, ans1, ans2, ans3] = req.body.answers;
+    let questionID;
+    let insertQuestionQuery = `
+        INSERT INTO questionsAdmin ( question, questionOwner_id, correctAnswer )
+            VALUES
+            ('${question}', ${adminID}, ${correctAnswer});
+        `;
+    
+    db.query(insertQuestionQuery, (error, results, fields)=>{
+        if (error) {
+            console.error(error);
+            process.exit(1);
+        }
+        
+        questionID = results.insertId;
+
+        let insertAnswersQuery = `
+        INSERT INTO answerOptions ( question_id, answer )
+            VALUES (${questionID}, '${ans0}'),
+                (${questionID}, '${ans1}'),
+                (${questionID}, '${ans2}'),
+                (${questionID}, '${ans3}')
+        `;
+        
+        db.query(insertAnswersQuery, (error, results, fields) => {
+            if (error) {
+                console.error(error);
+                process.exit(1);
             }
-        })
-    });
-    // dummyData example to make endpoint work from local file instead of a database
-    // const data = fs.readFileSync(__dirname + '/dummydata/getstudents.json');
-    // response.send(data);
+    
+            res.send('ok bowsssuuu adminQ added!')
+        }); 
+    })
 });
+
+server.post('/addQuestionQ', (req, res) => {
+
+    let { studentID, question } = req.body;
+    console.log('req.body:::: ', req.body);
+    let insertQuestionQQuery = `
+        INSERT INTO questionsQueue ( question, studentUser_id)
+            VALUES
+            ('${question}', ${studentID})
+        `;
+    console.log('insert questionsQ query: ', insertQuestionQQuery)
+    db.query(insertQuestionQQuery, (error, results, fields) => {
+        if (error) {
+            console.error(error);
+            process.exit(1);
+        }
+        res.send('ok questionQ added!!')
+    })
+});
+
+//single question query by question ID
+// SELECT a.id, a.channelName, a.twitchUser_id, q.question, q.questionOwner_id, ao.question_id,
+// GROUP_CONCAT(ao.answer) AS answers
+// FROM adminUsers AS a
+// JOIN questionsAdmin AS q
+// ON a.id = q.questionOwner_id
+// JOIN answerOptions AS ao
+// ON q.id = ao.question_id AND a.id = q.questionOwner_id
+// WHERE q.id = 4
+
+//grab all questions for an admin user
+// SELECT a.id, a.channelName, a.twitchUser_id, q.questionOwner_id, q.questionOwner_id,
+//     GROUP_CONCAT(q.question) AS questions
+// FROM adminUsers AS a
+// JOIN questionsAdmin AS q
+// ON a.id = q.questionOwner_id
+// WHERE a.id = 1
+
+// SELECT a.id, a.channelName, a.twitchUser_id, q.questionOwner_id, GROUP_CONCAT(q.id) AS questionID,
+//     GROUP_CONCAT(q.question) AS questions
+// FROM adminUsers AS a
+// JOIN questionsAdmin AS q
+// ON a.id = q.questionOwner_id
+
+// WHERE a.id = 1

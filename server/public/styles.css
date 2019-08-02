@@ -7,7 +7,7 @@
   padding-left: 1vw;
 }
 
-.hide {display: none !important;}
+.hide {display: none;}
 
 
 i {
@@ -38,4 +38,23 @@ body {
 
 .border {
   border: 1 px solid black;
+}
+
+.modal {
+  background-color: whitesmoke;
+  height: 30vh;
+  width: 30vw;
+  display: inline-block;
+  position: absolute;
+}
+
+.dropdown {
+  overflow: scroll;
+}
+
+.answerDiv {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  position: relative;
 }
