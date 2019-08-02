@@ -1,21 +1,19 @@
 
 const express = require('express');
+const server = express();
 const path = require('path')
 const mysql = require('mysql');
 const creds = require('./mysql_credentials.js');
 const db = mysql.createConnection(creds);
-
-const server = express();
-
 const pubDirectory = path.join(__dirname, '/public');
-const staticMiddlewareFunction = express.static(pubDirectory);
 
 server.use(express.urlencoded({ extended: false }))
-server.use(staticMiddlewareFunction);
-
+server.use(express.static(pubDirectory));
+server.use(express.json());
 server.listen(3001, function () {
     console.log('Listened to port 3001 successfully.');
 });
+
 
 server.get('/test', function (request, response) {
     console.log('this is your test endpoint. bro. sick.');
@@ -55,22 +53,76 @@ server.get('/getAdminQuestion/:id', (req, res)=> {
 
     }else{
         res.send('Please provide admin id.');
-    }
+    }  
+});
 
-
+server.post('/addAdminQuestion', (req,res)=>{
+    console.log('req.body:  ', req.body);
+    let {correctAnswer, adminID, question} = req.body;
+    let [ans0, ans1, ans2, ans3] = req.body.answers;
+    let questionID;
+    let insertQuestionQuery = `
+        INSERT INTO questionsAdmin ( question, questionOwner_id, correctAnswer )
+            VALUES
+            ('${question}', ${adminID}, ${correctAnswer});
+        `;
     
+    db.query(insertQuestionQuery, (error, results, fields)=>{
+        if (error) {
+            console.error(error);
+            process.exit(1);
+        }
+        
+        questionID = results.insertId;
+
+        let insertAnswersQuery = `
+        INSERT INTO answerOptions ( question_id, answer )
+            VALUES (${questionID}, '${ans0}'),
+                (${questionID}, '${ans1}'),
+                (${questionID}, '${ans2}'),
+                (${questionID}, '${ans3}')
+        `;
+        
+        db.query(insertAnswersQuery, (error, results, fields) => {
+            if (error) {
+                console.error(error);
+                process.exit(1);
+            }
+    
+            res.send('ok bowsssuuu adminQ added!')
+        }); 
+    })
 });
 
 
+server.post('/addQuestionQ', (req, res) => {
+
+    let { studentID, question } = req.body;
+    console.log('req.body:::: ', req.body);
+    let insertQuestionQQuery = `
+        INSERT INTO questionsQueue ( question, studentUser_id)
+            VALUES
+            ('${question}', ${studentID})
+        `;
+    console.log('insert questionsQ query: ', insertQuestionQQuery)
+    db.query(insertQuestionQQuery, (error, results, fields) => {
+        if (error) {
+            console.error(error);
+            process.exit(1);
+        }
+
+        res.send('ok questionQ added!!')
+    })
+});
 
 
-// $query = "SELECT  a.id,  a.name,  a.price,  a.shortDescription,  p.site,  p.longDescription,
+// $query = 'SELECT  a.id,  a.name,  a.price,  a.shortDescription,  p.site,  p.longDescription,
 //     GROUP_CONCAT( i.imgUrl) AS imgUrl
 //     FROM products AS p 
 //     JOIN images AS  i 
 //       ON p.id = i.productId
-//     $whereClause     "WHERE p.id = $id";
-//     GROUP BY p.id";
+//     $whereClause     'WHERE p.id = $id';
+//     GROUP BY p.id';
 
 //grabs admin and their first question, but beyond that we need to get individual questions
 // SELECT a.id, a.channelName, a.twitchUser_id, q.question, q.id, q.questionOwner_id, ao.question_id,
@@ -151,22 +203,6 @@ server.get('/getAdminQuestion/:id', (req, res)=> {
     // const data = fs.readFileSync(__dirname + '/dummydata/getstudents.json');
     // response.send(data);
 // });
-//subdomain.domain.tld/path/to/file/filename?a=1&b=2&c=3#somehash
-
-// $.ajax({
-//     url: 'subdomain.domain.tld/path/to/file/filename?a=1&b=2&c=3#somehash',
-//     method: 'put',
-//     data: {
-//         a: 4,
-//         yo: 'heya',
-//         'we rock': 'hell yeah'
-//     }
-// })
-// PUT path / to / file / filename ? a = 1 & b=2 & c=3#somehash
-// Host: subdomain.domain.tld
-// header1: header1value 
-
-// a=4&yo=heya&we%20rock=hell%20yeah
 
 
 // server.read('/readstudents', function(request, response){
@@ -180,8 +216,8 @@ server.get('/getAdminQuestion/:id', (req, res)=> {
 //         console.log('request.query:::::: ', request.body);
 
 //         var { name, course, grade } = request.body;
-//         // var query = "INSERT INTO `grades` (`name`, `course`, `grade`) VALUES ('" +name+"', "+course+"', '"+grade+"')";
-//         var query = "INSERT INTO `grades` SET `name` = '" + name + "', `course` =  '" + course + "', `grade` = '" + grade + "'";
+//         // var query = 'INSERT INTO `grades` (`name`, `course`, `grade`) VALUES ('' +name+'', '+course+'', ''+grade+'')';
+//         var query = 'INSERT INTO `grades` SET `name` = '' + name + '', `course` =  '' + course + '', `grade` = '' + grade + ''';
 //         console.log(query);
 //         db.query(query, function (error, data, fields) {
 //             if (!error) {
@@ -203,7 +239,7 @@ server.get('/getAdminQuestion/:id', (req, res)=> {
 //         console.log('request.query', request.body);
 
 //         var id = request.body.student_id;
-//         var query = "DELETE FROM `grades` WHERE `grades`.`id` = " + id;
+//         var query = 'DELETE FROM `grades` WHERE `grades`.`id` = ' + id;
 
 //         console.log(query);
 
