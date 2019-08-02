@@ -39,3 +39,17 @@ body {
 .border {
   border: 1 px solid black;
 }
+
+.button.button4{
+  position: absolute;
+  top: 50%;
+  right: 90%;
+  background-color: #4CAF50;
+  font-size: 16px;
+  cursor: pointer;
+  z-index:9999;
+}
+
+.modal{
+  display: inline-block;
+}

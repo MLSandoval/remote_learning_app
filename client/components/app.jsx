@@ -14,7 +14,6 @@ class App extends React.Component{
         this.switchUser = this.switchUser.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
         this.deleteQuestion = this.deleteQuestion.bind(this);
-
         };
 
 
@@ -41,7 +40,6 @@ class App extends React.Component{
         }
 
     render(){
-        console.log("this.State: ", this.state.userType);
         return(
             <div id="app" className="container-fluid nopadding">
                 <div className="row" style={{'height':101 + 'vh'}}>
@@ -53,7 +51,6 @@ class App extends React.Component{
                         data={this.state.data} />
                 </div>
             </div>
-
         )
     }
 }
