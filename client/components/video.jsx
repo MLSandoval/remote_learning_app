@@ -1,16 +1,25 @@
 import React from 'react';
+import AddQuestionForm from './addQuestionForm.jsx';
 import BroadcastButton from './broadcastquestionbutton';
 
 export default class Video extends React.Component{
-  
-    constructor() {
-        super();
-        this.state = {
-            view: ''
+    constructor(props){
+        super(props);
+        this.state={
+            view : ''
         }
         this.renderBroadcastButton = this.renderBroadcastButton.bind(this);
+        this.toggleAddQ =this.toggleAddQ.bind(this);
     }
-
+    
+    toggleAddQ(){
+        if(this.state.view === true){
+            this.setState({view : false});
+        } else {
+            this.setState({view: true});
+        }
+    }
+        
     renderBroadcastButton() {
         if (this.state.view === '') {
             this.setState({ view: 'broadcast' })
@@ -19,25 +28,10 @@ export default class Video extends React.Component{
         }
     }
 
-    fakeFetch(){
-        fetch('/test', {
-            method: 'get'
-        })
-        .then(res=> res.json())
-        .then(res=>{
-            console.log('fakeFetch Success, res: ', res);
-        })
-        .catch(err=>{
-            console.log('fakeFetch error: ', err);
-        })
-
-    }
-
     render(){
         if (this.props.userType === 'admin') {
             return (
                 <div id="video" className="col-lg-9">
-
                     <iframe
                         src="https://player.twitch.tv/?channel=shroud&muted=true"
                         height="100%"
@@ -45,7 +39,13 @@ export default class Video extends React.Component{
                         frameBorder="0"
                         scrolling="no"
                         allowFullScreen={true}>
-                    </iframe> */}
+                    </iframe>
+                    <button typ="button" className="button button4"                         
+                            onClick={this.toggleAddQ}>Add Q
+                    </button>
+                    <AddQuestionForm view={this.state.view}
+                                     toggle={this.toggleAddQ}
+                    />
                     <button className="button button4"
                         onClick={this.renderBroadcastButton}
                         style={{
@@ -58,22 +58,11 @@ export default class Video extends React.Component{
                         }}>Broadcast
                     </button>
                     <BroadcastButton view={this.state.view} data={this.props.data} load={this.props.load} />
-                    <button className="button button4"
-                        style={{
-                            'position': 'absolute',
-                            'top': 40 + '%',
-                            'right': 90 + '%',
-                            'backgroundColor': '#4CAF50',
-                            'display': 'inline-block',
-                            'fontSize': 16 + 'px'
-                        }}>click me
-                    </button>
                 </div>
             )
         } else {
             return (
                 <div id="video" className="col-lg-9">
-
                     <iframe
                         src="https://player.twitch.tv/?channel=shroud&muted=true"
                         height="100%"

@@ -40,7 +40,25 @@ body {
   border: 1 px solid black;
 }
 
-.modal {
+.button.button4{
+  position: absolute;
+  top: 50%;
+  right: 90%;
+  background-color: #4CAF50;
+  font-size: 16px;
+  cursor: pointer;
+  z-index:9999;
+}
+
+.modal1{
+  display: inline-block;
+}
+
+label {
+  width:100%;
+}
+
+.modal2 {
   background-color: whitesmoke;
   height: 30vh;
   width: 30vw;

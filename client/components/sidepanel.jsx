@@ -2,23 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 export default class SidePanel extends React.Component{
-
   constructor(props) {
     super(props);
-
-    this.appendQuestionDivs = this.appendQuestionDivs.bind(this);
-
-    this.state = {visible: 'chat',
-                  value: ''}
+    this.state = {
+      visible: 'chat',
+      value: ''
+    }
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.appendQuestionDivs = this.appendQuestionDivs.bind(this);
   }
 
   handleSubmit(event) {
     event.preventDefault();
   }
-
 
   handleChange(event) {
     this.setState({ value: event.target.value })
@@ -30,33 +28,30 @@ export default class SidePanel extends React.Component{
     }
   }
 
-
   appendQuestionDivs(){
     let deleteQuestion = this.props.delete;
     if(this.props.userType === 'student') {
-          var questionDivs = this.props.data.map(x =>  // change these variable names
+          var questionDivs = this.props.questionQueue.map(x =>
             <div className="question" key={x.id}>
             {x.question} - {x.author}
             </div>)
             return questionDivs;
     } else {
-        var questionDivs = this.props.data.map(x =>
-          <div className="question nopadding" style={{ 'height': 10 + 'vh' }} key={x.id}>
-          {x.question} - {x.author}
+
+        var questionDivs = this.props.questionQueue.map(x =>
+          <div className="question nopadding" style={{ 'height': 10 + 'vh' }} key={x.id}>{x.question} - {x.author}
           <i className="fas fa-times" onClick={()=>{deleteQuestion(x.id)}}></i>
         </div>)
         return questionDivs;
     }
   }
 
-
+ 
   render(){
     const { visible } = this.state;
     if (this.props.userType === 'student') {
       return (
         <div id="sidepanel" className="col-lg-3 container-fluid nopadding" style={{'height':100 + 'vh'}}>
-
-
             <div className="row nopadding" style={{ 'height': 8 + 'vh' }}>
               <div id="chat_button" className="col-lg-6 clickable border" onClick={() => this.setView('chat')}>Chat</div>
               <div id="queue_button" className="col-lg-6 clickable border" onClick={() => this.setView('queue')}>Queue</div>
@@ -64,18 +59,13 @@ export default class SidePanel extends React.Component{
 
 
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
-                {/* <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat">
-                </iframe> */}
-              </div>
-
+                <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat"/>
+          </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">
-
-                  <div className="col-lg-12 nopadding" style={{'height': 85 + 'vh', 'overflow':'scroll'}}>
-                    {this.appendQuestionDivs()}
-                  </div>
-
-
+            <div className="col-lg-12 nopadding" 
+                 style={{'height': 85 + 'vh', 'overflow':'scroll'}}>
+                 {this.appendQuestionDivs()}</div>
               <form className="col-lg-12 row" onSubmit={this.handleSubmit}>
                 <label>
                   <input type="text"
@@ -83,45 +73,32 @@ export default class SidePanel extends React.Component{
                     onChange={this.handleChange}
                     placeholder="Enter question" />
                 </label>
-                <input type="submit"
-                  value="submit" onClick={() => this.props.add(this.state.value)} />
-              </form>
-
+                  <input type="submit"
+                         value="submit" 
+                         onClick={() => this.props.add(this.state.value)} />
+               </form>
               </div>
             </div>
-
-      </div>
-    )
-  } else {
+        </div>
+        )
+    } else {
       return (
         <div id="sidepanel" className="col-lg-3 container-fluid nopadding" style={{ 'height': 100 + 'vh' }}>
-
-
           <div className="row nopadding" style={{ 'height': 8 + 'vh' }}>
             <div id="chat_button" className="col-lg-6 clickable border" onClick={() => this.setView('chat')}>Chat</div>
             <div id="queue_button" className="col-lg-6 clickable border" onClick={() => this.setView('queue')}>Queue</div>
           </div>
 
-
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
-            {/* <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat">
-            </iframe> */}
+            <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat"/>
           </div>
-
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">
-
-              <div className="col-lg-12 nopadding" style={{ 'height': 50 + 'vh', 'overflow': 'scroll' }}>{
-                this.appendQuestionDivs()}
-              </div>
-
-
-              <div className="col-lg-12 row">
-              </div>
-
+              <div className="col-lg-12 nopadding fullheight" 
+                   style={{ 'height': 85 + 'vh', 'overflow': 'scroll' }}>
+                   {this.appendQuestionDivs()}</div>
             </div>
           </div>
-
         </div>
       )
     }
