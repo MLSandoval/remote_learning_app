@@ -20,11 +20,9 @@ export default class SidePanel extends React.Component{
 
   handleChange(event) {
     this.setState({ value: event.target.value })
-    console.log('handleChange state: ', this.state.value);
   }
 
   setView(nextActive){
-    console.log('click');
     if(['chat', 'queue'].indexOf(nextActive) >= 0){
       this.setState({ visible: nextActive });
     }
@@ -39,6 +37,7 @@ export default class SidePanel extends React.Component{
             </div>)
             return questionDivs;
     } else {
+
         var questionDivs = this.props.questionQueue.map(x =>
           <div className="question nopadding" style={{ 'height': 10 + 'vh' }} key={x.id}>{x.question} - {x.author}
           <i className="fas fa-times" onClick={()=>{deleteQuestion(x.id)}}></i>
@@ -62,13 +61,11 @@ export default class SidePanel extends React.Component{
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
                 <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat"/>
           </div>
-
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">
             <div className="col-lg-12 nopadding" 
                  style={{'height': 85 + 'vh', 'overflow':'scroll'}}>
                  {this.appendQuestionDivs()}</div>
-
               <form className="col-lg-12 row" onSubmit={this.handleSubmit}>
                 <label>
                   <input type="text"
@@ -95,7 +92,6 @@ export default class SidePanel extends React.Component{
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
             <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat"/>
           </div>
-
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">
               <div className="col-lg-12 nopadding fullheight" 

@@ -7,7 +7,7 @@
   padding-left: 1vw;
 }
 
-.hide {display: none !important;}
+.hide {display: none;}
 
 
 i {
@@ -50,10 +50,29 @@ body {
   z-index:9999;
 }
 
-.modal{
+.modal1{
   display: inline-block;
 }
 
 label {
   width:100%;
+}
+
+.modal2 {
+  background-color: whitesmoke;
+  height: 30vh;
+  width: 30vw;
+  display: inline-block;
+  position: absolute;
+}
+
+.dropdown {
+  overflow: scroll;
+}
+
+.answerDiv {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  position: relative;
 }
