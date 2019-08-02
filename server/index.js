@@ -14,13 +14,8 @@ server.listen(3001, function () {
     console.log('Listened to port 3001 successfully.');
 });
 
-server.listen(3001, function () {
-    console.log('Listened to port 3001 successfully.');
-});
-
-server.get('/getStudentsQuestions', function (request, response) { // endpoint to get student Questions
-  console.log('/getStudentsQuestions started');
-  // console.log('what is db:', db);
+// endpoint to get student questions
+server.get('/getStudentsQuestions', function (request, response) { 
   db.connect(function () {
     const query = `SELECT questionsQueue.id, questionsQueue.question, studentUsers.twitchUserName as author
                    FROM questionsQueue
@@ -37,6 +32,7 @@ server.get('/getStudentsQuestions', function (request, response) { // endpoint t
   });
 });
 
+// endpoint to get admin questions
 server.get('/getAdminQuestions', function (request, response) {
   db.connect(function () {
     const query = `SELECT q.id, q.question, q.questionOwner_id as admin_id, GROUP_CONCAt(a.id) AS answer_ids, GROUP_CONCAT(a.answer) as answers
@@ -56,6 +52,7 @@ server.get('/getAdminQuestions', function (request, response) {
   });
 });
 
+// endpoint to delete admin question by id
 server.delete('/adminQuestion', function (request, response) {
   db.connect(function () {
     const adminQuestionID = parseInt(request.query.adminQuestionID);
@@ -63,19 +60,6 @@ server.delete('/adminQuestion', function (request, response) {
                    FROM answerOptions
                    JOIN questionsAdmin ON questionsAdmin.id = answerOptions.question_id
                    WHERE questionsAdmin.id = ${adminQuestionID}`
-
-
-    // let query = 'DELETE FROM ?? WHERE ?? = ?; DELETE FROM ?? WHERE ?? = ?;';
-    // let inserts = ['answerOptions', 'question_id', adminQuestionID, 
-    //                'questionsAdmin', 'id', adminQuestionID];
-    // // let query = 'DELETE FROM ?? WHERE ?? = ?';
-    // // let inserts = ['answerOptions', 'question_id', adminQuestionID, 
-    // //                'questionsAdmin', 'id', adminQuestionID];
-    // let sql = mysql.format(query, inserts);
-
-
-    // console.log('this is the formatted SQL:', sql);
-    
     db.query(query, function (error, data) {
       if (!error) {
         const output = {
@@ -87,14 +71,6 @@ server.delete('/adminQuestion', function (request, response) {
     });
   });
 
-
-
-
-server.get('/test', function (request, response) {
-    console.log('this is your test endpoint. bro. sick.');
-    response.send('this is your test endpoint. bro. sick: ' + Date.now());
-});
-
 server.post('/addAdminQuestion', (req,res)=>{
     console.log('req.body:  ', req.body);
     let {correctAnswer, adminID, question} = req.body;
@@ -103,38 +79,30 @@ server.post('/addAdminQuestion', (req,res)=>{
     let insertQuestionQuery = `
         INSERT INTO questionsAdmin ( question, questionOwner_id, correctAnswer )
             VALUES
-            ('${question}', ${adminID}, ${correctAnswer});
-        `;
-    
+            ('${question}', ${adminID}, ${correctAnswer})`;
     db.query(insertQuestionQuery, (error, results, fields)=>{
         if (error) {
             console.error(error);
             process.exit(1);
         }
-        
         questionID = results.insertId;
-
         let insertAnswersQuery = `
         INSERT INTO answerOptions ( question_id, answer )
             VALUES (${questionID}, '${ans0}'),
                 (${questionID}, '${ans1}'),
                 (${questionID}, '${ans2}'),
-                (${questionID}, '${ans3}')
-        `;
-        
+                (${questionID}, '${ans3}')`;
         db.query(insertAnswersQuery, (error, results, fields) => {
             if (error) {
                 console.error(error);
                 process.exit(1);
-            }
-    
+            }   
             res.send('ok bowsssuuu adminQ added!')
         }); 
     })
 });
 
 server.post('/addQuestionQ', (req, res) => {
-
     let { studentID, question } = req.body;
     console.log('req.body:::: ', req.body);
     let insertQuestionQQuery = `
