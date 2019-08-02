@@ -17,7 +17,7 @@ const server = express();
 const pubDirectory = path.join(__dirname, '/public');
 const staticMiddlewareFunction = express.static(pubDirectory);
 
-server.use(express.urlencoded({ extended: false }))
+server.use(express.urlencoded({ extended: false }));
 server.use(staticMiddlewareFunction);
 
 server.listen(3001, function () {
@@ -40,7 +40,58 @@ server.get('/getStudentsQuestions', function (request, response) { // endpoint t
           data
         });
       }
-    })
+    });
+  });
+});
+
+server.get('/getAdminQuestions', function (request, response) {
+  db.connect(function () {
+    const query = `SELECT q.id, q.question, q.questionOwner_id as admin_id, GROUP_CONCAt(a.id) AS answer_ids, GROUP_CONCAT(a.answer) as answers
+                  FROM questionsAdmin as q
+                  JOIN answerOptions as a
+                  ON q.id = a.question_id
+                  WHERE q.questionOwner_id = 1
+                  GROUP BY q.id`;
+    db.query(query, function (error, data) {
+      if (!error) {
+        response.send({
+          success: true,
+          data
+        });
+      }
+    });
+  });
+});
+
+server.delete('/adminQuestion', function (request, response) {
+  db.connect(function () {
+    const adminQuestionID = parseInt(request.query.adminQuestionID);
+    const query = `DELETE answerOptions, questionsAdmin
+                   FROM answerOptions
+                   JOIN questionsAdmin ON questionsAdmin.id = answerOptions.question_id
+                   WHERE questionsAdmin.id = ${adminQuestionID}`
+
+
+    // let query = 'DELETE FROM ?? WHERE ?? = ?; DELETE FROM ?? WHERE ?? = ?;';
+    // let inserts = ['answerOptions', 'question_id', adminQuestionID, 
+    //                'questionsAdmin', 'id', adminQuestionID];
+    // // let query = 'DELETE FROM ?? WHERE ?? = ?';
+    // // let inserts = ['answerOptions', 'question_id', adminQuestionID, 
+    // //                'questionsAdmin', 'id', adminQuestionID];
+    // let sql = mysql.format(query, inserts);
+
+
+    // console.log('this is the formatted SQL:', sql);
+    
+    db.query(query, function (error, data) {
+      if (!error) {
+        const output = {
+          success: true,
+          data
+        };
+        response.send( output );
+      }
+    });
   });
 });
 
@@ -68,72 +119,3 @@ server.get('/getstudents', function (request, response) {
     // const data = fs.readFileSync(__dirname + '/dummydata/getstudents.json');
     // response.send(data);
 });
-//subdomain.domain.tld/path/to/file/filename?a=1&b=2&c=3#somehash
-
-// $.ajax({
-//     url: 'subdomain.domain.tld/path/to/file/filename?a=1&b=2&c=3#somehash',
-//     method: 'put',
-//     data: {
-//         a: 4,
-//         yo: 'heya',
-//         'we rock': 'hell yeah'
-//     }
-// })
-// PUT path / to / file / filename ? a = 1 & b=2 & c=3#somehash
-// Host: subdomain.domain.tld
-// header1: header1value 
-
-// a=4&yo=heya&we%20rock=hell%20yeah
-
-
-// server.read('/readstudents', function(request, response){
-//     const mysql = fs.readFileSync(__dirname + '/')
-//     response.send(data);
-// });
-
-// server.put('/addstudent', function (request, response) {
-//     db.connect(function () {
-
-//         console.log('request.query:::::: ', request.body);
-
-//         var { name, course, grade } = request.body;
-//         // var query = "INSERT INTO `grades` (`name`, `course`, `grade`) VALUES ('" +name+"', "+course+"', '"+grade+"')";
-//         var query = "INSERT INTO `grades` SET `name` = '" + name + "', `course` =  '" + course + "', `grade` = '" + grade + "'";
-//         console.log(query);
-//         db.query(query, function (error, data, fields) {
-//             if (!error) {
-//                 response.send({
-//                     success: true,
-//                     data: data,
-
-//                 });
-//             } else {
-//                 console.log('error: ', error);
-//             }
-//         })
-//     });
-// });
-
-// server.delete('/deletestudent', function (request, response) {
-//     db.connect(function () {
-
-//         console.log('request.query', request.body);
-
-//         var id = request.body.student_id;
-//         var query = "DELETE FROM `grades` WHERE `grades`.`id` = " + id;
-
-//         console.log(query);
-
-//         db.query(query, function (error, data, fields) {
-//             if (!error) {
-//                 response.send({
-//                     success: true,
-//                     data: data,
-
-//                 });
-//             } else {
-//                 console.log('error: ', error);
-//             }
-//         })
-//     });
-// });
