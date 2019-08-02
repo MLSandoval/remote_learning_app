@@ -43,11 +43,18 @@ export default class BroadcastModal extends React.Component {
     }
     if (this.props.view === "broadcast"){
         return (
-          <div className="modal dropdown" style={{
-            'top': 50 + '%',
-            'left': 10 + '%',}}>
-            <Select style={{'width': 100 + '%'}} options={options} />
+          <div className="modal" tabIndex="-1" role="dialog">
+            <div className="modal-dialog modal-lg" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Question</h5>
+                </div>
+                <div className="modal-body">
+                  <Select style={{ 'width': 100 + '%' }} options={options} />
+                </div>
+              </div>
             </div>
+          </div>
         )
     } else {
       return (

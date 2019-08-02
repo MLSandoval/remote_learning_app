@@ -50,7 +50,7 @@ body {
   z-index:9999;
 }
 
-.modal1{
+.modal{
   display: inline-block;
 }
 
@@ -58,13 +58,13 @@ label {
   width:100%;
 }
 
-.modal2 {
+/* .modal {
   background-color: whitesmoke;
   height: 30vh;
   width: 30vw;
   display: inline-block;
   position: absolute;
-}
+} */
 
 .dropdown {
   overflow: scroll;

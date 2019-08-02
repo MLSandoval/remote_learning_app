@@ -1,6 +1,6 @@
 import React from 'react';
 import AddQuestionForm from './addQuestionForm.jsx';
-import BroadcastButton from './broadcastquestionbutton';
+import BroadcastModal from './broadcastquestionmodal';
 
 export default class Video extends React.Component{
     constructor(props){
@@ -8,19 +8,21 @@ export default class Video extends React.Component{
         this.state={
             view : ''
         }
-        this.renderBroadcastButton = this.renderBroadcastButton.bind(this);
+        this.renderBroadcastModal = this.renderBroadcastModal.bind(this);
         this.toggleAddQ =this.toggleAddQ.bind(this);
     }
-    
+
     toggleAddQ(){
-        if(this.state.view === true){
-            this.setState({view : false});
+        console.log('click');
+        if(this.state.view === ''){
+            this.setState({view : 'add'});
         } else {
-            this.setState({view: true});
+            this.setState({view: ''});
         }
     }
-        
-    renderBroadcastButton() {
+
+    renderBroadcastModal() {
+        console.log('click');
         if (this.state.view === '') {
             this.setState({ view: 'broadcast' })
         } else {
@@ -40,14 +42,22 @@ export default class Video extends React.Component{
                         scrolling="no"
                         allowFullScreen={true}>
                     </iframe>
-                    <button typ="button" className="button button4"                         
-                            onClick={this.toggleAddQ}>Add Q
+                    <button className="button button4"
+                            onClick={this.toggleAddQ}
+                            style={{
+                                'position': 'absolute',
+                                'top': 40 + '%',
+                                'right': 90 + '%',
+                                'backgroundColor': '#4CAF50',
+                                'display': 'inline-block',
+                                'fontSize': 16 + 'px'
+                            }}>Add Q
                     </button>
                     <AddQuestionForm view={this.state.view}
                                      toggle={this.toggleAddQ}
                     />
                     <button className="button button4"
-                        onClick={this.renderBroadcastButton}
+                        onClick={this.renderBroadcastModal}
                         style={{
                             'position': 'absolute',
                             'top': 50 + '%',
@@ -57,7 +67,7 @@ export default class Video extends React.Component{
                             'fontSize': 16 + 'px'
                         }}>Broadcast
                     </button>
-                    <BroadcastButton view={this.state.view} data={this.props.data} load={this.props.load} />
+                    <BroadcastModal view={this.state.view} data={this.props.data} load={this.props.load} />
                 </div>
             )
         } else {

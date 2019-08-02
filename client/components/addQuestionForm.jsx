@@ -21,19 +21,19 @@ export default class AddQuestionForm extends React.Component{
 
     storeQuestionData(){
         postData('./adminQuestionDummyData.json', {questions: this.state.questions})
-        .then(data => console.log(JSON.stringify(data))) 
+        .then(data => console.log(JSON.stringify(data)))
         .catch(error => console.error(error));
-      
+
       function postData(url = '', data = {}) {
-       
+
           return fetch(url, {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
               },
-              body: JSON.stringify(data), 
+              body: JSON.stringify(data),
           })
-          .then(response => response.json()); 
+          .then(response => response.json());
       }
     }
 
@@ -81,7 +81,7 @@ export default class AddQuestionForm extends React.Component{
         console.log("AnswerC: ", this.state.answerC);
         console.log("AnswerD: ", this.state.answerD);
 
-            if(this.props.view){    
+            if(this.props.view === 'add'){
                 return(
                     <div className="modal" tabIndex="-1" role="dialog">
                         <div className="modal-dialog modal-lg" role="document">
@@ -89,15 +89,15 @@ export default class AddQuestionForm extends React.Component{
                                 <div className="modal-header">
                                 <h5 className="modal-title">Question</h5>
                                 <button type="button" onClick={this.props.toggle} className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span> 
+                                    <span aria-hidden="true">&times;</span>
                                 </button>
                                 </div>
                                 <div className="modal-body">
                                     <form onSubmit={this.handleSubmit}>
                                         <div className="form-group">
-                                            <input type="text" 
-                                                   className="form-control form-control-lg" 
-                                                   placeholder="Enter Question" 
+                                            <input type="text"
+                                                   className="form-control form-control-lg"
+                                                   placeholder="Enter Question"
                                                    onChange={this.handleQuestionInput}
                                                    value={this.state.questions}
                                                 />
@@ -105,8 +105,8 @@ export default class AddQuestionForm extends React.Component{
                                             <div>
                                                 <label>A)
                                                     <input id="A"
-                                                           className="form-control form-control-sm" 
-                                                           type="text" 
+                                                           className="form-control form-control-sm"
+                                                           type="text"
                                                            name="name"
                                                            onChange={this.handleAnswerInput}
                                                            placeholder="Enter Answer"
@@ -116,9 +116,9 @@ export default class AddQuestionForm extends React.Component{
                                             </div>
                                             <div>
                                                 <label>B)
-                                                    <input id="B" 
-                                                           className="form-control form-control-sm"  
-                                                           type="text" 
+                                                    <input id="B"
+                                                           className="form-control form-control-sm"
+                                                           type="text"
                                                            name="name"
                                                            onChange={this.handleAnswerInput}
                                                            placeholder="Enter Answer"
@@ -129,8 +129,8 @@ export default class AddQuestionForm extends React.Component{
                                             <div>
                                                 <label>C)
                                                     <input id="C"
-                                                           className="form-control form-control-sm" 
-                                                           type="text" 
+                                                           className="form-control form-control-sm"
+                                                           type="text"
                                                            name="name"
                                                            onChange={this.handleAnswerInput}
                                                            placeholder="Enter Answer"
@@ -141,8 +141,8 @@ export default class AddQuestionForm extends React.Component{
                                             <div>
                                                 <label>D)
                                                     <input id="D"
-                                                           className="form-control form-control-sm" 
-                                                           type="text" 
+                                                           className="form-control form-control-sm"
+                                                           type="text"
                                                            name="name"
                                                            onChange={this.handleAnswerInput}
                                                            placeholder="Enter Answer"
@@ -160,7 +160,7 @@ export default class AddQuestionForm extends React.Component{
                             </div>
                         </div>
                     </div>
-                    )     
+                    )
             }else{
                 return(
                     <React.Fragment></React.Fragment>

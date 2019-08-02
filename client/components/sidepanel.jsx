@@ -46,7 +46,7 @@ export default class SidePanel extends React.Component{
     }
   }
 
- 
+
   render(){
     const { visible } = this.state;
     if (this.props.userType === 'student') {
@@ -63,22 +63,27 @@ export default class SidePanel extends React.Component{
           </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">
-            <div className="col-lg-12 nopadding" 
+            <div className="col-lg-12 nopadding"
                  style={{'height': 85 + 'vh', 'overflow':'scroll'}}>
                  {this.appendQuestionDivs()}</div>
-              <form className="col-lg-12 row" onSubmit={this.handleSubmit}>
-                <label>
-                  <input type="text"
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                    placeholder="Enter question" />
-                </label>
-                  <input type="submit"
-                         value="submit" 
-                         onClick={() => this.props.add(this.state.value)} />
-               </form>
-              </div>
-            </div>
+              <form className="col-lg-12 row container-fluid nopadding" onSubmit={this.handleSubmit}>
+                <div className="col-lg-10">
+                  <label>
+                    <input
+                      type="text"
+                      value={this.state.value}
+                      onChange={this.handleChange}
+                      placeholder="Enter question" />
+                  </label>
+                </div>
+                <input
+                  className="col-lg-2 nopadding"
+                  type="submit"
+                  value="submit"
+                  onClick={() => this.props.add(this.state.value)} />
+            </form>
+          </div>
+          </div>
         </div>
         )
     } else {
@@ -94,7 +99,7 @@ export default class SidePanel extends React.Component{
           </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">
-              <div className="col-lg-12 nopadding fullheight" 
+              <div className="col-lg-12 nopadding fullheight"
                    style={{ 'height': 85 + 'vh', 'overflow': 'scroll' }}>
                    {this.appendQuestionDivs()}</div>
             </div>
