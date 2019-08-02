@@ -1,21 +1,24 @@
 import React from 'react';
 import Video from './video.jsx';
 import SidePanel from './sidepanel.jsx';
+import addQuestionForm from './addQuestionForm';
 
 class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             userType: 'admin',
-            data: [ { id: '1',question: 'Why isn\'t this working?', author: 'Dwight' },
+            questionQueue: [ { id: '1',question: 'Why isn\'t this working?', author: 'Dwight' },
                     { id: '2', question: 'What does this button do?', author: 'Rex' },
-                    { id: '3', question: 'Do you feel lucky, punk?', author: 'Clint' }]
-            }
+                    { id: '3', question: 'Do you feel lucky, punk?', author: 'Clint' }],
+
+            broadcastQuestion:[]
+                }
+
         this.switchUser = this.switchUser.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
         this.deleteQuestion = this.deleteQuestion.bind(this);
         };
-
 
     switchUser(){
         if (this.state.userType === 'admin'){
@@ -27,16 +30,16 @@ class App extends React.Component{
 
     addQuestion(question) {
         let newQuestion = [{ 'id': '4', 'question': question, 'author': 'Guest' }];
-        this.setState({ data: this.state.data.concat(newQuestion)})
+        this.setState({ questionQueue: this.state.questionQueue.concat(newQuestion)})
 
          console.log('New Question', newQuestion);
       }
 
     deleteQuestion(id){
-        let questionArr = this.state.data.filter(questionObj =>{
+        let questionArr = this.state.questionQueue.filter(questionObj =>{
              return questionObj.id !== id;
         })
-           this.setState({data:questionArr})
+           this.setState({questionQueue:questionArr})
         }
 
     render(){
@@ -48,7 +51,7 @@ class App extends React.Component{
                     <SidePanel userType={this.state.userType}
                         add={this.addQuestion}
                         delete={this.deleteQuestion}
-                        data={this.state.data} />
+                        questionQueue={this.state.questionQueue} />
                 </div>
             </div>
         )

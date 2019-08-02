@@ -53,3 +53,7 @@ body {
 .modal{
   display: inline-block;
 }
+
+label {
+  width:100%;
+}

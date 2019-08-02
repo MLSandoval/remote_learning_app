@@ -37,7 +37,9 @@ export default class Video extends React.Component{
                     <button typ="button" className="button button4"                         
                             onClick={this.toggleAddQ}>Add Q
                     </button>
-                    <AddQuestionForm view={this.state.view}/>
+                    <AddQuestionForm view={this.state.view}
+                                     toggle={this.toggleAddQ}
+                    />
                     <button className="button button4"
                         style={{
                             'position': 'absolute',
