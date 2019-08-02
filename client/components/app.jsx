@@ -7,15 +7,39 @@ class App extends React.Component{
         super(props);
         this.state = {
             userType: 'admin',
-            data: [ { id: '1',question: 'Why isn\'t this working?', author: 'Dwight' },
-                    { id: '2', question: 'What does this button do?', author: 'Rex' },
-                    { id: '3', question: 'Do you feel lucky, punk?', author: 'Clint' }]
-            }
+            questionqueue: [
+                { id: '1', question: 'Why isn\'t this working?', author: 'Dwight' },
+                { id: '2', question: 'What does this button do?', author: 'Rex' },
+                { id: '3', question: 'Do you feel lucky, punk?', author: 'Clint' }
+            ],
+            broadcastquestions: []
+        }
         this.switchUser = this.switchUser.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
         this.deleteQuestion = this.deleteQuestion.bind(this);
+        this.fetchAdminQuestionData = this.fetchAdminQuestionData.bind(this);
 
         };
+
+
+    fetchAdminQuestionData() {
+        console.log('entered fetch')
+
+        fetch('./adminquestionsdummydata.json', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(function (response) {
+                return response.json();
+            }).then(function (myJson) {
+                myJson.map(x =>
+                    this.setState({broadcastquestions: this.state.broadcastquestions.concat([x])}));
+                    console.log('completed fetch');
+            })
+
+    }
 
 
     switchUser(){
@@ -29,8 +53,6 @@ class App extends React.Component{
     addQuestion(question) {
         let newQuestion = [{ 'id': '4', 'question': question, 'author': 'Guest' }];
         this.setState({ data: this.state.data.concat(newQuestion)})
-
-         console.log('New Question', newQuestion);
       }
 
     deleteQuestion(id){
@@ -41,16 +63,17 @@ class App extends React.Component{
         }
 
     render(){
-        console.log("this.State: ", this.state.userType);
+        this.fetchAdminQuestionData();
         return(
             <div id="app" className="container-fluid nopadding">
                 <div className="row" style={{'height':101 + 'vh'}}>
                     <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
-                    <Video userType={this.state.userType} />
+                    <Video userType={this.state.userType}
+                        data={this.state.broadcastquestions}/>
                     <SidePanel userType={this.state.userType}
                         add={this.addQuestion}
                         delete={this.deleteQuestion}
-                        data={this.state.data} />
+                        data={this.state.questionqueue} />
                 </div>
             </div>
 
