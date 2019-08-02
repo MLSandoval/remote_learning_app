@@ -115,38 +115,6 @@ server.post('/addQuestionQ', (req, res) => {
     })
 });
 
-
-// $query = 'SELECT  a.id,  a.name,  a.price,  a.shortDescription,  p.site,  p.longDescription,
-//     GROUP_CONCAT( i.imgUrl) AS imgUrl
-//     FROM products AS p 
-//     JOIN images AS  i 
-//       ON p.id = i.productId
-//     $whereClause     'WHERE p.id = $id';
-//     GROUP BY p.id';
-
-//grabs admin and their first question, but beyond that we need to get individual questions
-// SELECT a.id, a.channelName, a.twitchUser_id, q.question, q.id, q.questionOwner_id, ao.question_id,
-//     GROUP_CONCAT(ao.answer) AS answers
-// FROM adminUsers AS a
-// JOIN questionsAdmin AS q
-// ON a.id = q.questionOwner_id
-// JOIN answerOptions AS ao
-// ON q.id = ao.question_id
-// WHERE a.id = 2
-
-
-//
-// SELECT a.id, a.channelName, a.twitchUser_id, q.question, q.id, ao.question_id,
-//     GROUP_CONCAT(ao.answer) AS answers
-// FROM adminUsers AS a
-// JOIN questionsAdmin AS q
-// ON a.id = q.questionOwner_id
-// JOIN answerOptions AS ao
-// ON q.id = ao.question_id
-// WHERE a.id = 1 AND q.id = 2
-// GROUP BY q.id
-
-
 //single question query by question ID
 // SELECT a.id, a.channelName, a.twitchUser_id, q.question, q.questionOwner_id, ao.question_id,
 // GROUP_CONCAT(ao.answer) AS answers
@@ -172,8 +140,6 @@ server.post('/addQuestionQ', (req, res) => {
 // ON a.id = q.questionOwner_id
 
 // WHERE a.id = 1
-
-
 
 // server.get(`/getAllAdminQuestions/${id}`, function (request, response) {
 //     db.connect(function () {
@@ -202,57 +168,4 @@ server.post('/addQuestionQ', (req, res) => {
     // dummyData example to make endpoint work from local file instead of a database
     // const data = fs.readFileSync(__dirname + '/dummydata/getstudents.json');
     // response.send(data);
-// });
-
-
-// server.read('/readstudents', function(request, response){
-//     const mysql = fs.readFileSync(__dirname + '/')
-//     response.send(data);
-// });
-
-// server.put('/addstudent', function (request, response) {
-//     db.connect(function () {
-
-//         console.log('request.query:::::: ', request.body);
-
-//         var { name, course, grade } = request.body;
-//         // var query = 'INSERT INTO `grades` (`name`, `course`, `grade`) VALUES ('' +name+'', '+course+'', ''+grade+'')';
-//         var query = 'INSERT INTO `grades` SET `name` = '' + name + '', `course` =  '' + course + '', `grade` = '' + grade + ''';
-//         console.log(query);
-//         db.query(query, function (error, data, fields) {
-//             if (!error) {
-//                 response.send({
-//                     success: true,
-//                     data: data,
-
-//                 });
-//             } else {
-//                 console.log('error: ', error);
-//             }
-//         })
-//     });
-// });
-
-// server.delete('/deletestudent', function (request, response) {
-//     db.connect(function () {
-
-//         console.log('request.query', request.body);
-
-//         var id = request.body.student_id;
-//         var query = 'DELETE FROM `grades` WHERE `grades`.`id` = ' + id;
-
-//         console.log(query);
-
-//         db.query(query, function (error, data, fields) {
-//             if (!error) {
-//                 response.send({
-//                     success: true,
-//                     data: data,
-
-//                 });
-//             } else {
-//                 console.log('error: ', error);
-//             }
-//         })
-//     });
 // });
