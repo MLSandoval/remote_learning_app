@@ -22,23 +22,16 @@ class App extends React.Component{
         };
 
 
-    fetchAdminQuestionData() {
-        console.log('entered fetch')
-
-        fetch('./adminquestionsdummydata.json', {
+    async fetchAdminQuestionData() {
+        const response = await fetch('./adminquestionsdummydata.json', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
-            .then(function (response) {
-                return response.json();
-            }).then(function (myJson) {
-                myJson.map(x =>
-                    this.setState({broadcastquestions: this.state.broadcastquestions.concat([x])}));
-                    console.log('completed fetch');
-            })
-
+        });
+        const json = await response.json();
+        this.setState({broadcastquestions: json});
+        console.log(this.state.broadcastquestions);
     }
 
 
@@ -63,13 +56,13 @@ class App extends React.Component{
         }
 
     render(){
-        this.fetchAdminQuestionData();
         return(
             <div id="app" className="container-fluid nopadding">
                 <div className="row" style={{'height':101 + 'vh'}}>
                     <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
                     <Video userType={this.state.userType}
-                        data={this.state.broadcastquestions}/>
+                        data={this.state.broadcastquestions}
+                        load={this.fetchAdminQuestionData}/>
                     <SidePanel userType={this.state.userType}
                         add={this.addQuestion}
                         delete={this.deleteQuestion}

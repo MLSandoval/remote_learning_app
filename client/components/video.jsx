@@ -43,7 +43,7 @@ export default class Video extends React.Component{
                             'fontSize': 16 + 'px'
                         }}>Broadcast
                     </button>
-                    <BroadcastButton view={this.state.view} data={this.props.data} />
+                    <BroadcastButton view={this.state.view} data={this.props.data} load={this.props.load} />
                     <button className="button button4"
                         style={{
                             'position': 'absolute',

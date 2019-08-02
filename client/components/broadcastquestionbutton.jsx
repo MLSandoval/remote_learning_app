@@ -9,6 +9,10 @@ export default class BroadcastModal extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.load();
+  }
+
   appendQuestionDivs() {
     if (this.props.data) {
       var options = this.props.data.map(x =>
