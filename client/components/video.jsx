@@ -2,7 +2,7 @@ import React from 'react';
 import BroadcastButton from './broadcastquestionbutton';
 
 export default class Video extends React.Component{
-
+  
     constructor() {
         super();
         this.state = {
@@ -19,13 +19,27 @@ export default class Video extends React.Component{
         }
     }
 
+    fakeFetch(){
+        fetch('/test', {
+            method: 'get'
+        })
+        .then(res=> res.json())
+        .then(res=>{
+            console.log('fakeFetch Success, res: ', res);
+        })
+        .catch(err=>{
+            console.log('fakeFetch error: ', err);
+        })
+
+    }
 
     render(){
         if (this.props.userType === 'admin') {
             return (
                 <div id="video" className="col-lg-9">
-                    {/* <iframe
-                        src="https://player.twitch.tv/?channel=dallas&muted=true"
+
+                    <iframe
+                        src="https://player.twitch.tv/?channel=shroud&muted=true"
                         height="100%"
                         width="100%"
                         frameBorder="0"
@@ -59,8 +73,9 @@ export default class Video extends React.Component{
         } else {
             return (
                 <div id="video" className="col-lg-9">
-                    {/* <iframe
-                        src="https://player.twitch.tv/?channel=dallas&muted=true"
+
+                    <iframe
+                        src="https://player.twitch.tv/?channel=shroud&muted=true"
                         height="100%"
                         width="100%"
                         frameBorder="0"
