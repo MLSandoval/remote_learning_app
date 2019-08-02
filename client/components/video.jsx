@@ -2,6 +2,20 @@ import React from 'react';
 
 export default class Video extends React.Component{
 
+    fakeFetch(){
+        fetch('/test', {
+            method: 'get'
+        })
+        .then(res=> res.json())
+        .then(res=>{
+            console.log('fakeFetch Success, res: ', res);
+        })
+        .catch(err=>{
+            console.log('fakeFetch error: ', err);
+        })
+
+    }
+
     render(){
         console.log('video.jsx: ',this.props.userType)
         if (this.props.userType === 'admin') {
