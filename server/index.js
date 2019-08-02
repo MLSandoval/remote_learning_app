@@ -14,46 +14,85 @@ server.listen(3001, function () {
     console.log('Listened to port 3001 successfully.');
 });
 
+server.listen(3001, function () {
+    console.log('Listened to port 3001 successfully.');
+});
+
+server.get('/getStudentsQuestions', function (request, response) { // endpoint to get student Questions
+  console.log('/getStudentsQuestions started');
+  // console.log('what is db:', db);
+  db.connect(function () {
+    const query = `SELECT questionsQueue.id, questionsQueue.question, studentUsers.twitchUserName as author
+                   FROM questionsQueue
+                   JOIN studentUsers
+                   ON questionsQueue.studentUser_id = studentUsers.id`;
+    db.query(query, function (error, data) {
+      if (!error) {
+        response.send({
+          success: true,
+          data
+        });
+      }
+    });
+  });
+});
+
+server.get('/getAdminQuestions', function (request, response) {
+  db.connect(function () {
+    const query = `SELECT q.id, q.question, q.questionOwner_id as admin_id, GROUP_CONCAt(a.id) AS answer_ids, GROUP_CONCAT(a.answer) as answers
+                  FROM questionsAdmin as q
+                  JOIN answerOptions as a
+                  ON q.id = a.question_id
+                  WHERE q.questionOwner_id = 1
+                  GROUP BY q.id`;
+    db.query(query, function (error, data) {
+      if (!error) {
+        response.send({
+          success: true,
+          data
+        });
+      }
+    });
+  });
+});
+
+server.delete('/adminQuestion', function (request, response) {
+  db.connect(function () {
+    const adminQuestionID = parseInt(request.query.adminQuestionID);
+    const query = `DELETE answerOptions, questionsAdmin
+                   FROM answerOptions
+                   JOIN questionsAdmin ON questionsAdmin.id = answerOptions.question_id
+                   WHERE questionsAdmin.id = ${adminQuestionID}`
+
+
+    // let query = 'DELETE FROM ?? WHERE ?? = ?; DELETE FROM ?? WHERE ?? = ?;';
+    // let inserts = ['answerOptions', 'question_id', adminQuestionID, 
+    //                'questionsAdmin', 'id', adminQuestionID];
+    // // let query = 'DELETE FROM ?? WHERE ?? = ?';
+    // // let inserts = ['answerOptions', 'question_id', adminQuestionID, 
+    // //                'questionsAdmin', 'id', adminQuestionID];
+    // let sql = mysql.format(query, inserts);
+
+
+    // console.log('this is the formatted SQL:', sql);
+    
+    db.query(query, function (error, data) {
+      if (!error) {
+        const output = {
+          success: true,
+          data
+        };
+        response.send( output );
+      }
+    });
+  });
+
+
+
 
 server.get('/test', function (request, response) {
     console.log('this is your test endpoint. bro. sick.');
     response.send('this is your test endpoint. bro. sick: ' + Date.now());
-});
-
-
-
-//get all admin questions from specific admin
-server.get('/getAdminQuestion/:id', (req, res)=> {
-    if(req.params.id){
-
-        let whereClause = `WHERE a.id = ${req.params.id}`
-
-        let query = `
-            SELECT a.id, a.channelName, a.twitchUser_id, q.question, q.questionOwner_id, ao.question_id,
-                GROUP_CONCAT(ao.answer) AS answers
-                FROM adminUsers AS a
-                JOIN questionsAdmin AS q
-                    ON a.id = q.questionOwner_id
-                JOIN answerOptions AS ao 
-                    ON q.id = ao.question_id AND a.id = q.questionOwner_id
-                ${whereClause}
-            `;
-
-        db.query(query, function (error, data, fields) {
-            if (error) {
-                console.error(error)
-                process.exit(1)
-            }
-            res.send({
-                success: true,
-                data
-            })
-        });
-       
-
-    }else{
-        res.send('Please provide admin id.');
-    }  
 });
 
 server.post('/addAdminQuestion', (req,res)=>{
@@ -94,7 +133,6 @@ server.post('/addAdminQuestion', (req,res)=>{
     })
 });
 
-
 server.post('/addQuestionQ', (req, res) => {
 
     let { studentID, question } = req.body;
@@ -110,7 +148,6 @@ server.post('/addQuestionQ', (req, res) => {
             console.error(error);
             process.exit(1);
         }
-
         res.send('ok questionQ added!!')
     })
 });
@@ -140,32 +177,3 @@ server.post('/addQuestionQ', (req, res) => {
 // ON a.id = q.questionOwner_id
 
 // WHERE a.id = 1
-
-// server.get(`/getAllAdminQuestions/${id}`, function (request, response) {
-//     db.connect(function () {
-//         var query = 
-//             `SELECT a.id, a.channelName, a.twitchUser_id, q.question,  q.id, q.questionOwner_id, ao.answer, ao.question_id,
-//                 GROUP_CONCAT( ao.answer) AS answers
-//                 FROM adminUsers AS a
-//                 JOIN questionsAdmin AS q
-//                     ON a.id = q.questionOwner_id
-//                 JOIN answerOptions AS ao
-//                     ON q.id = ao.question_id
-//                 WHERE a.id = 1 
-//                 GROUP BY q.id`; //need to add variable inthe the where clause to account for the id being searched for
-        
-//         db.query(query, function (error, data, fields) {
-//             if (!error) {
-//                 response.send({
-//                     success: true,
-//                     data
-//                 })
-//             } else {
-//                 console.log('error: ', error);
-//             }
-//         })
-//     });
-    // dummyData example to make endpoint work from local file instead of a database
-    // const data = fs.readFileSync(__dirname + '/dummydata/getstudents.json');
-    // response.send(data);
-// });

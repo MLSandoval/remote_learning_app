@@ -21,6 +21,15 @@ class App extends React.Component{
 
         };
 
+        componentDidMount() {
+          fetch('/getStudentsQuestions')
+          .then(promiseObj => promiseObj.json())
+          .then(successObj => 
+            {
+            this.setState({ data: successObj.data })
+          }
+          );
+        }
 
     async fetchAdminQuestionData() {
         const response = await fetch('./adminquestionsdummydata.json', {
@@ -33,7 +42,6 @@ class App extends React.Component{
         this.setState({broadcastquestions: json});
         console.log(this.state.broadcastquestions);
     }
-
 
     switchUser(){
         if (this.state.userType === 'admin'){
