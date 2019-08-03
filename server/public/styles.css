@@ -47,7 +47,7 @@ body {
   background-color: #4CAF50;
   font-size: 16px;
   cursor: pointer;
-  z-index:9999;
+  z-index:9998;
 }
 
 .modal{
@@ -75,4 +75,25 @@ label {
   height: 50%;
   display: inline-block;
   position: relative;
+}
+
+.student {
+  z-index:-1;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.column {
+  float: left;
+  padding: 10px;
+  height: 50%;
+  width: 50%;
+  border: black solid 1px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width:100%;
 }

@@ -20,7 +20,7 @@ export default class AddQuestionForm extends React.Component{
 
 
     storeQuestionData(){
-        postData('./adminQuestionDummyData.json', {questions: this.state.questions})
+        postData('/addAdminQuestion', {questions: this.state.questions})
         .then(data => console.log(JSON.stringify(data)))
         .catch(error => console.error(error));
 
@@ -76,11 +76,6 @@ export default class AddQuestionForm extends React.Component{
     }
 
     render() {
-        console.log("AnswerA: ", this.state.answerA);
-        console.log("AnswerB: ", this.state.answerB);
-        console.log("AnswerC: ", this.state.answerC);
-        console.log("AnswerD: ", this.state.answerD);
-
             if(this.props.view === 'add'){
                 return(
                     <div className="modal" tabIndex="-1" role="dialog">

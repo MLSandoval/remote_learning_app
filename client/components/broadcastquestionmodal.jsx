@@ -19,17 +19,6 @@ export default class BroadcastModal extends React.Component {
         x = { 'value': x.id, 'label': x.question }
       );
     }
-
-      // var questionDivs = this.props.data.map(x =>
-      //   <div className="border" key={x.id}>
-      //     <div>{x.id}. {x.question}</div>
-      //     <div className="answerDiv border hide">{x.answers[0]}</div>
-      //     <div className="answerDiv border hide">{x.answers[1]}</div>
-      //     <div className="answerDiv border hide">{x.answers[2]}</div>
-      //     <div className="answerDiv border hide">{x.answers[3]}</div>
-      //   </div>
-      //   )
-
       return options;
 
   }
@@ -43,7 +32,7 @@ export default class BroadcastModal extends React.Component {
     }
     if (this.props.view === "broadcast"){
         return (
-          <div className="modal" tabIndex="-1" role="dialog">
+          <div className="modal student" tabIndex="-1" role="dialog">
             <div className="modal-dialog modal-lg" role="document">
               <div className="modal-content">
                 <div className="modal-header">
@@ -58,7 +47,7 @@ export default class BroadcastModal extends React.Component {
         )
     } else {
       return (
-        <div></div>
+        <React.Fragment/>
       )
     }
   }

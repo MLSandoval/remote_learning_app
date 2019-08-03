@@ -8,11 +8,7 @@ class App extends React.Component{
         super(props);
         this.state = {
             userType: 'admin',
-            questionQueue: [
-                { id: '1', question: 'Why isn\'t this working?', author: 'Dwight' },
-                { id: '2', question: 'What does this button do?', author: 'Rex' },
-                { id: '3', question: 'Do you feel lucky, punk?', author: 'Clint' }
-            ],
+            questionQueue: [],
             broadcastquestions: []
         }
         this.switchUser = this.switchUser.bind(this);
@@ -70,7 +66,7 @@ class App extends React.Component{
         return(
             <div id="app" className="container-fluid nopadding">
                 <div className="row" style={{'height':101 + 'vh'}}>
-                    <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
+                    <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 9999 }} onClick={this.switchUser}></button>
                     <Video userType={this.state.userType}
                         data={this.state.broadcastquestions}
                         load={this.fetchAdminQuestionData}/>

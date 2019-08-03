@@ -1,6 +1,7 @@
 import React from 'react';
 import AddQuestionForm from './addQuestionForm.jsx';
 import BroadcastModal from './broadcastquestionmodal';
+import StudentModal from './studentModal';
 
 export default class Video extends React.Component{
     constructor(props){
@@ -81,6 +82,7 @@ export default class Video extends React.Component{
                         scrolling="no"
                         allowFullScreen={true}>
                     </iframe> */}
+                    <StudentModal/>
                 </div>)
         }
     }
