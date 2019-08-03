@@ -5,7 +5,7 @@ export default class BroadcastModal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      options: []
+      options: null
     }
   }
 
@@ -18,14 +18,13 @@ export default class BroadcastModal extends React.Component {
     console.log('entered append method');
     console.log(this.props.data);
     if (this.props.data) {
-      this.setState(this.props.data.map(x =>
-        x = { 'value': x.id, 'label': x.question }
-      ));
+      let questionsList = 
+      this.setState();
     }
   }
 
   render() {
-    if (this.props.view === "broadcast"){
+    if (this.props.view === "broadcast" && this.props.options.length !== 0){
         return (
           <div className="modal" tabIndex="-1" role="dialog">
             <div className="modal-dialog modal-lg" role="document">
@@ -37,7 +36,7 @@ export default class BroadcastModal extends React.Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <Select style={{ 'width': 100 + '%' }} options={this.state.options} />
+                  <Select style={{ 'width': 100 + '%' }} options={this.props.options} />
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-danger" onClick={this.handleReset} >Delete</button>

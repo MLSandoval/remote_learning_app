@@ -54,7 +54,8 @@ export default class Video extends React.Component{
                             }}>Add Q
                     </button>
                     <AddQuestionForm view={this.state.view}
-                                     toggle={this.toggleAddQ}
+                        toggle={this.toggleAddQ}
+                        callback={this.props.passQuestionCallback}
                     />
                     <button className="button button4"
                         onClick={this.renderBroadcastModal}
@@ -68,7 +69,7 @@ export default class Video extends React.Component{
                         }}>Broadcast
                     </button>
                     <BroadcastModal view={this.state.view}
-                                    data={this.props.data}
+                                    options={this.props.data}
                                     toggle={this.toggleAddQ} />
                 </div>
             )

@@ -15,9 +15,13 @@ class App extends React.Component{
         this.deleteQuestion = this.deleteQuestion.bind(this);
         this.fetchAdminQuestionData = this.fetchAdminQuestionData.bind(this);
 
-        };
+    };
 
-    updateBroadcastQuestions(fkj) {
+    getInputAdminQ(question){
+        console.log('getInputAdminq called, question :::: ', question);
+    }
+
+    updateBroadcastQuestions() {
 
     }
 
@@ -61,8 +65,12 @@ class App extends React.Component{
             .then(promiseObj => promiseObj.json())
             .then(successObj => {
                 console.log('scuccesObj: ', successObj);
-                this.setState({ broadcastquestions: successObj.data })
-                this.appendQuestionDivs()
+                this.setState({
+                    broadcastquestions: successObj.data.map(element =>
+                        element = { 'value': element.id, 'label': element.question }
+                    )
+                });
+                console.log('this.state.broadcastQuestions:: : : :', this.state.broadcastquestions);
             }
             ).catch((error) => { console.error(error) });
 
@@ -96,7 +104,9 @@ class App extends React.Component{
                 <div className="row" style={{'height':101 + 'vh'}}>
                     <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
                     <Video userType={this.state.userType}
-                        data={this.state.broadcastquestions}/>
+                        data={this.state.broadcastquestions}
+                        passQuestionCallback={this.getInputAdminQ}    
+                    />
                     <SidePanel userType={this.state.userType}
                         add={this.addQuestion}
                         delete={this.deleteQuestion}
