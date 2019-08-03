@@ -59,7 +59,7 @@ export default class SidePanel extends React.Component{
 
 
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
-                <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat"/>
+                {/* <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat"/> */}
           </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">
@@ -95,7 +95,7 @@ export default class SidePanel extends React.Component{
           </div>
 
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
-            <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat"/>
+            {/* <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat"/> */}
           </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">

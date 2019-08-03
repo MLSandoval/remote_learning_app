@@ -34,14 +34,14 @@ export default class Video extends React.Component{
         if (this.props.userType === 'admin') {
             return (
                 <div id="video" className="col-lg-9">
-                    <iframe
+                    {/* <iframe
                         src="https://player.twitch.tv/?channel=shroud&muted=true"
                         height="100%"
                         width="100%"
                         frameBorder="0"
                         scrolling="no"
                         allowFullScreen={true}>
-                    </iframe>
+                    </iframe> */}
                     <button className="button button4"
                             onClick={this.toggleAddQ}
                             style={{
@@ -76,14 +76,14 @@ export default class Video extends React.Component{
         } else {
             return (
                 <div id="video" className="col-lg-9">
-                    <iframe
+                    {/* <iframe
                         src="https://player.twitch.tv/?channel=shroud&muted=true"
                         height="100%"
                         width="100%"
                         frameBorder="0"
                         scrolling="no"
                         allowFullScreen={true}>
-                    </iframe>
+                    </iframe> */}
                 </div>)
         }
     }
