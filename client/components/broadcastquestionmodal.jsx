@@ -7,6 +7,7 @@ export default class BroadcastModal extends React.Component {
     this.state = {
       options: null
     }
+    this.handleReset = this.handleReset.bind(this);
   }
 
   // componentDidMount() {
@@ -21,6 +22,10 @@ export default class BroadcastModal extends React.Component {
       let questionsList = 
       this.setState();
     }
+  }
+
+  handleReset(){
+    this.setState({options: null});
   }
 
   render() {
