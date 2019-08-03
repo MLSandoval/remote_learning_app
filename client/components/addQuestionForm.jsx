@@ -76,10 +76,6 @@ export default class AddQuestionForm extends React.Component{
     }
 
     render() {
-        console.log("AnswerA: ", this.state.answerA);
-        console.log("AnswerB: ", this.state.answerB);
-        console.log("AnswerC: ", this.state.answerC);
-        console.log("AnswerD: ", this.state.answerD);
 
             if(this.props.view === 'add'){
                 return(
@@ -154,8 +150,8 @@ export default class AddQuestionForm extends React.Component{
                                 </div>
                                 <div className="modal-footer">
                                     <button type="submit" className="btn btn-primary" data-dismiss="modal" value="Submit" onClick={this.storeQuestionData}>Add</button>
-                                    <button type="button" className="btn btn-secondary" onClick= {this.handleReset} >Cancel</button>
-                                    <button type="button" className="btn btn-danger">BroadCast</button>
+                                    <button type="button" className="btn btn-danger" onClick= {this.handleReset} >Cancel</button>
+                                    <button type="button" className="btn btn-warning">Broadcast</button>
                                 </div>
                             </div>
                         </div>

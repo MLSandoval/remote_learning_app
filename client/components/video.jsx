@@ -67,7 +67,9 @@ export default class Video extends React.Component{
                             'fontSize': 16 + 'px'
                         }}>Broadcast
                     </button>
-                    <BroadcastModal view={this.state.view} data={this.props.data} load={this.props.load} />
+                    <BroadcastModal view={this.state.view}
+                                    data={this.props.data}
+                                    toggle={this.toggleAddQ} />
                 </div>
             )
         } else {
@@ -80,7 +82,7 @@ export default class Video extends React.Component{
                         frameBorder="0"
                         scrolling="no"
                         allowFullScreen={true}>
-                    </iframe> */}
+                    </iframe>
                 </div>)
         }
     }

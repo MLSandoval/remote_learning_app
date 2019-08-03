@@ -2,45 +2,29 @@ import React from 'react';
 import Select from 'react-select';
 
 export default class BroadcastModal extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-
+      options: []
     }
   }
 
-  componentDidMount() {
-    this.props.load();
-  }
+  // componentDidMount() {
+  //   console.log('component mounted');
+  //   this.appendQuestionDivs();
+  // }
 
   appendQuestionDivs() {
+    console.log('entered append method');
+    console.log(this.props.data);
     if (this.props.data) {
-      var options = this.props.data.map(x =>
+      this.setState(this.props.data.map(x =>
         x = { 'value': x.id, 'label': x.question }
-      );
+      ));
     }
-
-      // var questionDivs = this.props.data.map(x =>
-      //   <div className="border" key={x.id}>
-      //     <div>{x.id}. {x.question}</div>
-      //     <div className="answerDiv border hide">{x.answers[0]}</div>
-      //     <div className="answerDiv border hide">{x.answers[1]}</div>
-      //     <div className="answerDiv border hide">{x.answers[2]}</div>
-      //     <div className="answerDiv border hide">{x.answers[3]}</div>
-      //   </div>
-      //   )
-
-      return options;
-
   }
 
   render() {
-    this.appendQuestionDivs();
-    if(this.props.data) {
-      var options = this.props.data.map(x =>
-        x = { 'value': x.id, 'label': x.question }
-      );
-    }
     if (this.props.view === "broadcast"){
         return (
           <div className="modal" tabIndex="-1" role="dialog">
@@ -48,9 +32,16 @@ export default class BroadcastModal extends React.Component {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Question</h5>
+                  <button type="button" onClick={this.props.toggle} className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
                 <div className="modal-body">
-                  <Select style={{ 'width': 100 + '%' }} options={options} />
+                  <Select style={{ 'width': 100 + '%' }} options={this.state.options} />
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-danger" onClick={this.handleReset} >Delete</button>
+                  <button type="button" className="btn btn-warning">Broadcast</button>
                 </div>
               </div>
             </div>

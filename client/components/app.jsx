@@ -1,18 +1,13 @@
 import React from 'react';
 import Video from './video.jsx';
 import SidePanel from './sidepanel.jsx';
-import addQuestionForm from './addQuestionForm';
 
 class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             userType: 'admin',
-            questionQueue: [
-                { id: '1', question: 'Why isn\'t this working?', author: 'Dwight' },
-                { id: '2', question: 'What does this button do?', author: 'Rex' },
-                { id: '3', question: 'Do you feel lucky, punk?', author: 'Clint' }
-            ],
+            questionQueue: [],
             broadcastquestions: []
         }
         this.switchUser = this.switchUser.bind(this);
@@ -22,26 +17,57 @@ class App extends React.Component{
 
         };
 
-        componentDidMount() {
-          fetch('/getStudentsQuestions')
-          .then(promiseObj => promiseObj.json())
-          .then(successObj => 
-            {
-            this.setState({ data: successObj.data })
-          }
-          );
-        }
+    updateBroadcastQuestions(fkj) {
 
-    async fetchAdminQuestionData() {
-        const response = await fetch('./adminquestionsdummydata.json', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
+    }
+
+    componentDidMount() {
+        console.log('component did mount');
+        this.fetchAdminQuestionData();
+        this.getStudentQuestions();
+    }
+
+    componentDidUpdate() {
+        console.log(this.state);
+    }
+
+    getStudentQuestions() {
+        fetch('http://localhost:3001/getStudentsQuestions', {
+            method: 'GET'
+        })
+        .then(promiseObj => promiseObj.json())
+        .then(successObj =>
+        {
+            console.log('scuccesObj: ',successObj);
+        this.setState({ questionQueue: successObj.data })
+        }
+        ).catch((error) => {console.error(error)});
+    }
+
+    fetchAdminQuestionData() {
+        console.log('click');
+        // const response = fetch('/getAdminQuestions', {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // });
+        // const json = response.json();
+        // this.setState({broadcastquestions: json});
+
+        fetch('http://localhost:3001/getAdminQuestions',{
+            method: 'GET'
+        })
+            .then(promiseObj => promiseObj.json())
+            .then(successObj => {
+                console.log('scuccesObj: ', successObj);
+                this.setState({ broadcastquestions: successObj.data })
+                this.appendQuestionDivs()
             }
-        });
-        const json = await response.json();
-        this.setState({broadcastquestions: json});
-        console.log(this.state.broadcastquestions);
+            ).catch((error) => { console.error(error) });
+
+
+        console.log('this.state post fetchAdminQuestionData: ',this.state);
     }
 
     switchUser(){
@@ -70,8 +96,7 @@ class App extends React.Component{
                 <div className="row" style={{'height':101 + 'vh'}}>
                     <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
                     <Video userType={this.state.userType}
-                        data={this.state.broadcastquestions}
-                        load={this.fetchAdminQuestionData}/>
+                        data={this.state.broadcastquestions}/>
                     <SidePanel userType={this.state.userType}
                         add={this.addQuestion}
                         delete={this.deleteQuestion}
