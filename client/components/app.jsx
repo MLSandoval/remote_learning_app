@@ -42,8 +42,7 @@ class App extends React.Component{
             }
         })
         .then(promiseObj => promiseObj.json())
-        .then(successObj =>
-        {
+        .then(successObj => {
             console.log('fetchStudentQuestions fetch call success: ', successObj);
         this.setState({ questionQueue: successObj.data })
         }
