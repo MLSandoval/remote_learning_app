@@ -5,7 +5,6 @@ export default class AddQuestionForm extends React.Component{
         super(props);
         this.state = {
             question: '',
-            adminQuestion: '',
             answerA : '',
             answerB: '',
             answerC : '',
@@ -17,12 +16,28 @@ export default class AddQuestionForm extends React.Component{
         this.handleAnswerInput = this.handleAnswerInput.bind(this);
     }
 
+    bundleQuestionData(){
+        let {answerA, answerB, answerC, answerD} = this.state;
+        let questionObj = {
+            question: this.state.question,
+            answers: [
+                answerA,
+                answerB,
+                answerC,
+                answerD
+            ]
+        };
+        console.log('bundle question:  :: : ', questionObj);
+        return questionObj;
+    }
 
     storeQuestionData(){
         this.setState({question:this.state.question});
-        let inputQuestion = this.state.question;
-        console.log("inputted q:::: ", inputQuestion);
-        this.props.callback(inputQuestion);
+        
+       
+        let questionObj = this.bundleQuestionData();
+        console.log('questionObj:::', questionObj);
+        this.props.callback(questionObj);
 
         postData('./adminQuestionDummyData.json', {questions: this.state.questions})
         .then(data => console.log(JSON.stringify(data)))
@@ -43,7 +58,9 @@ export default class AddQuestionForm extends React.Component{
 
 
     handleQuestionInput(event){
-        this.setState({ questions: event.target.value});
+        
+        this.setState({ question: event.target.value});
+        console.log('this.state.question')
     }
 
     handleAnswerInput(event){

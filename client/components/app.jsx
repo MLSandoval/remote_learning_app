@@ -17,8 +17,8 @@ class App extends React.Component{
 
     };
 
-    getInputAdminQ(question){
-        console.log('getInputAdminq called, question :::: ', question);
+    getInputAdminQ(questionObj){
+        console.log('getInputAdminq called, question :::: ', questionObj);
     }
 
     updateBroadcastQuestions() {
