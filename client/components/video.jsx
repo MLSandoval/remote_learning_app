@@ -46,6 +46,7 @@ export default class Video extends React.Component{
 
 
     handleQuestionSelect(event) {
+
         const answers = event.answers.split(",");
         console.log('answers: ',answers);
 
@@ -64,6 +65,7 @@ export default class Video extends React.Component{
 
 
     render(){
+        console.log("handleQuestion Select: ", this.state.answers)
         if (this.props.userType === 'admin') {
             return (
                 <div id="video" className="col-lg-9">
@@ -110,7 +112,9 @@ export default class Video extends React.Component{
             return (
                 <div id="video" className="col-lg-9">
                     <iframe src="https://player.twitch.tv/?channel=shroud&muted=true" height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}></iframe>
-                </div>)
+                <StudentModal questionList={this.props.data}/>
+                </div>
+                )
         }
     }
 }

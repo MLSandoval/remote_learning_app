@@ -58,7 +58,7 @@ class App extends React.Component{
             console.log(' getAdminQuestionData fetch successObj: ', successObj);
             this.setState({
                 broadcastquestions: successObj.data.map(element =>
-                    element = { 'value': element.id, 'label': element.question }
+                    element = { 'value': element.id, 'label': element.question, 'questionObj': element}
                 )
             });
             console.log('this.state.broadcastQuestions:: : : :', this.state.broadcastquestions);
@@ -90,6 +90,9 @@ class App extends React.Component{
         }
 
     render(){
+      
+        console.log("BroadCast QUestion: :::::::" , this.state.broadcastquestions);
+
         return(
             <div id="app" className="container-fluid nopadding">
                 <div className="row" style={{'height':101 + 'vh'}}>
