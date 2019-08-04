@@ -72,11 +72,13 @@ class App extends React.Component{
         }
     }
 
+    //add fetch call to post here
     addQuestion(question) {
         let newQuestion = [{ 'id': '4', 'question': question, 'author': 'Guest' }];
         this.setState({ questionQueue: this.state.questionQueue.concat(newQuestion)})
       }
 
+    //add fetch call to delete here
     deleteQuestion(id){
         let questionArr = this.state.questionQueue.filter(questionObj =>{
              return questionObj.id !== id;
