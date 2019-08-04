@@ -82,7 +82,7 @@ export default class AddQuestionForm extends React.Component{
                         <div className="modal-dialog modal-lg" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                <h5 className="modal-title">Question</h5>
+                                <h5 className="modal-title">New Question</h5>
                                 <button type="button" onClick={this.props.toggle} className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -148,9 +148,9 @@ export default class AddQuestionForm extends React.Component{
                                         </form>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="submit" className="btn btn-primary" data-dismiss="modal" value="Submit" onClick={this.storeQuestionData}>Add</button>
-                                    <button type="button" className="btn btn-danger" onClick= {this.handleReset} >Cancel</button>
-                                    <button type="button" className="btn btn-warning">Broadcast</button>
+                                    <button type="submit" className="btn btn-success" data-dismiss="modal" value="Submit" onClick={this.storeQuestionData}>Add</button>
+                                    <button type="button" className="btn btn-danger" onClick= {this.handleReset} >Reset</button>
+                                    <button type="button" className="btn btn-primary">Send</button>
                                 </div>
                             </div>
                         </div>

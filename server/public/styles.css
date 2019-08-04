@@ -20,10 +20,6 @@ i {
   padding: 0;
 }
 
-.margin {
-  margin: 3vw;
-}
-
 .fullheight {
   height: 90vh;
 }
@@ -44,10 +40,14 @@ body {
   position: absolute;
   top: 50%;
   right: 90%;
-  background-color: #4CAF50;
   font-size: 16px;
   cursor: pointer;
-  z-index:9999;
+  z-index:1051;
+}
+
+.middle {
+  left: 45%;
+  top: 25%;
 }
 
 .modal{
@@ -70,9 +70,26 @@ label {
   overflow: scroll;
 }
 
-.answerDiv {
+table {
+  width: 100%;
+}
+
+td {
+  width: 50%;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  border: 1px solid lightgrey;
+  padding: 5%;
+}
+
+/* .answerDiv {
   width: 50%;
   height: 50%;
   display: inline-block;
   position: relative;
-}
+  text-align: center;
+  line-height: 50%;
+  border: 1px solid lightgrey;
+} */

@@ -21,12 +21,7 @@ class App extends React.Component{
         console.log('getInputAdminq called, question :::: ', question);
     }
 
-    updateBroadcastQuestions() {
-
-    }
-
     componentDidMount() {
-        console.log('component did mount');
         this.fetchAdminQuestionData();
         this.getStudentQuestions();
     }
@@ -42,40 +37,31 @@ class App extends React.Component{
         .then(promiseObj => promiseObj.json())
         .then(successObj =>
         {
-            console.log('scuccesObj: ',successObj);
         this.setState({ questionQueue: successObj.data })
         }
         ).catch((error) => {console.error(error)});
     }
 
     fetchAdminQuestionData() {
-        console.log('click');
-        // const response = fetch('/getAdminQuestions', {
-        //     method: 'GET',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // });
-        // const json = response.json();
-        // this.setState({broadcastquestions: json});
 
         fetch('http://localhost:3001/getAdminQuestions',{
             method: 'GET'
         })
             .then(promiseObj => promiseObj.json())
             .then(successObj => {
-                console.log('scuccesObj: ', successObj);
                 this.setState({
                     broadcastquestions: successObj.data.map(element =>
-                        element = { 'value': element.id, 'label': element.question }
+                        element = { 'value': element.id,
+                                    'label': element.question,
+                                    'admin_id': element.admin_id,
+                                    'answer_ids': element.answer_ids,
+                                    'answers': element.answers }
                     )
                 });
-                console.log('this.state.broadcastQuestions:: : : :', this.state.broadcastquestions);
             }
             ).catch((error) => { console.error(error) });
 
 
-        console.log('this.state post fetchAdminQuestionData: ',this.state);
     }
 
     switchUser(){
@@ -105,7 +91,7 @@ class App extends React.Component{
                     <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
                     <Video userType={this.state.userType}
                         data={this.state.broadcastquestions}
-                        passQuestionCallback={this.getInputAdminQ}    
+                        passQuestionCallback={this.getInputAdminQ}
                     />
                     <SidePanel userType={this.state.userType}
                         add={this.addQuestion}
