@@ -146,8 +146,4 @@ server.post('/addQuestionQ', (req, res) => {
 // JOIN questionsAdmin AS q
 // ON a.id = q.questionOwner_id
 
-<<<<<<< HEAD
 // WHERE a.id = 1
-=======
-// WHERE a.id = 1;
->>>>>>> dev
