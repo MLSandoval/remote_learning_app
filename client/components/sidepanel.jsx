@@ -53,8 +53,12 @@ export default class SidePanel extends React.Component{
       return (
         <div id="sidepanel" className="col-lg-3 container-fluid nopadding" style={{'height':100 + 'vh'}}>
             <div className="row nopadding" style={{ 'height': 8 + 'vh' }}>
-              <div id="chat_button" className="col-lg-6 clickable border" onClick={() => this.setView('chat')}>Chat</div>
-              <div id="queue_button" className="col-lg-6 clickable border" onClick={() => this.setView('queue')}>Queue</div>
+              <div id="chat_button" className="col-lg-6 clickable border" onClick={() => this.setView('chat')}>
+                <i className="fa fa-comment-o middle" aria-hidden="true"></i>
+              </div>
+              <div id="queue_button" className="col-lg-6 nopadding clickable border" onClick={() => this.setView('queue')}>
+                <i className="fa fa-question middle" aria-hidden="true"></i>
+              </div>
             </div>
 
 
@@ -63,35 +67,39 @@ export default class SidePanel extends React.Component{
           </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">
-            <div className="col-lg-12 nopadding"
-                 style={{'height': 85 + 'vh', 'overflow':'scroll'}}>
-                 {this.appendQuestionDivs()}</div>
-              <form className="col-lg-12 row container-fluid nopadding" onSubmit={this.handleSubmit}>
-                <div className="col-lg-10">
-                  <label>
-                    <input
-                      type="text"
-                      value={this.state.value}
-                      onChange={this.handleChange}
-                      placeholder="Enter question" />
-                  </label>
-                </div>
-                <input
-                  className="col-lg-2 nopadding"
-                  type="submit"
-                  value="submit"
-                  onClick={() => this.props.add(this.state.value)} />
-            </form>
+              <div className="col-lg-12 nopadding"
+                  style={{'height': 85 + 'vh', 'overflow':'scroll'}}>
+                  {this.appendQuestionDivs()}</div>
+                <form className="col-lg-12 row container-fluid nopadding" onSubmit={this.handleSubmit}>
+                  <div className="col-lg-10">
+                    <label>
+                      <input
+                        type="text"
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                        placeholder="Enter question" />
+                    </label>
+                  </div>
+                  <input
+                    className="col-lg-2 nopadding"
+                    type="submit"
+                    value="submit"
+                    onClick={() => this.props.add(this.state.value)} />
+                </form>
+              </div>
+            </div>
           </div>
-          </div>
-        </div>
         )
     } else {
       return (
         <div id="sidepanel" className="col-lg-3 container-fluid nopadding" style={{ 'height': 100 + 'vh' }}>
           <div className="row nopadding" style={{ 'height': 8 + 'vh' }}>
-            <div id="chat_button" className="col-lg-6 clickable border" onClick={() => this.setView('chat')}>Chat</div>
-            <div id="queue_button" className="col-lg-6 clickable border" onClick={() => this.setView('queue')}>Queue</div>
+            <div id="chat_button" className="col-lg-6 nopadding clickable border" onClick={() => this.setView('chat')}>
+              <i className="fa fa-comment-o middle" aria-hidden="true"></i>
+            </div>
+            <div id="queue_button" className="col-lg-6 clickable border" onClick={() => this.setView('queue')}>
+              <i class="fa fa-question middle" aria-hidden="true"></i>
+            </div>
           </div>
 
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
