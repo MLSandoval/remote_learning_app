@@ -78,7 +78,7 @@ export default class AddQuestionForm extends React.Component{
 
             if(this.props.view === 'add'){
                 return(
-                    <div className="modal" tabIndex="-1" role="dialog">
+                    <div className="modal" tabIndex="-1" role="dialog" style={{'zIndex': 420}}>
                         <div className="modal-dialog modal-lg" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">
