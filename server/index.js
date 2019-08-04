@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const server = express();
 const path = require('path');
@@ -6,6 +7,7 @@ const creds = require('./mysql_credentials.js');
 const db = mysql.createConnection(creds);
 const pubDirectory = path.join(__dirname, '/public');
 
+server.use(cors());
 server.use(express.urlencoded({ extended: false }));
 server.use(express.static(pubDirectory));
 server.use(express.json());
@@ -14,7 +16,7 @@ server.listen(3001, function () {
 });
 
 // endpoint to get student questions
-server.get('/getStudentsQuestions', function (request, response) { 
+server.get('/getStudentsQuestions', function (request, response) {
   db.connect(function () {
     const query = `SELECT questionsQueue.id, questionsQueue.question, studentUsers.twitchUserName as author
                    FROM questionsQueue
@@ -96,9 +98,9 @@ server.post('/addAdminQuestion', (req,res)=>{
             if (error) {
                 console.error(error);
                 process.exit(1);
-            }   
+            }
             res.send('ok bowsssuuu adminQ added!')
-        }); 
+        });
     })
 });
 

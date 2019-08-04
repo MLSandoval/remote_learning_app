@@ -8,11 +8,9 @@ export default class StudentModal extends React.Component{
         }   
 }
 
-receiveQuestion(){
-
-}
 
 render(){
+    console.log("question obj in studentModal:::::::::::::: : ", this.props.questionList)
     return(
         <React.Fragment>
             <div className="modal" tabindex="-1">

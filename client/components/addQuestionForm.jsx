@@ -4,23 +4,42 @@ export default class AddQuestionForm extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            questions: '',
-            adminQuestions: [],
+            question: '',
             answerA : '',
             answerB: '',
             answerC : '',
             answerD: ''
         }
         this.handleQuestionInput = this.handleQuestionInput.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleReset = this.handleReset.bind(this);
         this.storeQuestionData = this.storeQuestionData.bind(this);
         this.handleAnswerInput = this.handleAnswerInput.bind(this);
     }
 
+    bundleQuestionData(){
+        let {answerA, answerB, answerC, answerD} = this.state;
+        let questionObj = {
+            question: this.state.question,
+            answers: [
+                answerA,
+                answerB,
+                answerC,
+                answerD
+            ]
+        };
+        console.log('bundle question:  :: : ', questionObj);
+        return questionObj;
+    }
 
     storeQuestionData(){
-        postData('/addAdminQuestion', {questions: this.state.questions})
+        this.setState({question:this.state.question});
+        
+       
+        let questionObj = this.bundleQuestionData();
+        console.log('questionObj:::', questionObj);
+        this.props.callback(questionObj);
+
+        postData('./adminQuestionDummyData.json', {questions: this.state.questions})
         .then(data => console.log(JSON.stringify(data)))
         .catch(error => console.error(error));
 
@@ -39,7 +58,9 @@ export default class AddQuestionForm extends React.Component{
 
 
     handleQuestionInput(event){
-        this.setState({ questions: event.target.value});
+        
+        this.setState({ question: event.target.value});
+        console.log('this.state.question')
     }
 
     handleAnswerInput(event){
@@ -61,11 +82,6 @@ export default class AddQuestionForm extends React.Component{
         }
     }
 
-    handleSubmit(event){
-        event.preventDefault();
-        let x = this.setState({adminQuestions:this.state.questions})
-        console.log("stored admin question ", x)
-    }
     handleReset(){
     this.setState({ questions : '',
                     answerA : '',
@@ -88,7 +104,7 @@ export default class AddQuestionForm extends React.Component{
                                 </button>
                                 </div>
                                 <div className="modal-body">
-                                    <form onSubmit={this.handleSubmit}>
+                                    <form>
                                         <div className="form-group">
                                             <input type="text"
                                                    className="form-control form-control-lg"
@@ -98,7 +114,7 @@ export default class AddQuestionForm extends React.Component{
                                                 />
                                         </div>
                                             <div>
-                                                <label>A)
+                                                <label>A:
                                                     <input id="A"
                                                            className="form-control form-control-sm"
                                                            type="text"
@@ -110,7 +126,7 @@ export default class AddQuestionForm extends React.Component{
                                                 </label>
                                             </div>
                                             <div>
-                                                <label>B)
+                                                <label>B:
                                                     <input id="B"
                                                            className="form-control form-control-sm"
                                                            type="text"
@@ -122,7 +138,7 @@ export default class AddQuestionForm extends React.Component{
                                                 </label>
                                             </div>
                                             <div>
-                                                <label>C)
+                                                <label>C:
                                                     <input id="C"
                                                            className="form-control form-control-sm"
                                                            type="text"
@@ -134,7 +150,7 @@ export default class AddQuestionForm extends React.Component{
                                                 </label>
                                             </div>
                                             <div>
-                                                <label>D)
+                                                <label>D:
                                                     <input id="D"
                                                            className="form-control form-control-sm"
                                                            type="text"
@@ -149,8 +165,8 @@ export default class AddQuestionForm extends React.Component{
                                 </div>
                                 <div className="modal-footer">
                                     <button type="submit" className="btn btn-primary" data-dismiss="modal" value="Submit" onClick={this.storeQuestionData}>Add</button>
-                                    <button type="button" className="btn btn-secondary" onClick= {this.handleReset} >Cancel</button>
-                                    <button type="button" className="btn btn-danger">BroadCast</button>
+                                    <button type="button" className="btn btn-danger" onClick= {this.handleReset} >Cancel</button>
+                                    <button type="button" className="btn btn-warning">Broadcast</button>
                                 </div>
                             </div>
                         </div>

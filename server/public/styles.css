@@ -97,3 +97,6 @@ label {
   bottom: 0;
   width:100%;
 }
+.modal-lg{
+  max-width: 74.5%;
+}

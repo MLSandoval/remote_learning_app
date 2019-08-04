@@ -55,7 +55,8 @@ export default class Video extends React.Component{
                             }}>Add Q
                     </button>
                     <AddQuestionForm view={this.state.view}
-                                     toggle={this.toggleAddQ}
+                        toggle={this.toggleAddQ}
+                        callback={this.props.passQuestionCallback}
                     />
                     <button className="button button4"
                         onClick={this.renderBroadcastModal}
@@ -65,10 +66,12 @@ export default class Video extends React.Component{
                             'right': 90 + '%',
                             'backgroundColor': '#4CAF50',
                             'display': 'inline-block',
-                            'fontSize': 16 + 'px'
+                            'fontSize': 16 + 'px',
                         }}>Broadcast
                     </button>
-                    <BroadcastModal view={this.state.view} data={this.props.data} load={this.props.load} />
+                    <BroadcastModal view={this.state.view}
+                                    options={this.props.data}
+                                    toggle={this.toggleAddQ} />
                 </div>
             )
         } else {
@@ -82,7 +85,7 @@ export default class Video extends React.Component{
                         scrolling="no"
                         allowFullScreen={true}>
                     </iframe> */}
-                    <StudentModal/>
+                    <StudentModal questionList={this.props.questionQueue}/>
                 </div>)
         }
     }
