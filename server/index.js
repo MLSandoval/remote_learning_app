@@ -1,7 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const server = express();
-const path = require('path')
+const path = require('path');
 const mysql = require('mysql');
 const creds = require('./mysql_credentials.js');
 const db = mysql.createConnection(creds);
@@ -146,4 +146,8 @@ server.post('/addQuestionQ', (req, res) => {
 // JOIN questionsAdmin AS q
 // ON a.id = q.questionOwner_id
 
+<<<<<<< HEAD
 // WHERE a.id = 1
+=======
+// WHERE a.id = 1;
+>>>>>>> dev
