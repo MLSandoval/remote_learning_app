@@ -5,8 +5,16 @@ import Answers from './savedquestionanswers';
 export default class BroadcastModal extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      options: null
+    }
+    this.handleReset = this.handleReset.bind(this);
   }
 
+
+  handleReset(){
+    this.setState({options: null});
+  }
 
   render() {
     if (this.props.view === "saved" && this.props.options.length !== 0){

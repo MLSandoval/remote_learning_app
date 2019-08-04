@@ -17,51 +17,60 @@ class App extends React.Component{
 
     };
 
-    getInputAdminQ(question){
-        console.log('getInputAdminq called, question :::: ', question);
+
+    getInputAdminQ(questionObj){
+        console.log('getInputAdminQ in app called, question :::: ', questionObj);
     }
 
     componentDidMount() {
+        console.log('componentDidMount called.');
         this.fetchAdminQuestionData();
-        this.getStudentQuestions();
+        this.fetchStudentQuestions();
     }
 
     componentDidUpdate() {
-        console.log(this.state);
+        console.log('componentDidUpdate called. this.state: ',this.state);
     }
 
-    getStudentQuestions() {
+    fetchStudentQuestions() {
+
+        console.log('fetchSTudentQuestions in app called');
+        
         fetch('http://localhost:3001/getStudentsQuestions', {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
         .then(promiseObj => promiseObj.json())
-        .then(successObj =>
-        {
+        .then(successObj => {
+            console.log('fetchStudentQuestions fetch call success: ', successObj);
         this.setState({ questionQueue: successObj.data })
         }
-        ).catch((error) => {console.error(error)});
+        ).catch((error) => {console.error('getStudentQuestions fetch error:  ', error)});
     }
 
     fetchAdminQuestionData() {
+        console.log('fetch admin question data called');
 
         fetch('http://localhost:3001/getAdminQuestions',{
-            method: 'GET'
-        })
-            .then(promiseObj => promiseObj.json())
-            .then(successObj => {
-                this.setState({
-                    broadcastquestions: successObj.data.map(element =>
-                        element = { 'value': element.id,
-                                    'label': element.question,
-                                    'admin_id': element.admin_id,
-                                    'answer_ids': element.answer_ids,
-                                    'answers': element.answers }
-                    )
-                });
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
             }
-            ).catch((error) => { console.error(error) });
-
-
+        })
+        .then(promiseObj => promiseObj.json())
+        .then(successObj => {
+            console.log(' getAdminQuestionData fetch successObj: ', successObj);
+            this.setState({
+                broadcastquestions: successObj.data.map(element =>
+                    element = { 'value': element.id, 'label': element.question }
+                )
+            });
+            console.log('this.state.broadcastQuestions:: : : :', this.state.broadcastquestions);
+            console.log('this.state post fetchAdminQuestionData: ', this.state);
+        })
+        .catch((error) => { console.error('admin question fetch error: ', error) });
     }
 
     switchUser(){
@@ -104,5 +113,4 @@ class App extends React.Component{
         )
     }
 }
-
 export default App;
