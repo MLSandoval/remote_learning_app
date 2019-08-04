@@ -18,7 +18,9 @@ export default class StudentModal extends React.Component{
 
 
     compareQuestionId(){
-        
+        this.props.questionList.filter(function(){
+
+        })
     }
 
     render(){

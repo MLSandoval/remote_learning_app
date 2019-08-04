@@ -24,7 +24,7 @@ export default class Video extends React.Component{
     }
 
     toggleModal(event){
-        console.log('event: ',event.target.id);
+        console.log('event: ',event.target);
         if(this.state.view === ''){
             if(event.target.id === 'addButton'){
                 this.setState({ view: 'add' });
@@ -70,37 +70,19 @@ export default class Video extends React.Component{
             return (
                 <div id="video" className="col-lg-9">
                     <iframe src="https://player.twitch.tv/?channel=shroud&muted=true" height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}> </iframe>
-                    <button
-                            id="addButton"
-                            className="button button4"
-                            onClick={this.toggleModal}
-                            style={{
-                                'position': 'absolute',
-                                'top': 40 + '%',
-                                'right': 90 + '%',
-                                'backgroundColor': '#4CAF50',
-                                'display': 'inline-block',
-                                'fontSize': 16 + 'px'
-                            }}>Add Q
-                    </button>
+                    <div className="front btn-group btn-group-vertical" style={{'bottom':70 + 'vh', "height":150 + 'px'}}>
+                        <button id="addButton" type="button" className="front btn btn-primary" onClick={this.toggleModal}>
+                            <i id="addButton" className="front admin-button fa fa-plus-square-o"></i>
+                        </button>
+                        <button id="savedButton" type="button" className="front btn btn-primary" onClick={this.toggleModal}>
+                            <i id="savedButton" className="front admin-button fa fa-list-ul"></i>
+                        </button>
+                    </div>
                     <AddQuestionForm
                         view={this.state.view}
                         toggle={this.toggleModal}
                         callback={this.props.passQuestionCallback}
                     />
-                    <button
-                        id="savedButton"
-                        className="button button4"
-                        onClick={this.toggleModal}
-                        style={{
-                            'position': 'absolute',
-                            'top': 50 + '%',
-                            'right': 90 + '%',
-                            'backgroundColor': '#4CAF50',
-                            'display': 'inline-block',
-                            'fontSize': 16 + 'px',
-                        }}>Broadcast
-                    </button>
                     <BroadcastModal view={this.state.view}
                                     options={this.props.data}
                                     toggle={this.toggleModal}

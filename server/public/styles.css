@@ -46,12 +46,25 @@ body {
 }
 
 .middle {
-  left: 45%;
-  top: 25%;
+  left: 5%;
+  top: 40%;
 }
 
 .modal{
   display: inline-block;
+  z-index: 420;
+}
+
+.chat-button{
+  background-color: deepskyblue;
+  cursor: pointer;
+  border: 1 px solid black;
+}
+
+.queue-button{
+  background-color: darkorange;
+  cursor: pointer;
+  border: 1 px solid black;
 }
 
 label {
@@ -87,6 +100,21 @@ td {
 .column {
   float: left;
   padding: 10px;
+}
+
+.front {
+  z-index: 9999999999;
+}
+
+.admin-button {
+  position: 'absolute';
+  background-color: '#4CAF50';
+  display: 'inline-block';
+  font-size: 16 + 'px';
+}
+
+/* .answerDiv {
+  width: 50%;
   height: 50%;
   width: 50%;
   border: black solid 1px;

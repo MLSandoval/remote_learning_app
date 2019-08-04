@@ -6,14 +6,16 @@ export default class Answers extends React.Component {
       console.log('answer props: ',this.props)
       return (
         <table>
-          <tr>
-            <td className="answerDiv">{this.props.data.answerA[0]}</td>
-            <td className="answerDiv">{this.props.data.answerB[0]}</td>
-          </tr>
-          <tr>
-            <td className="answerDiv">{this.props.data.answerC[0]}</td>
-            <td className="answerDiv">{this.props.data.answerD[0]}</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td className="answerDiv">{this.props.data.answerA[0]}</td>
+              <td className="answerDiv">{this.props.data.answerB[0]}</td>
+            </tr>
+            <tr>
+              <td className="answerDiv">{this.props.data.answerC[0]}</td>
+              <td className="answerDiv">{this.props.data.answerD[0]}</td>
+            </tr>
+          </tbody>
         </table>
     )
     } else {

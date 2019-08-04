@@ -1,7 +1,6 @@
 import React from 'react';
 import Video from './video.jsx';
 import SidePanel from './sidepanel.jsx';
-
 class App extends React.Component{
     constructor(props){
         super(props);
@@ -14,59 +13,46 @@ class App extends React.Component{
         this.addQuestion = this.addQuestion.bind(this);
         this.deleteQuestion = this.deleteQuestion.bind(this);
         this.fetchAdminQuestionData = this.fetchAdminQuestionData.bind(this);
-
     };
-
-
-    getInputAdminQ(questionObj){
-        console.log('getInputAdminQ in app called, question :::: ', questionObj);
+    getInputAdminQ(question){
+        console.log('getInputAdminq called, question :::: ', question);
     }
-
     componentDidMount() {
-        console.log('componentDidMount called.');
         this.fetchAdminQuestionData();
-        this.fetchStudentQuestions();
+        this.getStudentQuestions();
     }
-
     componentDidUpdate() {
-        console.log('componentDidUpdate called. this.state: ',this.state);
+        console.log(this.state);
     }
-
-    fetchStudentQuestions() {
-
-        console.log('fetchSTudentQuestions in app called');
-        
+    getStudentQuestions() {
         fetch('http://localhost:3001/getStudentsQuestions', {
             method: 'GET'
         })
         .then(promiseObj => promiseObj.json())
-        .then(successObj => {
-            console.log('fetchStudentQuestions fetch call success: ', successObj);
+        .then(successObj =>
+        {
         this.setState({ questionQueue: successObj.data })
         }
-        ).catch((error) => {console.error('getStudentQuestions fetch error:  ', error)});
+        ).catch((error) => {console.error(error)});
     }
-
     fetchAdminQuestionData() {
-        console.log('fetch admin question data called');
-
         fetch('http://localhost:3001/getAdminQuestions',{
             method: 'GET'
         })
-        .then(promiseObj => promiseObj.json())
-        .then(successObj => {
-            console.log(' getAdminQuestionData fetch successObj: ', successObj);
-            this.setState({
-                broadcastquestions: successObj.data.map(element =>
-                    element = { 'value': element.id, 'label': element.question, 'questionObj': element}
-                )
-            });
-            console.log('this.state.broadcastQuestions:: : : :', this.state.broadcastquestions);
-            console.log('this.state post fetchAdminQuestionData: ', this.state);
-        })
-        .catch((error) => { console.error('admin question fetch error: ', error) });
+            .then(promiseObj => promiseObj.json())
+            .then(successObj => {
+                this.setState({
+                    broadcastquestions: successObj.data.map(element =>
+                        element = { 'value': element.id,
+                                    'label': element.question,
+                                    'admin_id': element.admin_id,
+                                    'answer_ids': element.answer_ids,
+                                    'answers': element.answers }
+                    )
+                });
+            }
+            ).catch((error) => { console.error(error) });
     }
-
     switchUser(){
         if (this.state.userType === 'admin'){
             this.setState({ userType: 'student' })
@@ -74,33 +60,24 @@ class App extends React.Component{
             this.setState({ userType: 'admin' })
         }
     }
-
-    //add fetch call to post here
     addQuestion(question) {
         let newQuestion = [{ 'id': '4', 'question': question, 'author': 'Guest' }];
         this.setState({ questionQueue: this.state.questionQueue.concat(newQuestion)})
       }
-
-    //add fetch call to delete here
     deleteQuestion(id){
         let questionArr = this.state.questionQueue.filter(questionObj =>{
              return questionObj.id !== id;
         })
            this.setState({questionQueue:questionArr})
         }
-
     render(){
-      
-        console.log("BroadCast QUestion: :::::::" , this.state.broadcastquestions);
-
         return(
             <div id="app" className="container-fluid nopadding">
                 <div className="row" style={{'height':101 + 'vh'}}>
-                    <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 9999 }} onClick={this.switchUser}></button>
+                    <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
                     <Video userType={this.state.userType}
                         data={this.state.broadcastquestions}
                         passQuestionCallback={this.getInputAdminQ}
-                        questionQueue={this.state.questionQueue}    
                     />
                     <SidePanel userType={this.state.userType}
                         add={this.addQuestion}

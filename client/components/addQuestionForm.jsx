@@ -90,26 +90,26 @@ export default class AddQuestionForm extends React.Component{
     }
 
     render() {
-        if(this.props.view === 'add'){
-            return(
-                <div className="modal" tabIndex="-1" role="dialog">
-                    <div className="modal-dialog modal-lg" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                            <h5 className="modal-title">New Question</h5>
-                            <button type="button" onClick={this.props.toggle} className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            </div>
-                            <div className="modal-body">
-                                <form>
-                                    <div className="form-group">
-                                        <input type="text"
-                                                className="form-control form-control-lg"
-                                                placeholder="Enter Question"
-                                                onChange={this.handleQuestionInput}
-                                                value={this.state.questions}
-                                            />
+if(this.props.view === 'add'){
+    return(
+        <div className="modal" tabIndex="-1" role="dialog" style={{'zIndex': 420}}>
+            <div className="modal-dialog modal-lg" role="document">
+                <div className="modal-content">
+                    <div className="modal-header">
+                    <h5 className="modal-title">New Question</h5>
+                    <button type="button" onClick={this.props.toggle} className="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div className="modal-body">
+                        <form>
+                            <div className="form-group">
+                                <input type="text"
+                                       className="form-control form-control-lg"
+                                       placeholder="Enter Question"
+                                       onChange={this.handleQuestionInput}
+                                       value={this.state.questions}
+                                    />
                                     </div>
                                         <div>
                                             <label>A:
@@ -134,6 +134,7 @@ export default class AddQuestionForm extends React.Component{
                                                         value={this.state.answerB}
                                                         />
                                             </label>
+
                                         </div>
                                         <div>
                                             <label>C:
