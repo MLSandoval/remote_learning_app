@@ -17,6 +17,7 @@ class App extends React.Component{
 
     };
 
+
     getInputAdminQ(questionObj){
         console.log('getInputAdminQ in app called, question :::: ', questionObj);
     }
@@ -101,7 +102,7 @@ class App extends React.Component{
                     <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
                     <Video userType={this.state.userType}
                         data={this.state.broadcastquestions}
-                        passQuestionCallback={this.getInputAdminQ}    
+                        passQuestionCallback={this.getInputAdminQ}
                     />
                     <SidePanel userType={this.state.userType}
                         add={this.addQuestion}
