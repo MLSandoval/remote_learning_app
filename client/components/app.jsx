@@ -5,7 +5,8 @@ class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            adminID: null,
+            adminID: 1,
+            adminTwitchID: null,
             adminTwitchUsername: '',
             userType: 'admin',
             questionQueue: [],
@@ -15,7 +16,17 @@ class App extends React.Component{
         this.addQuestion = this.addQuestion.bind(this);
         this.deleteQuestion = this.deleteQuestion.bind(this);
         this.fetchAdminQuestionData = this.fetchAdminQuestionData.bind(this);
+        this.addAdminQuestionToState = this.addAdminQuestionToState.bind(this);
     };
+
+    addAdminQuestionToState(newQuestion){
+        console.log('addAdminQuestionToState called. newQuestion: ', newQuestion);
+        console.log('this.state.broadcastquestions: ', this.state.broadcastquestions);
+
+        newQuestion.answers = newQuestion.answers.join(',', ',');
+        this.setState({broadcastquestions: this.state.broadcastquestions.concat(newQuestion)});
+    }
+
     getAdminUserData(adminTwitchUsername){
         console.log('getInputUserData called');
         adminTwitchUsername = 'mixmstrmike';
@@ -29,7 +40,7 @@ class App extends React.Component{
             .then(res => res.json())
             .then(res => {
                 console.log('twitch fetch admin data res: ', res);
-                this.setState({adminID: res.data[0].id, adminTwitchUsername: res.data[0].login});
+                this.setState({adminTwitchID: res.data[0].id, adminTwitchUsername: res.data[0].login});
             })
             .catch(error=>{console.error(error)});
     }
@@ -98,6 +109,7 @@ class App extends React.Component{
                     <Video userType={this.state.userType}
                         data={this.state.broadcastquestions}
                         adminData={[this.state.adminID, this.state.adminTwitchUsername]}
+                        passQuestionCallback={this.addAdminQuestionToState}
 
                     />
                     <SidePanel userType={this.state.userType}

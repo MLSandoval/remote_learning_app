@@ -46,12 +46,12 @@ export default class Video extends React.Component{
 
 
     handleQuestionSelect(event) {
-
-        const answers = event.answers.split(",");
+        console.log('handleQuestionSelect event: ', event);
+        const answers = event.answers
         console.log('answers: ',answers);
 
-        const answerIDs = event.answer_ids.split(",")
-        console.log('answerIDs: ',answerIDs);
+        const answerIDs = event.answer_ids
+        console.log('answerIDs: ',answer_IDs);
 
         this.setState({
             answers: {
