@@ -3,7 +3,7 @@ import React from 'react';
 export default class Answers extends React.Component {
   render(){
     if(this.props.data){
-      console.log('answer props: ',this.props)
+      console.log('saved questions props: ', this.props);
       return (
         <table>
           <tbody>

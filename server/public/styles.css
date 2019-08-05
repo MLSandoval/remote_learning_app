@@ -104,13 +104,17 @@ td {
 
 .front {
   z-index: 9999999999;
+  height:50px;
+  width:50px;
 }
 
 .admin-button {
-  position: 'absolute';
+  height: 10%;
+  width: 10%;
+  /* position: 'absolute'; */
   background-color: '#4CAF50';
-  display: 'inline-block';
-  font-size: 16 + 'px';
+  display: block;
+  font-size: 16px;
 }
 
 /* .answerDiv {

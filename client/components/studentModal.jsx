@@ -29,7 +29,7 @@ export default class StudentModal extends React.Component{
         if(this.toggleStudentModal){
             return(
                 <React.Fragment>
-                    <div className="modal" tabindex="-1">
+                    <div className="modal" tabIndex="-1">
                         <div className="modal-dialog modal-lg footer">
                             <div className="modal-content">
                             <div className="modal-header">
