@@ -64,6 +64,7 @@ export default class AddAdminQuestionForm extends React.Component{
                 console.error(error);
             });
         }  
+        this.handleReset();
     }
 
     handleQuestionInput(event){
