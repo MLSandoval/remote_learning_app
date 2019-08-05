@@ -51,7 +51,7 @@ export default class SidePanel extends React.Component{
     const { visible } = this.state;
     if (this.props.userType === 'student') {
       return (
-        <div id="sidepanel" className="col-lg-3 container-fluid nopadding" style={{'height':100 + 'vh'}}>
+        <div id="sidepanel" className="col-2 container-fluid nopadding" style={{'height':100 + 'vh'}}>
             <div className="row nopadding" style={{ 'height': 8 + 'vh' }}>
               <div id="chat_button" className="chat-button col-lg-6" onClick={() => this.setView('chat')}>
                 <i className="fa fa-comment-o middle" aria-hidden="true"></i>
@@ -60,8 +60,6 @@ export default class SidePanel extends React.Component{
                 <i className="fa fa-question middle" aria-hidden="true"></i>
               </div>
             </div>
-
-
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
                 <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat"/>
           </div>
@@ -92,7 +90,7 @@ export default class SidePanel extends React.Component{
         )
     } else {
       return (
-        <div id="sidepanel" className="col-lg-3 container-fluid nopadding" style={{ 'height': 100 + 'vh' }}>
+        <div id="sidepanel" className="col-2 container-fluid nopadding" style={{ 'height': 100 + 'vh' }}>
           <div className="row nopadding" style={{ 'height': 8 + 'vh' }}>
             <div className="btn-group btn-group-justified"></div>
               <div id="chat_button" className="btn chat-button col-lg-6" onClick={() => this.setView('chat')}>
