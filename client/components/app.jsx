@@ -5,6 +5,8 @@ class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            adminID: null,
+            adminTwitchUsername: '',
             userType: 'admin',
             questionQueue: [],
             broadcastquestions: []
@@ -14,14 +16,29 @@ class App extends React.Component{
         this.deleteQuestion = this.deleteQuestion.bind(this);
         this.fetchAdminQuestionData = this.fetchAdminQuestionData.bind(this);
     };
-    getInputAdminQ(question){
-        console.log('getInputAdminq called, question :::: ', question);
+    getAdminUserData(adminTwitchUsername){
+        console.log('getInputUserData called');
+        adminTwitchUsername = 'mixmstrmike';
+        
+        fetch(`https://api.twitch.tv/helix/users?login=${adminTwitchUsername}`,{
+            method: 'GET',
+            headers:{
+                "Client-Id": '1k9829yw8sqkbl0ghhao4ml6zpx33l'
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log('twitch fetch admin data res: ', res);
+                this.setState({adminID: res.data[0].id, adminTwitchUsername: res.data[0].login});
+            })
+            .catch(error=>{console.error(error)});
     }
     componentDidMount() {
         
         this.fetchAdminQuestionData();
         this.getStudentQuestions();
-        setTimeout(console.log('app component mounted +3 seconds. this.state: ', this.state), 3000);
+        this.getAdminUserData();
+        setTimeout(()=>{console.log('app component mounted +3 seconds. this.state: ', this.state)}, 3000);
     }
     componentDidUpdate() {
         console.log('app component updated. this.state: ', this.state);
@@ -80,7 +97,8 @@ class App extends React.Component{
                     <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
                     <Video userType={this.state.userType}
                         data={this.state.broadcastquestions}
-                        passQuestionCallback={this.getInputAdminQ}
+                        adminData={[this.state.adminID, this.state.adminTwitchUsername]}
+
                     />
                     <SidePanel userType={this.state.userType}
                         add={this.addQuestion}

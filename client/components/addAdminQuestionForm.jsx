@@ -17,6 +17,7 @@ export default class AddAdminQuestionForm extends React.Component{
     }
 
     bundleQuestionData(){
+        console.log('bundleQuestionData props: ', this.props);
         let {answerA, answerB, answerC, answerD} = this.state;
         let questionObj = {
             question: this.state.question,
@@ -25,7 +26,8 @@ export default class AddAdminQuestionForm extends React.Component{
                 answerB,
                 answerC,
                 answerD
-            ]
+            ],
+            correctAnswer: null
         };
         return questionObj;
     }
@@ -37,11 +39,11 @@ export default class AddAdminQuestionForm extends React.Component{
         let questionObj = this.bundleQuestionData();
         this.props.callback(questionObj);
 
-        postData('./adminQuestionDummyData.json', {questions: this.state.questions})
+        postData('http://localhost:3001/addAdminQuestion', {questions: this.state.questions})
         .then(data => console.log(JSON.stringify(data)))
         .catch(error => console.error(error));
 
-      function postData(url = '', data = {}) {
+      function postData(url, data) {
 
           return fetch(url, {
               method: 'POST',
@@ -96,10 +98,10 @@ if(this.props.view === 'add'){
             <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
-                    <h5 className="modal-title">New Question</h5>
-                    <button type="button" onClick={this.props.toggle} className="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                        <h5 className="modal-title">New Question</h5>
+                        <button type="button" onClick={this.props.toggle} className="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div className="modal-body">
                         <form>
@@ -109,73 +111,71 @@ if(this.props.view === 'add'){
                                        placeholder="Enter Question"
                                        onChange={this.handleQuestionInput}
                                        value={this.state.questions}
+                                />
+                            </div>
+                            <div>
+                                <label>A:
+                                    <input id="A"
+                                        className="form-control form-control-sm"
+                                        type="text"
+                                        name="name"
+                                        onChange={this.handleAnswerInput}
+                                        placeholder="Enter Answer"
+                                        value={this.state.answerA}
                                     />
-                                    </div>
-                                        <div>
-                                            <label>A:
-                                                <input id="A"
-                                                        className="form-control form-control-sm"
-                                                        type="text"
-                                                        name="name"
-                                                        onChange={this.handleAnswerInput}
-                                                        placeholder="Enter Answer"
-                                                        value={this.state.answerA}
-                                                        />
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>B:
-                                                <input id="B"
-                                                        className="form-control form-control-sm"
-                                                        type="text"
-                                                        name="name"
-                                                        onChange={this.handleAnswerInput}
-                                                        placeholder="Enter Answer"
-                                                        value={this.state.answerB}
-                                                        />
-                                            </label>
-
-                                        </div>
-                                        <div>
-                                            <label>C:
-                                                <input id="C"
-                                                        className="form-control form-control-sm"
-                                                        type="text"
-                                                        name="name"
-                                                        onChange={this.handleAnswerInput}
-                                                        placeholder="Enter Answer"
-                                                        value={this.state.answerC}
-                                                        />
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>D:
-                                                <input id="D"
-                                                        className="form-control form-control-sm"
-                                                        type="text"
-                                                        name="name"
-                                                        onChange={this.handleAnswerInput}
-                                                        placeholder="Enter Answer"
-                                                        value={this.state.answerD}
-                                                        />
-                                            </label>
-                                        </div>
-                                    </form>
+                                </label>
                             </div>
-                            <div className="modal-footer">
-                                <button type="submit" className="btn btn-success" data-dismiss="modal" value="Submit" onClick={this.storeQuestionData}>Add</button>
-                                <button type="button" className="btn btn-danger" onClick= {this.handleReset} >Reset</button>
-                                <button type="button" className="btn btn-primary">Send</button>
+                            <div>
+                                <label>B:
+                                    <input id="B"
+                                        className="form-control form-control-sm"
+                                        type="text"
+                                        name="name"
+                                        onChange={this.handleAnswerInput}
+                                        placeholder="Enter Answer"
+                                        value={this.state.answerB}
+                                    />
+                                </label>
                             </div>
-                        </div>
+                            <div>
+                                <label>C:
+                                    <input id="C"
+                                        className="form-control form-control-sm"
+                                        type="text"
+                                        name="name"
+                                        onChange={this.handleAnswerInput}
+                                        placeholder="Enter Answer"
+                                        value={this.state.answerC}
+                                    />
+                                </label>
+                            </div>
+                            <div>
+                                <label>D:
+                                    <input id="D"
+                                        className="form-control form-control-sm"
+                                        type="text"
+                                        name="name"
+                                        onChange={this.handleAnswerInput}
+                                        placeholder="Enter Answer"
+                                        value={this.state.answerD}
+                                    />
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="submit" className="btn btn-success" data-dismiss="modal" value="Submit" onClick={this.storeQuestionData}>Add</button>
+                        <button type="button" className="btn btn-danger" onClick= {this.handleReset} >Reset</button>
+                        <button type="button" className="btn btn-primary">Send</button>
                     </div>
                 </div>
-            
-            )
-    }else{
-        return(
-            <React.Fragment></React.Fragment>
-        )
-        }
+            </div>
+        </div>   
+    )
+}else{
+    return(
+        <React.Fragment></React.Fragment>
+    )
     }
+}
 }

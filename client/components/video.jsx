@@ -84,12 +84,13 @@ export default class Video extends React.Component{
                         view={this.state.view}
                         toggle={this.toggleModal}
                         callback={this.props.passQuestionCallback}
+                        adminData={this.props.adminData}
                     />
                     <BroadcastModal view={this.state.view}
-                                    options={this.props.data}
-                                    toggle={this.toggleModal}
-                                    answers={this.state.answers}
-                                    handleSelect={this.handleQuestionSelect} />
+                        options={this.props.data}
+                        toggle={this.toggleModal}
+                        answers={this.state.answers}
+                        handleSelect={this.handleQuestionSelect} />
                 </div>
             )
         } else {
