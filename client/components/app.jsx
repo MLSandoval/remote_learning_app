@@ -18,24 +18,27 @@ class App extends React.Component{
         console.log('getInputAdminq called, question :::: ', question);
     }
     componentDidMount() {
+        
         this.fetchAdminQuestionData();
         this.getStudentQuestions();
+        setTimeout(console.log('app component mounted +3 seconds. this.state: ', this.state), 3000);
     }
     componentDidUpdate() {
-        console.log(this.state);
+        console.log('app component updated. this.state: ', this.state);
     }
     getStudentQuestions() {
+        console.log('get student questions fetch method called');
         fetch('http://localhost:3001/getStudentsQuestions', {
             method: 'GET'
         })
-        .then(promiseObj => promiseObj.json())
-        .then(successObj =>
-        {
-        this.setState({ questionQueue: successObj.data })
-        }
-        ).catch((error) => {console.error(error)});
+            .then(promiseObj => promiseObj.json())
+            .then(successObj =>{
+                this.setState({ questionQueue: successObj.data }, console.log('app state after fetch student question data success: ', this.state));
+            })
+            .catch((error) => {console.error(error)});
     }
     fetchAdminQuestionData() {
+        console.log('get admin questions fetch method called');
         fetch('http://localhost:3001/getAdminQuestions',{
             method: 'GET'
         })
@@ -49,7 +52,7 @@ class App extends React.Component{
                                     'answer_ids': element.answer_ids,
                                     'answers': element.answers }
                     )
-                });
+                }, console.log('app state after fetch admin question data success: ', this.state));
             }
             ).catch((error) => { console.error(error) });
     }

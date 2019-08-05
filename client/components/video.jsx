@@ -1,5 +1,5 @@
 import React from 'react';
-import AddQuestionForm from './addQuestionForm.jsx';
+import AddAdminQuestionForm from './addAdminQuestionForm.jsx';
 import BroadcastModal from './broadcastquestionmodal';
 import StudentModal from './studentModal';
 
@@ -20,11 +20,11 @@ export default class Video extends React.Component{
     }
 
     componentDidUpdate() {
-        console.log('video.state.answers: ',this.state.answers)
+        console.log(' video component mounted. video.state.answers: ',this.state.answers)
     }
 
     toggleModal(event){
-        console.log('event: ',event.target);
+        console.log('add admin question button event: ',event.target);
         if(this.state.view === ''){
             if(event.target.id === 'addButton'){
                 this.setState({ view: 'add' });
@@ -65,20 +65,22 @@ export default class Video extends React.Component{
 
 
     render(){
-        console.log("handleQuestion Select: ", this.state.answers)
+        console.log('video render switch, this.props.userType: ', this.props.userType);
         if (this.props.userType === 'admin') {
             return (
-                <div id="video" className="col-lg-9">
-                    <iframe src="https://player.twitch.tv/?channel=shroud&muted=true" height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}> </iframe>
-                    <div className="front btn-group btn-group-vertical" style={{'bottom':70 + 'vh', "height":150 + 'px'}}>
+                <div id="video" className="col-10">
+                    {/* <iframe src="https://player.twitch.tv/?channel=shroud&muted=true" height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}> </iframe> */}
+                    <div className="front btn-group btn-group-vertical" 
+                    // style={{'bottom':70 + 'vh', "height":150 + 'px'}}
+                        >
                         <button id="addButton" type="button" className="front btn btn-primary" onClick={this.toggleModal}>
-                            <i id="addButton" className="front admin-button fa fa-plus-square-o"></i>
+                            <i id="addButton" className="admin-button fa fa-plus-square-o"></i>
                         </button>
                         <button id="savedButton" type="button" className="front btn btn-primary" onClick={this.toggleModal}>
-                            <i id="savedButton" className="front admin-button fa fa-list-ul"></i>
+                            <i id="savedButton" className="admin-button fa fa-list-ul"></i>
                         </button>
                     </div>
-                    <AddQuestionForm
+                    <AddAdminQuestionForm
                         view={this.state.view}
                         toggle={this.toggleModal}
                         callback={this.props.passQuestionCallback}
@@ -92,8 +94,8 @@ export default class Video extends React.Component{
             )
         } else {
             return (
-                <div id="video" className="col-lg-9">
-                    <iframe src="https://player.twitch.tv/?channel=shroud&muted=true" height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}></iframe>
+                <div id="video" className="col-10">
+                    {/* <iframe src="https://player.twitch.tv/?channel=shroud&muted=true" height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}></iframe> */}
                 <StudentModal questionList={this.props.data}/>
                 </div>
                 )

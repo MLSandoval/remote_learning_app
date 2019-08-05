@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class AddQuestionForm extends React.Component{
+export default class AddAdminQuestionForm extends React.Component{
     constructor(props){
         super(props);
         this.state = {
