@@ -17,7 +17,6 @@ export default class BroadcastModal extends React.Component {
   }
 
   render() {
-    console.log("Onchange on select", this.props.handleSelect);
     if (this.props.view === "saved" && this.props.options.length !== 0){
         return (
           <div className="modal student" tabIndex="-1" role="dialog">

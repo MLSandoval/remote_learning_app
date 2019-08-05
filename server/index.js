@@ -76,9 +76,10 @@ server.delete('/adminQuestion',(request, response) => {
 server.post('/addAdminQuestion', (req,res)=>{
     console.log('req.body:  ', req.body);
     let {correctAnswer, adminID, question} = req.body;
-    let [ans0, ans1, ans2, ans3] = req.body.answers;
+    let ansArray = req.body.answers.split(',');
+    let [ans0, ans1, ans2, ans3] = ansArray;
     let regex = /(['])/g;
-    //this regex stuff is to allow apostraphes into the mysql queries
+    //this regex stuff is to accommodate apostraphes into the mysql queries
     for(let index = 0; index > 4; i++){
       switch(index){
         case 0: ans0 = ans0.search(regex).replace("/'");
@@ -91,15 +92,16 @@ server.post('/addAdminQuestion', (req,res)=>{
           break;
       }  
     }
-    console.log('answers after')
-
     console.log('question', question);
-    console.log('type of question: ', typeof question);
-    //problematic code, gives type error even though im checking that question variable is a string before calling .search().replace() like i did on the answer strings 
+    
+    // this is meant to accommodate for apostrophes in the question text, but
+    // problematic code, gives type error even though im checking that question variable is 
+    // a string before calling .search().replace() like i did on the answer strings 
     // question = question.toString().search(regex).replace("/'");
     
 
     let questionID;
+    let firstAnswerID;
     let insertQuestionQuery = `
         INSERT INTO questionsAdmin ( question, questionOwner_id, correctAnswer )
             VALUES
@@ -123,7 +125,8 @@ server.post('/addAdminQuestion', (req,res)=>{
                 console.error(error);
                 process.exit(1);
             }
-            res.send('ok bowsssuuu adminQ added!');
+            firstAnswerID = results.insertId;
+            res.send({success: 'true', questionID, firstAnswerID});
         });
     })
 });

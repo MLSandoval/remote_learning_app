@@ -23,12 +23,15 @@ class App extends React.Component{
         console.log('addAdminQuestionToState called. newQuestion: ', newQuestion);
         console.log('this.state.broadcastquestions: ', this.state.broadcastquestions);
 
-        newQuestion.answers = newQuestion.answers.join(',', ',');
+        newQuestion.answers = newQuestion.answers.join(',');
+        console.log('addAdminQuestionToState called. newQuestion after join()ß: ', newQuestion);
+        
         this.setState({broadcastquestions: this.state.broadcastquestions.concat(newQuestion)});
+        console.log('new question added state: ', this.state.broadcastquestions);
     }
 
     getAdminUserData(adminTwitchUsername){
-        console.log('getInputUserData called');
+
         adminTwitchUsername = 'mixmstrmike';
         
         fetch(`https://api.twitch.tv/helix/users?login=${adminTwitchUsername}`,{
@@ -39,7 +42,7 @@ class App extends React.Component{
         })
             .then(res => res.json())
             .then(res => {
-                console.log('twitch fetch admin data res: ', res);
+
                 this.setState({adminTwitchID: res.data[0].id, adminTwitchUsername: res.data[0].login});
             })
             .catch(error=>{console.error(error)});
@@ -49,24 +52,24 @@ class App extends React.Component{
         this.fetchAdminQuestionData();
         this.getStudentQuestions();
         this.getAdminUserData();
-        setTimeout(()=>{console.log('app component mounted +3 seconds. this.state: ', this.state)}, 3000);
+
     }
     componentDidUpdate() {
-        console.log('app component updated. this.state: ', this.state);
+
     }
     getStudentQuestions() {
-        console.log('get student questions fetch method called');
+
         fetch('http://localhost:3001/getStudentsQuestions', {
             method: 'GET'
         })
             .then(promiseObj => promiseObj.json())
             .then(successObj =>{
-                this.setState({ questionQueue: successObj.data }, console.log('app state after fetch student question data success: ', this.state));
+                this.setState({ questionQueue: successObj.data });
             })
             .catch((error) => {console.error(error)});
     }
     fetchAdminQuestionData() {
-        console.log('get admin questions fetch method called');
+
         fetch('http://localhost:3001/getAdminQuestions',{
             method: 'GET'
         })
@@ -80,7 +83,7 @@ class App extends React.Component{
                                     'answer_ids': element.answer_ids,
                                     'answers': element.answers }
                     )
-                }, console.log('app state after fetch admin question data success: ', this.state));
+                });
             }
             ).catch((error) => { console.error(error) });
     }

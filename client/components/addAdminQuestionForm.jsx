@@ -8,7 +8,7 @@ export default class AddAdminQuestionForm extends React.Component{
             answerA : '',
             answerB: '',
             answerC : '',
-            answerD: ''
+            answerD: '',
         }
         this.handleQuestionInput = this.handleQuestionInput.bind(this);
         this.handleReset = this.handleReset.bind(this);
@@ -17,9 +17,9 @@ export default class AddAdminQuestionForm extends React.Component{
     }
 
     storeQuestionData(){
-
         
-        let questionObj = {
+        if(this.state.question){
+            let questionObj = {
             adminID: this.props.adminData[0],
             question: this.state.question,
             answers: [
@@ -29,41 +29,48 @@ export default class AddAdminQuestionForm extends React.Component{
                 this.state.answerD
             ],
             correctAnswer: null
-        };
-        // questionObj.answers.split(',');
-        this.props.callback(questionObj);
-        console.log('questionObj.answers: ', typeof questionObj.answers)
+            };
+        
+            console.log('questionOBj: ', questionObj);
+            questionObj.answers = questionObj.answers.join(',');
 
-        console.log('questionObj: ', questionObj);
+        
 
-    //     postData('http://localhost:3001/addAdminQuestion', questionObj)
-    //     .then(data => data)
-    //     .catch(error => console.error(error));
-
-    //   function postData(url, data) {
-
-    //       return fetch(url, {
-    //           method: 'POST',
-    //           headers: {
-    //               'Content-Type': 'application/json',
-    //           },
-    //           body: data,
-    //       })
-    //       .then(response => response.json());
-    //   }
-
-      this.handleReset();
+            fetch('http://localhost:3001/addAdminQuestion',{
+                method: "POST",
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(questionObj)
+            })
+            .then(res => res.json())
+            .then(res=>{
+                console.log('post admin question fetch success, res: ', res);
+                let FrontEndQuestionObj = {
+                    admin_id: questionObj.adminID,
+                    answer_ids: [
+                        res.firstAnswerID,
+                        res.firstAnswerID + 1,
+                        res.firstAnswerID + 2,
+                        res.firstAnswerID + 3,
+                     ],
+                    answers: questionObj.answers.split(','),
+                    label: questionObj.question,
+                    value: res.questionID
+                };
+                this.props.callback(FrontEndQuestionObj);
+            })
+            .catch(error=>{
+                console.error(error);
+            });
+        }  
     }
 
-
     handleQuestionInput(event){
-        
         this.setState({ question: event.target.value});
-        console.log('this.state.question')
     }
 
     handleAnswerInput(event){
-        console.log("event: ", event.target.id)
 
         switch(event.target.id){
             case "A":

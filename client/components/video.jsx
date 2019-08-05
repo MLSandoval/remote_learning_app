@@ -20,11 +20,11 @@ export default class Video extends React.Component{
     }
 
     componentDidUpdate() {
-        console.log(' video component mounted. video.state.answers: ',this.state.answers)
+
     }
 
     toggleModal(event){
-        console.log('add admin question button event: ',event.target);
+
         if(this.state.view === ''){
             if(event.target.id === 'addButton'){
                 this.setState({ view: 'add' });
@@ -46,12 +46,12 @@ export default class Video extends React.Component{
 
 
     handleQuestionSelect(event) {
-        console.log('handleQuestionSelect event: ', event);
-        const answers = event.answers
-        console.log('answers: ',answers);
+        console.log('handlequestionselect in video, event: ', event);
+        const answers = event.answers.split(',');
 
-        const answerIDs = event.answer_ids
-        console.log('answerIDs: ',answer_IDs);
+
+        const answerIDs = event.answer_ids;
+
 
         this.setState({
             answers: {
@@ -65,7 +65,7 @@ export default class Video extends React.Component{
 
 
     render(){
-        console.log('video render switch, this.props.userType: ', this.props.userType);
+
         if (this.props.userType === 'admin') {
             return (
                 <div id="video" className="col-10">
