@@ -25,7 +25,7 @@ class App extends React.Component{
 
         newQuestion.answers = newQuestion.answers.join(',');
         console.log('addAdminQuestionToState called. newQuestion after join()ß: ', newQuestion);
-        
+
         this.setState({broadcastquestions: this.state.broadcastquestions.concat(newQuestion)});
         console.log('new question added state: ', this.state.broadcastquestions);
     }
@@ -33,7 +33,7 @@ class App extends React.Component{
     getAdminUserData(adminTwitchUsername){
 
         adminTwitchUsername = 'mixmstrmike';
-        
+
         fetch(`https://api.twitch.tv/helix/users?login=${adminTwitchUsername}`,{
             method: 'GET',
             headers:{
@@ -48,7 +48,7 @@ class App extends React.Component{
             .catch(error=>{console.error(error)});
     }
     componentDidMount() {
-        
+
         this.fetchAdminQuestionData();
         this.getStudentQuestions();
         this.getAdminUserData();
@@ -75,6 +75,7 @@ class App extends React.Component{
         })
             .then(promiseObj => promiseObj.json())
             .then(successObj => {
+                console.log('admin question object: ', successObj);
                 this.setState({
                     broadcastquestions: successObj.data.map(element =>
                         element = { 'value': element.id,

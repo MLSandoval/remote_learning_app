@@ -1,11 +1,12 @@
 import React from "react";
+import Answers from "./savedquestionanswers";
 
 export default class StudentModal extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            broadcast: true 
-        }   
+            broadcast: true
+        }
     }
 
     toggleStudentModal(){
@@ -17,14 +18,8 @@ export default class StudentModal extends React.Component{
     }
 
 
-    compareQuestionId(){
-        this.props.questionList.filter(function(){
-
-        })
-    }
-
     render(){
-        console.log("question obj in studentModal:::::::::::::: : ", this.props.questionList)
+        console.log("question obj in studentModal: ", this.props.adminQuestion)
         console.log("toggle modal: ", this.state.broadcast)
         if(this.toggleStudentModal){
             return(
@@ -33,15 +28,10 @@ export default class StudentModal extends React.Component{
                         <div className="modal-dialog modal-lg footer">
                             <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title">{this.props.questionTitle}</h5>
+                                <h5 className="modal-title">{this.props.adminQuestion.label}</h5>
                             </div>
                             <div className="modal-body">
-                                <div className="row">
-                                    <div className={this.props.answer1}>A</div>
-                                    <div className={this.props.answer2}>B</div>
-                                    <div className={this.props.answer3}>C</div>
-                                    <div className={this.props.answer4}>D</div>      
-                                </div>                  
+                                <Answers data={this.props.adminQuestion}></Answers>
                             </div>
                             </div>
                         </div>
@@ -51,6 +41,6 @@ export default class StudentModal extends React.Component{
         } else {
             <React.Fragment/>
         }
-        
+
     }
 }

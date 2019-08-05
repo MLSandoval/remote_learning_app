@@ -5,16 +5,15 @@ import Answers from './savedquestionanswers';
 export default class BroadcastModal extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      options: null
-    }
     this.handleReset = this.handleReset.bind(this);
   }
 
 
   handleReset(){
-    this.setState({options: null});
+    this.setState({});
   }
+
+
 
   render() {
     if (this.props.view === "saved" && this.props.options.length !== 0){
@@ -35,12 +34,12 @@ export default class BroadcastModal extends React.Component {
                     onChange={this.props.handleSelect}
                   />
                   <Answers
-                    data={this.props.answers}
+                    data={this.props.question}
                   />
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-danger" onClick={this.handleReset} >Delete</button>
-                  <button type="button" className="btn btn-primary">Send</button>
+                  <button type="button" className="btn btn-primary" onClick={this.props.handleSend}>Send</button>
                 </div>
               </div>
             </div>
