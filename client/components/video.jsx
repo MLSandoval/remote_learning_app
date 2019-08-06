@@ -83,17 +83,18 @@ export default class Video extends React.Component{
 
 
     render(){
+        console.log('this.props.hostUser: ',this.props.hostUser);
 
         if (this.props.userType === 'admin') {
             return (
-                <div id="video" className="col-10">
-                    <iframe src="https://player.twitch.tv/?channel=shroud&muted=true" height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}> </iframe>
-                    <div className="front btn-group btn-group-vertical"
+                <div id="video" className="col-10 fullheight">
+                    <iframe src={`https://player.twitch.tv/?channel=${this.props.hostUser}&muted=true`} height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}> </iframe>
+                    <div className="front btn-group-vertical"
                         style={{ 'bottom': 70 + 'vh', "height": 150 + 'px' }}>
-                        <button id="addButton" type="button" className="front btn btn-primary" onClick={this.toggleModal}>
+                        <button id="addButton" type="button" className="btn btn-primary" onClick={this.toggleModal}>
                             <i id="addButton" className="admin-button fa fa-plus-square-o"></i>
                         </button>
-                        <button id="savedButton" type="button" className="front btn btn-primary" onClick={this.toggleModal}>
+                        <button id="savedButton" type="button" className="btn btn-primary" onClick={this.toggleModal}>
                             <i id="savedButton" className="admin-button fa fa-list-ul"></i>
                         </button>
                     </div> 
@@ -104,15 +105,15 @@ export default class Video extends React.Component{
         } else {
             if (this.state.displayQuestion){
                 return (
-                    <div id="video" className="col-10">
-                        <iframe src="https://player.twitch.tv/?channel=shroud&muted=true" height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}></iframe>
+                    <div id="video" className="col-10 fullheight">
+                        <iframe src={`https://player.twitch.tv/?channel=${this.props.hostUser}&muted=true`} height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}></iframe>
                         <StudentModal adminQuestion={this.state.sentQuestion} />
                     </div>
                 )
             } else {
                 return (
-                    <div id="video" className="col-10">
-                        <iframe src="https://player.twitch.tv/?channel=shroud&muted=true" height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}></iframe>
+                    <div id="video" className="col-10 fullheight">
+                        <iframe src={`https://player.twitch.tv/?channel=${this.props.hostUser}&muted=true`} height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}></iframe>
                     </div>
                 )
             }
