@@ -106,6 +106,7 @@ class App extends React.Component{
            this.setState({questionQueue:questionArr})
         }
     render(){
+        console.log("THIS IS FROM APP: ", this.state.broadcastquestions)
         return(
             <div id="app" className="container-fluid nopadding">
                 <div className="row" style={{'height':101 + 'vh'}}>

@@ -9,11 +9,13 @@ export default class AddAdminQuestionForm extends React.Component{
             answerB: '',
             answerC : '',
             answerD: '',
+            selectedAnswer: ''
         }
         this.handleQuestionInput = this.handleQuestionInput.bind(this);
         this.handleReset = this.handleReset.bind(this);
         this.storeQuestionData = this.storeQuestionData.bind(this);
         this.handleAnswerInput = this.handleAnswerInput.bind(this);
+        this.handleSelectedAnswer =this.handleSelectedAnswer.bind(this);
     }
 
     storeQuestionData(){
@@ -28,9 +30,9 @@ export default class AddAdminQuestionForm extends React.Component{
                 this.state.answerC,
                 this.state.answerD
             ],
-            correctAnswer: null
+            correctAnswer: this.state.selectedAnswer
             };
-        
+
             console.log('questionOBj: ', questionObj);
             questionObj.answers = questionObj.answers.join(',');
 
@@ -94,8 +96,16 @@ export default class AddAdminQuestionForm extends React.Component{
                     answerA : '',
                     answerB : '',
                     answerC : '',
-                    answerD : ''
+                    answerD : '',
+                    selectedAnswer : ''
                 })
+    }
+
+
+    handleSelectedAnswer(event){
+        event.preventDefault()
+        let targetAnswer = event.target.id;
+        this.setState({selectedAnswer:targetAnswer});
     }
 
     render() {
@@ -171,6 +181,17 @@ export default class AddAdminQuestionForm extends React.Component{
                                 </form>
                             </div>
                             <div className="modal-footer">
+                                    <div className="dropdown">
+                                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Key
+                                        </button>
+                                            <div className="dropdown-menu" aria-labelledby="dropdownMenu2" >
+                                                <a id="A" className="dropdown-item" type="button" onClick={this.handleSelectedAnswer}>A</a>
+                                                <a id="B" className="dropdown-item" type="button" onClick={this.handleSelectedAnswer}>B</a>
+                                                <a id="C" className="dropdown-item" type="button" onClick={this.handleSelectedAnswer}>C</a>
+                                                <a id="D" className="dropdown-item" type="button" onClick={this.handleSelectedAnswer}>D</a>
+                                            </div>
+                                    </div>
                                 <button type="submit" className="btn btn-success" data-dismiss="modal" value="Submit" onClick={this.storeQuestionData}>Add</button>
                                 <button type="button" className="btn btn-danger" onClick= {this.handleReset} >Reset</button>
                                 <button type="button" className="btn btn-primary">Send</button>
