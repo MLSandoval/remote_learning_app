@@ -18,7 +18,7 @@ export default class BroadcastModal extends React.Component {
   render() {
     if (this.props.view === "saved" && this.props.options.length !== 0){
         return (
-          <div className="modal student" tabIndex="-1" role="dialog">
+          <div className="modal student bringModalForward centerOnVideo" tabIndex="-1" role="dialog">
             <div className="modal-dialog modal-lg" role="document">
               <div className="modal-content">
                 <div className="modal-header">
