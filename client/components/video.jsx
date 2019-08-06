@@ -24,14 +24,12 @@ export default class Video extends React.Component{
     }
 
     toggleModal(event){
-
-        if(this.state.view === ''){
-            if(event.target.id === 'addButton'){
-                this.setState({ view: 'add' });
-            } else {
+        console.log('toggle modal called.');
+        if (this.state.view === '' && event.target.id === 'addButton' || this.state.view === 'saved' && event.target.id === 'addButton'){
+            this.setState({ view: 'add' });
+        } else if (this.state.view === '' || this.state.view === 'add' && event.target.id === 'savedButton') {
                 this.setState({ view: 'saved' })
-            }
-        }else {
+        }else{
             this.setState({
                 view: '',
                 answers: {
@@ -42,16 +40,46 @@ export default class Video extends React.Component{
                 }
             });
         }
+    }  
+
+    renderModalSwitch(){
+        if (this.state.view === 'add'){
+            return(
+                <div className="container">
+                    <AddAdminQuestionForm
+                        view={this.state.view}
+                        toggle={this.toggleModal}
+                        callback={this.props.passQuestionCallback}
+                        adminData={this.props.adminData}
+                        setStateCallback={this.toggleModal}
+                    />
+                </div>
+                    
+                  
+            );
+        }else if(this.state.view === 'saved'){
+            return(
+                <div className="container">
+                    <BroadcastModal view={this.state.view}
+                        options={this.props.data}
+                        toggle={this.toggleModal}
+                        answers={this.state.answers}
+                        handleSelect={this.handleQuestionSelect} />
+                </div>
+            );
+        }else{
+            return(
+                <React.Fragment/>
+            );
+        }
     }
 
 
     handleQuestionSelect(event) {
-        console.log('handlequestionselect in video, event: ', event);
+        console.log('handlequestionselect in video, event.target: ', event.target);
         const answers = event.answers.split(',');
 
-
         const answerIDs = event.answer_ids;
-
 
         this.setState({
             answers: {
@@ -78,18 +106,8 @@ export default class Video extends React.Component{
                         <button id="savedButton" type="button" className="front btn btn-primary" onClick={this.toggleModal}>
                             <i id="savedButton" className="admin-button fa fa-list-ul"></i>
                         </button>
-                    </div>
-                    <AddAdminQuestionForm
-                        view={this.state.view}
-                        toggle={this.toggleModal}
-                        callback={this.props.passQuestionCallback}
-                        adminData={this.props.adminData}
-                    />
-                    <BroadcastModal view={this.state.view}
-                        options={this.props.data}
-                        toggle={this.toggleModal}
-                        answers={this.state.answers}
-                        handleSelect={this.handleQuestionSelect} />
+                    </div> 
+                    {this.renderModalSwitch()}    
                 </div>
             )
         } else {

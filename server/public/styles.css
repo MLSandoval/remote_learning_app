@@ -52,7 +52,7 @@ body {
 
 .modal{
   display: inline-block;
-  z-index: 420;
+  z-index: 64290;
 }
 
 .chat-button{
@@ -130,5 +130,16 @@ td {
 }
 .modal-lg{
   max-width: 74.5%;
-}
+} */
 
+.modalBG{
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.438);
+  position: fixed;
+  top:0;
+  left: 0;
+}
+.bringModalForward{
+  z-index: 1;
+}
