@@ -117,12 +117,6 @@ td {
   font-size: 16px;
 }
 
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width:100%;
-}
 .modal-lg{
   max-width: 74.5%;
 <<<<<<< HEAD
@@ -140,4 +134,9 @@ td {
 .bringModalForward{
   z-index: 1;
 >>>>>>> 9b1a2121cbfd6539b649a3bc0a925754ccd77a00
+}
+
+.dropdown-menu {
+  position: relative;
+  display:inline-flex;
 }
