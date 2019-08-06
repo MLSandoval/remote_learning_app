@@ -1,6 +1,9 @@
 import React from 'react';
 import Video from './video.jsx';
 import SidePanel from './sidepanel.jsx';
+import Header from './header.jsx';
+
+
 class App extends React.Component{
     constructor(props){
         super(props);
@@ -17,7 +20,12 @@ class App extends React.Component{
         this.deleteQuestion = this.deleteQuestion.bind(this);
         this.fetchAdminQuestionData = this.fetchAdminQuestionData.bind(this);
         this.addAdminQuestionToState = this.addAdminQuestionToState.bind(this);
+        this.getAdminUserData = this.getAdminUserData.bind(this);
     };
+
+    componentDidUpdate(){
+        console.log('app state: ', this.state);
+    }
 
     addAdminQuestionToState(newQuestion){
         console.log('addAdminQuestionToState called. newQuestion: ', newQuestion);
@@ -31,9 +39,8 @@ class App extends React.Component{
     }
 
     getAdminUserData(adminTwitchUsername){
-
-        adminTwitchUsername = 'mixmstrmike';
-
+        console.log('entered getAdminUserData');
+        let x = this;
         fetch(`https://api.twitch.tv/helix/users?login=${adminTwitchUsername}`,{
             method: 'GET',
             headers:{
@@ -42,8 +49,12 @@ class App extends React.Component{
         })
             .then(res => res.json())
             .then(res => {
+                console.log('response: ',res.data[0]);
 
-                this.setState({adminTwitchID: res.data[0].id, adminTwitchUsername: res.data[0].login});
+                x.setState({adminTwitchID: res.data[0].id});
+                x.setState({adminTwitchUsername: res.data[0].login});
+                console.log('app state: ', this.state);
+
             })
             .catch(error=>{console.error(error)});
     }
@@ -109,9 +120,13 @@ class App extends React.Component{
         console.log("THIS IS FROM APP: ", this.state.broadcastquestions)
         return(
             <div id="app" className="container-fluid nopadding">
-                <div className="row" style={{'height':101 + 'vh'}}>
+                <div className="row" style={{'height':7 + 'vh'}}>
+                    <Header loginFunction={this.getAdminUserData} />
+                </div>
+                <div className="row" style={{'height':93 + 'vh'}}>
                     <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
                     <Video userType={this.state.userType}
+                        hostUser={this.state.adminTwitchUsername}
                         data={this.state.broadcastquestions}
                         adminData={[this.state.adminID, this.state.adminTwitchUsername]}
                         passQuestionCallback={this.addAdminQuestionToState}
