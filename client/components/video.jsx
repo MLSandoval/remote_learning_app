@@ -19,18 +19,48 @@ export default class Video extends React.Component{
     }
 
     toggleModal(event){
-
-        if(this.state.view === ''){
-            if(event.target.id === 'addButton'){
-                this.setState({ view: 'add' });
-            } else {
+        console.log('toggle modal called.');
+        if (this.state.view === '' && event.target.id === 'addButton' || this.state.view === 'saved' && event.target.id === 'addButton'){
+            this.setState({ view: 'add' });
+        } else if (this.state.view === '' || this.state.view === 'add' && event.target.id === 'savedButton') {
                 this.setState({ view: 'saved' })
-            }
-        }else {
+        }else{
             this.setState({
                 view: '',
                 selectedQuestion: ''
             });
+        }
+    }  
+
+    renderModalSwitch(){
+        if (this.state.view === 'add'){
+            return(
+                <div className="container">
+                    <AddAdminQuestionForm
+                        view={this.state.view}
+                        toggle={this.toggleModal}
+                        callback={this.props.passQuestionCallback}
+                        adminData={this.props.adminData}
+                        setStateCallback={this.toggleModal}
+                    />
+                </div>
+                    
+                  
+            );
+        }else if(this.state.view === 'saved'){
+            return(
+                <div className="container">
+                    <BroadcastModal view={this.state.view}
+                        options={this.props.data}
+                        toggle={this.toggleModal}
+                        question={this.state.selectedQuestion}
+                        handleSelect={this.handleQuestionSelect} />
+                </div>
+            );
+        }else{
+            return(
+                <React.Fragment/>
+            );
         }
     }
 
@@ -46,6 +76,7 @@ export default class Video extends React.Component{
     handleSendQuestion(){
         this.setState({displayQuestion: true, sentQuestion: this.state.selectedQuestion});
         setTimeout(() => {this.setState({displayQuestion: false, sentQuestion: ''})}, 5000);
+
 
 
     }
@@ -65,19 +96,9 @@ export default class Video extends React.Component{
                         <button id="savedButton" type="button" className="front btn btn-primary" onClick={this.toggleModal}>
                             <i id="savedButton" className="admin-button fa fa-list-ul"></i>
                         </button>
-                    </div>
-                    <AddAdminQuestionForm
-                        view={this.state.view}
-                        toggle={this.toggleModal}
-                        callback={this.props.passQuestionCallback}
-                        adminData={this.props.adminData}
-                    />
-                    <BroadcastModal view={this.state.view}
-                        options={this.props.data}
-                        toggle={this.toggleModal}
-                        question={this.state.selectedQuestion}
-                        handleSelect={this.handleQuestionSelect}
-                        handleSend={this.handleSendQuestion} />
+                    </div> 
+
+                    {this.renderModalSwitch()}    
                 </div>
             )
         } else {
