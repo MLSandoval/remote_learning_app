@@ -1,6 +1,9 @@
 import React from 'react';
 import Video from './video.jsx';
 import SidePanel from './sidepanel.jsx';
+import Header from './header.jsx';
+
+
 class App extends React.Component{
     constructor(props){
         super(props);
@@ -108,7 +111,10 @@ class App extends React.Component{
     render(){
         return(
             <div id="app" className="container-fluid nopadding">
-                <div className="row" style={{'height':101 + 'vh'}}>
+                <div className="row" style={{'height':7 + 'vh'}}>
+                    <Header />
+                </div>
+                <div className="row" style={{'height':93 + 'vh'}}>
                     <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
                     <Video userType={this.state.userType}
                         data={this.state.broadcastquestions}

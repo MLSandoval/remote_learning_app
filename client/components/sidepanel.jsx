@@ -51,12 +51,12 @@ export default class SidePanel extends React.Component{
     const { visible } = this.state;
     if (this.props.userType === 'student') {
       return (
-        <div id="sidepanel" className="col-2 container-fluid nopadding" style={{'height':100 + 'vh'}}>
-            <div className="row nopadding" style={{ 'height': 8 + 'vh' }}>
-              <div id="chat_button" className="chat-button col-lg-6" onClick={() => this.setView('chat')}>
+        <div id="sidepanel" className="col-2 container-fluid nopadding fullheight">
+            <div className="row btn-group btn-group-justified" style={{ 'height': 8 + 'vh' }}>
+              <div id="chat_button" className="btn chat-button" onClick={() => this.setView('chat')}>
                 <i className="fa fa-comment-o middle" aria-hidden="true"></i>
               </div>
-              <div id="queue_button" className="queue-button col-lg-6 nopadding" onClick={() => this.setView('queue')}>
+              <div id="queue_button" className="btn queue-button" onClick={() => this.setView('queue')}>
                 <i className="fa fa-question middle" aria-hidden="true"></i>
               </div>
             </div>
@@ -90,15 +90,14 @@ export default class SidePanel extends React.Component{
         )
     } else {
       return (
-        <div id="sidepanel" className="col-2 container-fluid nopadding" style={{ 'height': 100 + 'vh' }}>
-          <div className="row nopadding" style={{ 'height': 8 + 'vh' }}>
-            <div className="btn-group btn-group-justified"></div>
-              <div id="chat_button" className="btn chat-button col-lg-6" onClick={() => this.setView('chat')}>
-                <i className="fa fa-comment-o middle" aria-hidden="true"></i>
-              </div>
-              <div id="queue_button" className="btn queue-button col-lg-6 nopadding" onClick={() => this.setView('queue')}>
-                <i className="fa fa-question middle" aria-hidden="true"></i>
-              </div>
+        <div id="sidepanel" className="col-2 container-fluid nopadding fullheight">
+          <div className="row btn-group btn-group-justified col-lg-12 nopadding" style={{ 'height': 8 + 'vh' }}>
+            <div id="chat_button" className="btn btn-primary" onClick={() => this.setView('chat')}>
+              <i className="fa fa-comment-o middle" aria-hidden="true"></i>
+            </div>
+            <div id="queue_button" className="btn btn-primary" onClick={() => this.setView('queue')}>
+              <i className="fa fa-question middle" aria-hidden="true"></i>
+            </div>
           </div>
 
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
