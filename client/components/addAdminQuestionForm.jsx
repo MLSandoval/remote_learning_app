@@ -92,7 +92,7 @@ export default class AddAdminQuestionForm extends React.Component{
     }
 
     handleReset(){
-    this.setState({ questions : '',
+    this.setState({ question : '',
                     answerA : '',
                     answerB : '',
                     answerC : '',
@@ -109,6 +109,7 @@ export default class AddAdminQuestionForm extends React.Component{
     }
 
     render() {
+        console.log("new value ", this.state.selectedAnswer);
         if(this.props.view === 'add'){
             return(
                 <div className="modal" tabIndex="-1" role="dialog" style={{'zIndex': 420}}>
@@ -127,7 +128,7 @@ export default class AddAdminQuestionForm extends React.Component{
                                             className="form-control form-control-lg"
                                             placeholder="Enter Question"
                                             onChange={this.handleQuestionInput}
-                                            value={this.state.questions}
+                                            value={this.state.question}
                                         />
                                     </div>
                                     <div>
@@ -186,10 +187,10 @@ export default class AddAdminQuestionForm extends React.Component{
                                             Key
                                         </button>
                                             <div className="dropdown-menu" aria-labelledby="dropdownMenu2" >
-                                                <a id="A" className="dropdown-item" type="button" onClick={this.handleSelectedAnswer}>A</a>
-                                                <a id="B" className="dropdown-item" type="button" onClick={this.handleSelectedAnswer}>B</a>
-                                                <a id="C" className="dropdown-item" type="button" onClick={this.handleSelectedAnswer}>C</a>
-                                                <a id="D" className="dropdown-item" type="button" onClick={this.handleSelectedAnswer}>D</a>
+                                                <a id="A" className="dropdown-item" type="button" value="this.state.selectedAnswer" onClick={this.handleSelectedAnswer}>A</a>
+                                                <a id="B" className="dropdown-item" type="button" value="this.state.selectedAnswer" onClick={this.handleSelectedAnswer}>B</a>
+                                                <a id="C" className="dropdown-item" type="button" value="this.state.selectedAnswer" onClick={this.handleSelectedAnswer}>C</a>
+                                                <a id="D" className="dropdown-item" type="button" value="this.state.selectedAnswer" onClick={this.handleSelectedAnswer}>D</a>
                                             </div>
                                     </div>
                                 <button type="submit" className="btn btn-success" data-dismiss="modal" value="Submit" onClick={this.storeQuestionData}>Add</button>
