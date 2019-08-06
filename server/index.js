@@ -106,13 +106,14 @@ server.post('/addAdminQuestion', (req,res)=>{
     let insertQuestionQuery = `
         INSERT INTO questionsAdmin ( question, questionOwner_id, correctAnswer )
             VALUES
-            ('${question}', ${adminID}, ${correctAnswer})
+            ('${question}', ${adminID}, '${correctAnswer}')
         `;
     db.query(insertQuestionQuery, (error, results, fields)=>{
         if (error) {
             console.error(error);
             process.exit(1);
         }
+        console.log('questions table insert query on post call:::::::', insertQuestionQuery);
         questionID = results.insertId;
         let insertAnswersQuery = `
           INSERT INTO answerOptions ( question_id, answer )
