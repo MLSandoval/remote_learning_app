@@ -5,11 +5,11 @@ import Answers from './savedquestionanswers';
 export default class BroadcastModal extends React.Component {
   constructor(props) {
     super(props)
-    this.handleReset = this.handleReset.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
 
-  handleReset(){
+  handleDelete(){
     this.setState({});
   }
 
@@ -38,7 +38,7 @@ export default class BroadcastModal extends React.Component {
                   />
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-danger" onClick={this.handleReset} >Delete</button>
+                  <button type="button" className="btn btn-danger" onClick={this.handleDelete} >Delete</button>
                   <button type="button" className="btn btn-primary" onClick={this.props.handleSend}>Send</button>
                 </div>
               </div>
