@@ -1,10 +1,11 @@
 .question {
-  height: 10vh;
+  height: 6vh;
   width: 100%;
   background-color: whitesmoke;
-  line-height: 3;
-  border:3px groove grey;
+  line-height: 1;
+  border:1px groove grey;
   padding-left: 1vw;
+  text-overflow: ellipsis;
 }
 
 .hide {display: none;}
@@ -21,7 +22,12 @@
 }
 
 .fullheight {
-  height: 100%;
+  height: 90%;
+  max-height: 90%;
+}
+.QQheightAndScroll{
+  height: 70vh;
+  overflow: scroll;
 }
 
 .login {
@@ -34,6 +40,7 @@
 
 .loginbutton {
   background-color: darkgrey;
+  border: 1px solid black;
 }
 
 .loginbutton:active {
@@ -115,8 +122,6 @@ td {
   z-index:69;
 }
 
-
-
 .row:after {
   content: "";
   display: table;
@@ -142,18 +147,6 @@ td {
 
 .modal-lg{
   max-width: 74.5%;
-} 
-
-.modalBG{
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0, 0, 0, 0.438);
-  position: fixed;
-  top:0;
-  left: 0;
-}
-.bringModalForward{
-  z-index: 1;
 }
 
 .dropdown-menu {
