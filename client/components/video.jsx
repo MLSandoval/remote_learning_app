@@ -17,7 +17,13 @@ export default class Video extends React.Component{
 
         this.handleQuestionSelect = this.handleQuestionSelect.bind(this);
         this.handleSendQuestion = this.handleSendQuestion.bind(this);
-        this.toggleModal =this.toggleModal.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.resetSelect = this.resetSelect.bind(this);
+    }
+
+    resetSelect(){
+      this.setState({ selectedQuestion: '' });
+
     }
 
     toggleModal(event){
@@ -56,7 +62,10 @@ export default class Video extends React.Component{
                         options={this.props.data}
                         toggle={this.toggleModal}
                         question={this.state.selectedQuestion}
-                        handleSelect={this.handleQuestionSelect} />
+                        handleSelect={this.handleQuestionSelect}
+                        deleteAdminQuestion={this.props.deleteAdminQuestion}
+                        resetSelect={this.resetSelect}
+                        />
                 </div>
             );
         }else{
