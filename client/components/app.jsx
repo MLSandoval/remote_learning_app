@@ -10,7 +10,8 @@ class App extends React.Component{
             adminTwitchUsername: '',
             userType: 'admin',
             questionQueue: [],
-            broadcastquestions: []
+            broadcastquestions: [],
+            currentQuestionTarget: null
         }
         this.switchUser = this.switchUser.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
@@ -95,18 +96,26 @@ class App extends React.Component{
             this.setState({ userType: 'admin' })
         }
     }
+
     addQuestion(question) {
         let newQuestion = [{ 'id': '4', 'question': question, 'author': 'Guest' }];
         this.setState({ questionQueue: this.state.questionQueue.concat(newQuestion)})
       }
+
     deleteQuestion(id){
+        console.log("question removed: ", id)
         let questionArr = this.state.questionQueue.filter(questionObj =>{
              return questionObj.id !== id;
         })
-           this.setState({questionQueue:questionArr})
-        }
+        console.log("fun console, ", questionArr[id]);
+        this.setState({currentQuestionTarget: questionArr[id]})
+        this.setState({questionQueue:questionArr})
+       
+
+    }
+
     render(){
-        console.log("THIS IS FROM APP: ", this.state.broadcastquestions)
+        console.log("Deleted Question: ",this.state.currentQuestionTarget);
         return(
             <div id="app" className="container-fluid nopadding">
                 <div className="row" style={{'height':101 + 'vh'}}>
@@ -120,7 +129,9 @@ class App extends React.Component{
                     <SidePanel userType={this.state.userType}
                         add={this.addQuestion}
                         delete={this.deleteQuestion}
-                        questionQueue={this.state.questionQueue} />
+                        questionQueue={this.state.questionQueue} 
+                        questionTarget={this.state.currentQuestionTarget}
+                        />
                 </div>
             </div>
         )

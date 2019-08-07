@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ExpandedQuestionModal from './expandedQuestionModal';
 
 export default class SidePanel extends React.Component{
   constructor(props) {
@@ -12,6 +13,7 @@ export default class SidePanel extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.appendQuestionDivs = this.appendQuestionDivs.bind(this);
+    this.targetQuestion = this.targetQuestion.bind(this);
   }
 
   handleSubmit(event) {
@@ -37,15 +39,22 @@ export default class SidePanel extends React.Component{
             </div>)
             return questionDivs;
     } else {
-
+      console.log("question:::::::::", this.props.questionQueue)
         var questionDivs = this.props.questionQueue.map(x =>
-          <div className="question nopadding" style={{ 'height': 10 + 'vh' }} key={x.id}>{x.question} - {x.author}
-          <i className="fas fa-times" onClick={()=>{deleteQuestion(x.id)}}></i>
-        </div>)
+          <div className="question nopadding" onClick={()=>{deleteQuestion(x.id)}} style={{ 'height': 10 + 'vh' }} key={x.id}> 
+          {x.question} - {x.author}
+          <i className="fas fa-times"></i>
+          <ExpandedQuestionModal questionTarget={this.props.questionTarget}/>
+        </div>
+        )
+
         return questionDivs;
     }
   }
 
+  targetQuestion(){
+   return this.props.questionTarget
+  } 
 
   render(){
     const { visible } = this.state;
