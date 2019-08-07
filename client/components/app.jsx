@@ -21,6 +21,7 @@ class App extends React.Component{
         this.fetchAdminQuestionData = this.fetchAdminQuestionData.bind(this);
         this.addAdminQuestionToState = this.addAdminQuestionToState.bind(this);
         this.getAdminUserData = this.getAdminUserData.bind(this);
+        this.deleteAdminQuestion = this.deleteAdminQuestion.bind(this);
     };
 
     componentDidUpdate(){

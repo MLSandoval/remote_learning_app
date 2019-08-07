@@ -6,6 +6,7 @@ export default class BroadcastModal extends React.Component {
   constructor(props) {
     super(props)
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleDeleteSavedQuestion = this.handleDeleteSavedQuestion.bind(this);
   }
 
 
