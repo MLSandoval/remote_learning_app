@@ -11,7 +11,6 @@ class App extends React.Component{
             userType: 'admin',
             questionQueue: [],
             broadcastquestions: [],
-            currentQuestionTarget: null
         }
         this.switchUser = this.switchUser.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
@@ -103,19 +102,13 @@ class App extends React.Component{
       }
 
     deleteQuestion(id){
-        console.log("question removed: ", id)
         let questionArr = this.state.questionQueue.filter(questionObj =>{
              return questionObj.id !== id;
         })
-        console.log("fun console, ", questionArr[id]);
-        this.setState({currentQuestionTarget: questionArr[id]})
         this.setState({questionQueue:questionArr})
-       
-
     }
 
     render(){
-        console.log("Deleted Question: ",this.state.currentQuestionTarget);
         return(
             <div id="app" className="container-fluid nopadding">
                 <div className="row" style={{'height':101 + 'vh'}}>
@@ -124,13 +117,11 @@ class App extends React.Component{
                         data={this.state.broadcastquestions}
                         adminData={[this.state.adminID, this.state.adminTwitchUsername]}
                         passQuestionCallback={this.addAdminQuestionToState}
-
                     />
                     <SidePanel userType={this.state.userType}
                         add={this.addQuestion}
                         delete={this.deleteQuestion}
                         questionQueue={this.state.questionQueue} 
-                        questionTarget={this.state.currentQuestionTarget}
                         />
                 </div>
             </div>
