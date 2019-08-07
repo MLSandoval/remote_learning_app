@@ -21,10 +21,27 @@ class App extends React.Component{
         this.fetchAdminQuestionData = this.fetchAdminQuestionData.bind(this);
         this.addAdminQuestionToState = this.addAdminQuestionToState.bind(this);
         this.getAdminUserData = this.getAdminUserData.bind(this);
+        this.deleteAdminQuestion = this.deleteAdminQuestion.bind(this);
     };
 
     componentDidUpdate(){
         console.log('app state: ', this.state);
+        this.deleteAdminQuestion = this.deleteAdminQuestion.bind(this);
+    };
+
+    deleteAdminQuestion(adminQuestionID){
+      const broadcastquestions = this.state.broadcastquestions;
+      console.log('what is broadcastquestions', broadcastquestions);
+
+      fetch(`http://localhost:3001/adminQuestion?adminQuestionID=${adminQuestionID}`, {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({ broadcastquestions: broadcastquestions.filter(broadcastquestions => broadcastquestions.value !== adminQuestionID) });
+      })
+      .catch(error=>{console.error(error)});
+
     }
 
     addAdminQuestionToState(newQuestion){
@@ -59,10 +76,10 @@ class App extends React.Component{
             .catch(error=>{console.error(error)});
     }
     componentDidMount() {
-
         this.fetchAdminQuestionData();
         this.getStudentQuestions();
         this.getAdminUserData();
+
 
     }
     componentDidUpdate() {
@@ -127,10 +144,12 @@ class App extends React.Component{
                 </div>
                 <div className="row" style={{'height':93 + 'vh'}}>
                     <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
-                    <Video userType={this.state.userType}                            
-                            data={this.state.broadcastquestions}
-                            adminData={[this.state.adminID, this.state.adminTwitchUsername]}
-                            passQuestionCallback={this.addAdminQuestionToState}
+                    <Video userType={this.state.userType}
+                        hostUser={this.state.adminTwitchUsername}
+                        data={this.state.broadcastquestions}
+                        adminData={[this.state.adminID, this.state.adminTwitchUsername]}
+                        passQuestionCallback={this.addAdminQuestionToState}
+                        deleteAdminQuestion={this.deleteAdminQuestion}
 
                     />
                     <SidePanel userType={this.state.userType}

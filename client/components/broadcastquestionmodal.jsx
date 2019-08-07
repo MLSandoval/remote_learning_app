@@ -6,11 +6,21 @@ export default class BroadcastModal extends React.Component {
   constructor(props) {
     super(props)
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleDeleteSavedQuestion = this.handleDeleteSavedQuestion.bind(this);
   }
 
 
   handleDelete(){
     this.setState({});
+  }
+
+
+  handleDeleteSavedQuestion(){
+    if (this.props.question) {
+      console.log('the handleDelete if statement ran');
+      // this.props.deleteAdminQuestion(this.props.question.value);
+      this.props.resetSelect();
+    } 
   }
 
 
@@ -32,13 +42,14 @@ export default class BroadcastModal extends React.Component {
                     style={{ 'width': 100 + '%' }}
                     options={this.props.options}
                     onChange={this.props.handleSelect}
+                    value={this.props.question}
                   />
                   <Answers
                     data={this.props.question}
                   />
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-danger" onClick={this.handleDelete} >Delete</button>
+                  <button type="button" className="btn btn-danger" onClick={this.handleDeleteSavedQuestion} >Delete</button>
                   <button type="button" className="btn btn-primary" onClick={this.props.handleSend}>Send</button>
                 </div>
               </div>
