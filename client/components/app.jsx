@@ -126,16 +126,17 @@ class App extends React.Component{
                 <div className="row" style={{'height':93 + 'vh'}}>
                     <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
                     <Video userType={this.state.userType}
-                        hostUser={this.state.adminTwitchUsername}
-                        data={this.state.broadcastquestions}
-                        adminData={[this.state.adminID, this.state.adminTwitchUsername]}
-                        passQuestionCallback={this.addAdminQuestionToState}
+                            
+                            data={this.state.broadcastquestions}
+                            adminData={[this.state.adminID, this.state.adminTwitchUsername]}
+                            passQuestionCallback={this.addAdminQuestionToState}
 
                     />
                     <SidePanel userType={this.state.userType}
-                        add={this.addQuestion}
-                        delete={this.deleteQuestion}
-                        questionQueue={this.state.questionQueue} />
+                                adminData={[this.state.adminID, this.state.adminTwitchUsername]}
+                                add={this.addQuestion}
+                                delete={this.deleteQuestion}
+                                questionQueue={this.state.questionQueue} />
                 </div>
             </div>
         )

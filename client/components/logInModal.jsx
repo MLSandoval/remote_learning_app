@@ -16,22 +16,23 @@ export default class LogIn extends React.Component {
 
   login() {
     this.props.loginFunction(this.state.username);
+    this.props.close();
   }
 
 
   render() {
     if(this.props.loginState) {
       return (
-      <div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Log In</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={this.props.close}>
+      <div className="modal" tabindex="-1" role="dialog" style={{'zIndex':1600, 'backgroundColor': 'black'}}>
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Log In</h5>
+              {/* <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={this.props.close}>
                 <span aria-hidden="true">&times;</span>
-              </button>
+              </button> */}
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <form>
                 <input 
                 type="text"
@@ -40,7 +41,7 @@ export default class LogIn extends React.Component {
                 ></input>
               </form>
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button type="submit" class="btn btn-primary" onClick={this.login}>Log In</button>
             </div>
           </div>
