@@ -147,7 +147,7 @@ server.post('/addQuestionQ', (req, res) => {
             console.error(error);
             process.exit(1);
         }
-        res.send('ok questionQ added!!')
+        res.send({success: true, data:{message: 'question added'}})
     })
 });
 
