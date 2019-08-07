@@ -18,6 +18,4 @@ export default class Question extends React.Component{
             return questionDivs;
         }
       }
-       
-
 }
