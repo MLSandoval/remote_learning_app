@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ExpandedQuestionModal from './expandedQuestionModal';
 
 export default class SidePanel extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
       visible: 'chat',
-      value: ''
+      value: '',
+      selectedQuestion: null
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.appendQuestionDivs = this.appendQuestionDivs.bind(this);
+    this.showQuestionInput =this.showQuestionInput.bind(this);
+    this.resetSelectedQuestion = this.resetSelectedQuestion.bind(this);
   }
 
   handleSubmit(event) {
@@ -37,15 +41,24 @@ export default class SidePanel extends React.Component{
             </div>)
             return questionDivs;
     } else {
-
         var questionDivs = this.props.questionQueue.map(x =>
-          <div className="question nopadding" style={{ 'height': 10 + 'vh' }} key={x.id}>{x.question} - {x.author}
-          <i className="fas fa-times" onClick={()=>{deleteQuestion(x.id)}}></i>
-        </div>)
+          <div onClick={()=>{{this.showQuestionInput(x)}}} className="question nopadding" style={{ 'height': 10 + 'vh' }} key={x.id}> 
+          {x.question} - {x.author}
+            <i className="fas fa-times" onClick={()=>{deleteQuestion(x.id)}}></i>
+        </div>
+        )
         return questionDivs;
     }
   }
 
+  showQuestionInput(data){
+    this.setState({selectedQuestion:data})
+    console.log("Inside question divs: ", data);
+  }
+  
+  resetSelectedQuestion() {
+    this.setState({ selectedQuestion : null })
+  }
 
   render(){
     const { visible } = this.state;
@@ -107,7 +120,9 @@ export default class SidePanel extends React.Component{
             <div className="row col-lg-12 container-fluid nopadding">
               <div className="col-lg-12 nopadding fullheight"
                    style={{ 'height': 85 + 'vh', 'overflow': 'scroll' }}>
-                   {this.appendQuestionDivs()}</div>
+                      {this.appendQuestionDivs()}
+                      {this.state.selectedQuestion && <ExpandedQuestionModal resetSelectedQuestion={this.resetSelectedQuestion} questionTarget={this.state.selectedQuestion} />}
+              </div>
             </div>
           </div>
         </div>

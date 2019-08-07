@@ -13,7 +13,7 @@ class App extends React.Component{
             adminTwitchUsername: '',
             userType: 'admin',
             questionQueue: [],
-            broadcastquestions: []
+            broadcastquestions: [],
         }
         this.switchUser = this.switchUser.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
@@ -106,18 +106,20 @@ class App extends React.Component{
             this.setState({ userType: 'admin' })
         }
     }
+
     addQuestion(question) {
         let newQuestion = [{ 'id': '4', 'question': question, 'author': 'Guest' }];
         this.setState({ questionQueue: this.state.questionQueue.concat(newQuestion)})
       }
+
     deleteQuestion(id){
         let questionArr = this.state.questionQueue.filter(questionObj =>{
              return questionObj.id !== id;
         })
-           this.setState({questionQueue:questionArr})
-        }
+        this.setState({questionQueue:questionArr})
+    }
+
     render(){
-        console.log("THIS IS FROM APP: ", this.state.broadcastquestions)
         return(
             <div id="app" className="container-fluid nopadding">
                 <div className="row" style={{'height':7 + 'vh'}}>
@@ -130,12 +132,12 @@ class App extends React.Component{
                         data={this.state.broadcastquestions}
                         adminData={[this.state.adminID, this.state.adminTwitchUsername]}
                         passQuestionCallback={this.addAdminQuestionToState}
-
                     />
                     <SidePanel userType={this.state.userType}
                         add={this.addQuestion}
                         delete={this.deleteQuestion}
-                        questionQueue={this.state.questionQueue} />
+                        questionQueue={this.state.questionQueue} 
+                        />
                 </div>
             </div>
         )

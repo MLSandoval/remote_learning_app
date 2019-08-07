@@ -144,9 +144,7 @@ td {
 
 .modal-lg{
   max-width: 74.5%;
-<<<<<<< HEAD
-=======
-} */
+} 
 
 .modalBG{
   height: 100vh;
@@ -158,7 +156,6 @@ td {
 }
 .bringModalForward{
   z-index: 1;
->>>>>>> 9b1a2121cbfd6539b649a3bc0a925754ccd77a00
 }
 
 .dropdown-menu {

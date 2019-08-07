@@ -2,6 +2,8 @@ import React from 'react';
 import AddAdminQuestionForm from './addAdminQuestionForm.jsx';
 import BroadcastModal from './broadcastquestionmodal';
 import StudentModal from './studentModal';
+import ExpandedQuestionModal from "./expandedQuestionModal"
+
 
 export default class Video extends React.Component{
     constructor(props){
@@ -98,8 +100,8 @@ export default class Video extends React.Component{
                             <i id="savedButton" className="admin-button fa fa-list-ul"></i>
                         </button>
                     </div> 
-
                     {this.renderModalSwitch()}    
+                    {/* <ExpandedQuestionModal/> */}
                 </div>
             )
         } else {
