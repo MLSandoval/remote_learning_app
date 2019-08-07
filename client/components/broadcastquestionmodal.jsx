@@ -12,7 +12,6 @@ export default class BroadcastModal extends React.Component {
 
   handleDelete(){
     this.setState({});
-    this.handleDeleteSavedQuestion = this.handleDeleteSavedQuestion.bind(this);
   }
 
 
