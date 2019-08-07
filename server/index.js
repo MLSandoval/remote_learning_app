@@ -6,6 +6,7 @@ const mysql = require('mysql');
 const creds = require('./mysql_credentials.js');
 const db = mysql.createConnection(creds);
 const pubDirectory = path.join(__dirname, '/public');
+console.log('__dirname: ', __dirname);
 
 server.use(cors());
 server.use(express.urlencoded({ extended: false }));
@@ -146,7 +147,7 @@ server.post('/addQuestionQ', (req, res) => {
             console.error(error);
             process.exit(1);
         }
-        res.send('ok questionQ added!!')
+        res.send({success: true, data:{message: 'question added'}})
     })
 });
 

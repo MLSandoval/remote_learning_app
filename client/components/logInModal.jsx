@@ -42,7 +42,7 @@ export default class LogIn extends React.Component {
               </form>
             </div>
             <div className="modal-footer">
-              <button type="submit" class="btn btn-primary" onClick={this.login}>Log In</button>
+              <button type="submit" className="btn btn-primary" onClick={this.login}>Log In</button>
             </div>
           </div>
         </div>

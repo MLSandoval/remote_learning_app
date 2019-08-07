@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ExpandedQuestionModal from './expandedQuestionModal';
 
 export default class SidePanel extends React.Component{
@@ -17,10 +16,45 @@ export default class SidePanel extends React.Component{
     this.showQuestionInput =this.showQuestionInput.bind(this);
     this.resetSelectedQuestion = this.resetSelectedQuestion.bind(this);
     this.handleDeleteStudentQuestion = this.handleDeleteStudentQuestion.bind(this);
+    this.handleQuestionAdd = this.handleQuestionAdd.bind(this);
   }
 
   handleDeleteStudentQuestion(event){
     console.log('what is studentQuestionID:', event.currentTarget);
+    this.handleQuestionAdd = this.handleQuestionAdd.bind(this);
+  }
+
+  handleQuestionAdd(event){
+    //make this dynamic at some point
+    let studentID = 1;
+
+    this.props.add(this.state.value);
+
+    let question = {
+      question: this.state.value,
+      studentID
+    };
+    console.log('handleQuestionAdd question: ', question);
+
+    fetch('http://localhost:3001/addQuestionQ',{
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        question: question.question,
+        studentID: question.studentID
+      })
+    })
+    .then(res=> res.json())
+    .then(res=>{
+      console.log('qq add fetch success, res: ', res);
+    })
+    .catch(error=>{
+      console.error(error);
+    });
+
+    this.setState({value: ''});
   }
 
   handleSubmit(event) {
@@ -39,21 +73,23 @@ export default class SidePanel extends React.Component{
 
   appendQuestionDivs(){
     if(this.props.userType === 'student') {
+      console.log('appendquestiondivs student view called');
           var questionDivs = this.props.questionQueue.map(x =>
-            <div className="question" key={x.id}>
+            <div className="question" id={x.id} key={x.id}>
             {x.question} - {x.author}
             </div>)
             return questionDivs;
     } else {
+      console.log('append questiondivs amdin view called')
         var questionDivs = this.props.questionQueue.map(x =>
-          <div onClick={()=>{{this.showQuestionInput(x)}}} className="question nopadding" style={{ 'height': 10 + 'vh' }} key={x.id}> 
+          <div onClick={() => { { this.showQuestionInput(x) } }} className="question nopadding" id={x.id} style={{ 'height': 6 + 'vh' }} key={x.id}> 
           {x.question} - {x.author}
             <i className="fas fa-times" onClick={()=>{deleteQuestion(x.id)}}></i>
         </div>
-        )
-        return questionDivs;
-    }
+        );
+      return questionDivs;
   }
+}
 
   showQuestionInput(data){
     this.setState({selectedQuestion:data})
@@ -87,28 +123,27 @@ export default class SidePanel extends React.Component{
           </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">
-              <div className="col-lg-12 nopadding"
-                  style={{'height': 85 + 'vh', 'overflow':'scroll'}}>
-                  {this.appendQuestionDivs()}</div>
-                <form className="col-lg-12 row container-fluid nopadding" onSubmit={this.handleSubmit}>
-                  <div className="col-lg-10">
-                    <label>
-                      <input
-                        type="text"
-                        value={this.state.value}
-                        onChange={this.handleChange}
-                        placeholder="Enter question" />
-                    </label>
-                  </div>
-                  <input
-                    className="col-lg-2 nopadding"
-                    type="submit"
-                    value="submit"
-                    onClick={() => this.props.add(this.state.value)} />
-                </form>
-              </div>
+              <div className="col-lg-12 nopadding fullheight QQheightAndScroll">
+                {this.appendQuestionDivs()}</div>
+              <form className="col-lg-12 row container-fluid" onSubmit={this.handleSubmit}>
+                <div className="col-lg-11">
+                  <label>
+                    <input
+                      type="text"
+                      value={this.state.value}
+                      onChange={this.handleChange}
+                      placeholder="Enter question" />
+                  </label>
+                </div>
+                <input
+                  className="col-lg-1 nopadding"
+                  type="submit"
+                  value="Add"
+                  onClick={this.handleQuestionAdd} />
+              </form>
             </div>
-          </div>
+          </div>          
+        </div>
         )
     } else {
       return (
@@ -131,11 +166,11 @@ export default class SidePanel extends React.Component{
           </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">
-              <div className="col-lg-12 nopadding fullheight"
-                   style={{ 'height': 85 + 'vh', 'overflow': 'scroll' }}>
-                      {this.appendQuestionDivs()}
-                      {this.state.selectedQuestion && <ExpandedQuestionModal resetSelectedQuestion={this.resetSelectedQuestion} questionTarget={this.state.selectedQuestion} />}
+              <div className="col-lg-12 nopadding QQheightAndScroll"
+                   style={{ 'height': 76 + 'vh', 'overflow': 'scroll' }}>
+                   {this.appendQuestionDivs()}
               </div>
+            {this.state.selectedQuestion && <ExpandedQuestionModal resetSelectedQuestion={this.resetSelectedQuestion} questionTarget={this.state.selectedQuestion} />}
             </div>
           </div>
         </div>

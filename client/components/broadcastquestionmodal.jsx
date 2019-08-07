@@ -18,7 +18,7 @@ export default class BroadcastModal extends React.Component {
   handleDeleteSavedQuestion(){
     if (this.props.question) {
       console.log('the handleDelete if statement ran');
-      // this.props.deleteAdminQuestion(this.props.question.value);
+      this.props.deleteAdminQuestion(this.props.question.value);
       this.props.resetSelect();
     } 
   }
