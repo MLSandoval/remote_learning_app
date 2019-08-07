@@ -16,6 +16,11 @@ export default class SidePanel extends React.Component{
     this.appendQuestionDivs = this.appendQuestionDivs.bind(this);
     this.showQuestionInput =this.showQuestionInput.bind(this);
     this.resetSelectedQuestion = this.resetSelectedQuestion.bind(this);
+    this.handleDeleteStudentQuestion = this.handleDeleteStudentQuestion.bind(this);
+  }
+
+  handleDeleteStudentQuestion(event){
+    console.log('what is studentQuestionID:', event.currentTarget);
   }
 
   handleSubmit(event) {
@@ -33,7 +38,6 @@ export default class SidePanel extends React.Component{
   }
 
   appendQuestionDivs(){
-    let deleteQuestion = this.props.delete;
     if(this.props.userType === 'student') {
           var questionDivs = this.props.questionQueue.map(x =>
             <div className="question" key={x.id}>

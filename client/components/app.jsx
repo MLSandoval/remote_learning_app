@@ -25,6 +25,22 @@ class App extends React.Component{
 
     componentDidUpdate(){
         console.log('app state: ', this.state);
+        this.deleteAdminQuestion = this.deleteAdminQuestion.bind(this);
+    };
+
+    deleteAdminQuestion(adminQuestionID){
+      const broadcastquestions = this.state.broadcastquestions;
+      console.log('what is broadcastquestions', broadcastquestions);
+
+      fetch(`http://localhost:3001/adminQuestion?adminQuestionID=${adminQuestionID}`, {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({ broadcastquestions: broadcastquestions.filter(broadcastquestions => broadcastquestions.value !== adminQuestionID) });
+      })
+      .catch(error=>{console.error(error)});
+
     }
 
     addAdminQuestionToState(newQuestion){
@@ -59,10 +75,10 @@ class App extends React.Component{
             .catch(error=>{console.error(error)});
     }
     componentDidMount() {
-
         this.fetchAdminQuestionData();
         this.getStudentQuestions();
         this.getAdminUserData();
+
 
     }
     componentDidUpdate() {
@@ -132,6 +148,8 @@ class App extends React.Component{
                         data={this.state.broadcastquestions}
                         adminData={[this.state.adminID, this.state.adminTwitchUsername]}
                         passQuestionCallback={this.addAdminQuestionToState}
+                        deleteAdminQuestion={this.deleteAdminQuestion}
+
                     />
                     <SidePanel userType={this.state.userType}
                         add={this.addQuestion}
