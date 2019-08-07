@@ -25,15 +25,15 @@
 }
 
 .login {
-  display: inline-block;
-  position: relative;
-  height: 100%;
-  left: 90vw;
+  background-color: darkgrey;
+}
+
+.norightpadding {
+  padding-right: 0;
 }
 
 .loginbutton {
   background-color: darkgrey;
-  border: 
 }
 
 .loginbutton:active {
@@ -128,9 +128,7 @@ td {
 }
 
 .front {
-  z-index: 9999999999;
-  height:50px;
-  width:50px;
+  z-index: 1502;
 }
 
 .admin-button {

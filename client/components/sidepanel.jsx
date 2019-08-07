@@ -61,20 +61,25 @@ export default class SidePanel extends React.Component{
   }
 
   render(){
+    console.log('sidepanel props: ', this.props.adminData[1]);
     const { visible } = this.state;
     if (this.props.userType === 'student') {
       return (
         <div id="sidepanel" className="col-2 container-fluid nopadding fullheight">
-            <div className="row btn-group btn-group-justified" style={{ 'height': 8 + 'vh' }}>
-              <div id="chat_button" className="btn chat-button" onClick={() => this.setView('chat')}>
-                <i className="fa fa-comment-o middle" aria-hidden="true"></i>
-              </div>
-              <div id="queue_button" className="btn queue-button" onClick={() => this.setView('queue')}>
-                <i className="fa fa-question middle" aria-hidden="true"></i>
-              </div>
+            <div className="row btn-group btn-group-justified col-lg-12 nopadding" style={{ 'height': 8 + 'vh' }}>
+            <div id="chat_button" className="btn btn-primary" onClick={() => this.setView('chat')}>
+              <i className="fa fa-comment-o middle" aria-hidden="true"></i>
             </div>
+            <div id="queue_button" className="btn btn-primary" onClick={() => this.setView('queue')}>
+              <i className="fa fa-question middle" aria-hidden="true"></i>
+            </div>
+          </div>
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
-                <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat"/>
+                <iframe className="col-lg-12 nopadding"
+                        frameBorder="0"
+                        scrolling="no"
+                        // id="mixmstrmike"
+                        src={`https://www.twitch.tv/embed/${this.props.adminData[1]}/chat`}/>
           </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">
@@ -114,7 +119,11 @@ export default class SidePanel extends React.Component{
           </div>
 
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
-            <iframe className="col-lg-12 nopadding" frameBorder="0" scrolling="no" id="chat_embed" src="https://www.twitch.tv/embed/hebo/chat"/>
+            <iframe className="col-lg-12 nopadding"
+                    frameBorder="0"
+                    scrolling="yes"
+                    // id="mixmstrmike"
+                    src={`https://www.twitch.tv/embed/${this.props.adminData[1]}/chat`}/>
           </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className="row col-lg-12 container-fluid nopadding">
