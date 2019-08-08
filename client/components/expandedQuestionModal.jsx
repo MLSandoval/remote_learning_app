@@ -1,6 +1,6 @@
 import React from "react";
 
-export default  class ExpandedQuestionModal extends React.Component { 
+export default  class ExpandedQuestionModal extends React.Component {
     constructor(props){
         super(props);
         this.toggleView = this.toggleView.bind(this);
@@ -17,7 +17,7 @@ export default  class ExpandedQuestionModal extends React.Component {
 
     render(){
         console.log("ExpandedQuestionModal: ", this.props.questionTarget)
-    
+
 
         return (
             <div  className="modal" tabIndex="-1" role="dialog" onClick={this.toggleView}>
@@ -33,12 +33,12 @@ export default  class ExpandedQuestionModal extends React.Component {
                     <p>{this.props.questionTarget.question}</p>
                 </div>
                 <div  className="modal-footer">
-                    <button type="button"  className="btn btn-secondary" data-dismiss="modal" onClick={this.toggleView}>Close</button>
+                    {/* <button type="button"  className="btn btn-secondary" data-dismiss="modal" onClick={this.toggleView}>Close</button> */}
                     <button type="button"  className="btn btn-danger" data-dismiss="modal" onClick={this.handleDeleteStudentQuestion}>Delete</button>
                 </div>
                 </div>
             </div>
-            </div>) 
-        
+            </div>)
+
     }
 }
