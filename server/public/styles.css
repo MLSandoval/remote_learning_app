@@ -18,13 +18,6 @@
 
 .hide {display: none;}
 
-
-/* i {
-  position: absolute;
-  right: 10%;
-  cursor: pointer;
-} */
-
 .nopadding {
   padding: 0;
 }
@@ -107,10 +100,6 @@ label {
   width:100%;
 }
 
-.dropdown {
-  overflow: scroll;
-}
-
 table {
   width: 100%;
 }
@@ -146,7 +135,6 @@ td {
 .admin-button {
   height: 10%;
   width: 10%;
-  /* position: 'absolute'; */
   background-color: '#4CAF50';
   display: block;
   font-size: 16px;
@@ -154,9 +142,4 @@ td {
 
 .modal-lg{
   max-width: 74.5%;
-}
-
-.dropdown-menu {
-  position: relative;
-  display:inline-flex;
 }
