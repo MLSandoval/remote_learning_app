@@ -104,7 +104,7 @@ export default class SidePanel extends React.Component {
               <i className="fa fa-question middle" aria-hidden="true"></i>
             </div>
           </div>
-          <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
+          <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding h-100' : 'hide'}>
             <iframe className="col-lg-12 nopadding"
               frameBorder="0"
               scrolling="no"
@@ -151,7 +151,7 @@ export default class SidePanel extends React.Component {
             </div>
           </div>
 
-          <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding fullheight' : 'hide'}>
+          <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding h-100' : 'hide'}>
             <iframe className="col-lg-12 nopadding"
               frameBorder="0"
               scrolling="yes"

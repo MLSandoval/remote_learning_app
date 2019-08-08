@@ -155,7 +155,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div id="app" className="container-fluid nopadding">
+      <div id="app" className="container-fluid p-0">
         <div className="row" style={{ 'height': 7 + 'vh' }}>
           <Header switchUser={this.switchUser}
             loginFunction={this.getUserLoginData}

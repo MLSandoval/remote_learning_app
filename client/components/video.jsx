@@ -110,7 +110,7 @@ export default class Video extends React.Component{
 
         if (this.props.userType === 'admin') {
             return (
-                <div id="video" className="col-10 fullheight">
+                <div id="video" className="col-10">
                     <iframe src={`https://player.twitch.tv/?channel=${this.props.adminData[1]}&muted=true`} height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}> </iframe>
                     <div className="front btn-group-vertical"
                         style={{ 'bottom': 70 + 'vh', "height": 150 + 'px' }}>
@@ -128,14 +128,14 @@ export default class Video extends React.Component{
         } else {
             if (this.state.displayQuestion){
                 return (
-                    <div id="video" className="col-10 fullheight">
+                    <div id="video" className="col-10">
                         <iframe src={`https://player.twitch.tv/?channel=${this.props.adminData[1]}&muted=true`} height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}></iframe>
                         <StudentModal adminQuestion={this.state.sentQuestion} />
                     </div>
                 )
             } else {
                 return (
-                    <div id="video" className="col-10 fullheight">
+                    <div id="video" className="col-10">
                         <iframe src={`https://player.twitch.tv/?channel=${this.props.adminData[1]}&muted=true`} height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}></iframe>
                     </div>
                 )

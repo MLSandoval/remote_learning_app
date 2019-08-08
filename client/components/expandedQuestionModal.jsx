@@ -8,12 +8,12 @@ export default  class ExpandedQuestionModal extends React.Component {
         this.handleChildClick = this.handleChildClick.bind(this);
     }
 
-    toggleView(){
-        this.props.resetSelectedQuestion();
-    }
-    handleDeleteStudentQuestion(){
-      this.props.deleteStudentQuestion(this.props.questionTarget.id);
-    }
+  toggleView() {
+    this.props.resetSelectedQuestion();
+  }
+  handleDeleteStudentQuestion() {
+    this.props.deleteStudentQuestion(this.props.questionTarget.id);
+  }
 
     handleChildClick(event) {
     event.stopPropagation()
