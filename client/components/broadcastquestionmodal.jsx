@@ -29,6 +29,7 @@ export default class BroadcastModal extends React.Component {
   }
 
   render() {
+    console.log("modal is clicked: ", this.props.view, this.props.options.length);
     if (this.props.view === "saved" && this.props.options.length !== 0){
         return (
           <div className="modal" tabIndex="-1" role="dialog" onClick={this.props.toggle}>
