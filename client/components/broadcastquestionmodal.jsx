@@ -5,8 +5,10 @@ import Answers from './savedquestionanswers';
 export default class BroadcastModal extends React.Component {
   constructor(props) {
     super(props)
+  
     this.handleDelete = this.handleDelete.bind(this);
     this.handleDeleteSavedQuestion = this.handleDeleteSavedQuestion.bind(this);
+    this.handleChildClick = this.handleChildClick.bind(this);
   }
 
 
@@ -14,22 +16,22 @@ export default class BroadcastModal extends React.Component {
     this.setState({});
   }
 
-
   handleDeleteSavedQuestion(){
     if (this.props.question) {
-      console.log('the handleDelete if statement ran');
       this.props.deleteAdminQuestion(this.props.question.value);
       this.props.resetSelect();
     } 
   }
 
-
+  handleChildClick(event){
+    event.stopPropagation();
+  }
 
   render() {
     if (this.props.view === "saved" && this.props.options.length !== 0){
         return (
-          <div className="modal" tabIndex="-1" role="dialog">
-            <div className="modal-dialog modal-lg" role="document">
+          <div className="modal" tabIndex="-1" role="dialog" onClick={this.props.toggle}>
+            <div className="modal-dialog modal-lg" role="document" onClick={this.handleChildClick}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Saved Questions</h5>

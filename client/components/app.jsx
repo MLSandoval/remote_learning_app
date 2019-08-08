@@ -29,7 +29,6 @@ class App extends React.Component{
     };
 
     componentDidUpdate(){
-        console.log('app state: ', this.state);
         this.deleteAdminQuestion = this.deleteAdminQuestion.bind(this);
     };
 

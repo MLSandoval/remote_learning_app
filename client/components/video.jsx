@@ -27,7 +27,7 @@ export default class Video extends React.Component{
     }
 
     toggleModal(event){
-        console.log('toggle modal called.');
+        console.log('toggle modal called')
         if (this.state.view === '' && event.target.id === 'addButton' || this.state.view === 'saved' && event.target.id === 'addButton'){
             this.setState({ view: 'add' });
         } else if (this.state.view === '' || this.state.view === 'add' && event.target.id === 'savedButton') {
