@@ -68,16 +68,15 @@ export default class SidePanel extends React.Component {
   appendQuestionDivs() {
     if (this.props.userType === 'student') {
       var questionDivs = this.props.questionQueue.map(x =>
-        <div className="question" id={x.id} key={x.id}>
+        <li className="list-group-item text-truncate" id={x.id} key={x.id}>
           {x.question} - {x.author}
-        </div>)
+        </li>)
       return questionDivs;
     } else {
       var questionDivs = this.props.questionQueue.map(x =>
-        <div onClick={() => { { this.showQuestionInput(x) } }} className="question nopadding" id={x.id} style={{ 'height': 6 + 'vh' }} key={x.id}>
+        <li onClick={() => { { this.showQuestionInput(x) } }} className="list-group-item text-truncate" id={x.id} key={x.id}>
           {x.question} - {x.author}
-          <i className="fas fa-times" onClick={() => { deleteQuestion(x.id) }}></i>
-        </div>
+        </li>
       );
       return questionDivs;
     }
@@ -120,17 +119,21 @@ export default class SidePanel extends React.Component {
                 <div className="col-lg-11">
                   <label>
                     <input
+                      className="p-0"
                       type="text"
                       value={this.state.value}
                       onChange={this.handleChange}
                       placeholder="Enter question" />
                   </label>
                 </div>
-                <input
+                {/* <button
                   className="col-lg-1 nopadding"
                   type="submit"
-                  value="Add"
-                  onClick={this.handleQuestionAdd} />
+                  value="+"
+                  onClick={this.handleQuestionAdd} /> */}
+                  <button className="p-0" type="submit" onClick={this.handleQuestionAdd} style={{ 'height': '28px'}}>
+                    +
+                  </button>
               </form>
             </div>
           </div>
