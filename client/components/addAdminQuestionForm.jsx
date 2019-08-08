@@ -16,6 +16,7 @@ export default class AddAdminQuestionForm extends React.Component{
         this.storeQuestionData = this.storeQuestionData.bind(this);
         this.handleAnswerInput = this.handleAnswerInput.bind(this);
         this.handleSelectedAnswer =this.handleSelectedAnswer.bind(this);
+        this.handleChildClick = this.handleChildClick.bind(this);
     }
 
     storeQuestionData(){
@@ -108,12 +109,15 @@ export default class AddAdminQuestionForm extends React.Component{
         this.setState({selectedAnswer:targetAnswer});
     }
 
+    handleChildClick(event){
+        event.stopPropagation();
+      }
+
     render() {
-        console.log("new value ", this.state.selectedAnswer);
         if(this.props.view === 'add'){
             return(
-                <div className="modal " tabIndex="-1" role="dialog">
-                    <div className="modal-dialog modal-lg" role="document">
+                <div className="modal " tabIndex="-1" role="dialog" onClick={this.props.toggle}>
+                    <div className="modal-dialog modal-lg" role="document" onClick={this.handleChildClick}>
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">New Question</h5>
