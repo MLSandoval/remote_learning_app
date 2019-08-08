@@ -179,7 +179,8 @@ io.on('connection', (socket) => {
     console.log('backend socket received. question data: ', question);
     io.emit('questionToBroadcast', question);
   });
-})
+});
 
 http.listen(3001, () => {
-  console.log('Node server listening on port 3001 successfully.')});
+  console.log('Node server listening on port 3001 successfully.')
+});
