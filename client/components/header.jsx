@@ -25,7 +25,7 @@ export default class Header extends React.Component {
     return(
       <div className="col-12 container-fluid">
         <div className="row fullheight">
-          <div className="col-10 fullheight">Telegogy</div>
+          <div className="col-10 fullheight">Remogy</div>
           <div className="col-2 fullheight nopadding" onClick={this.renderLogInModal}>Log In</div>
         </div>
         <LogIn loginState={this.state.login} 
