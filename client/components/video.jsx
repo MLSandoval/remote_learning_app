@@ -59,6 +59,7 @@ export default class Video extends React.Component{
             return(
                 <div className="container">
                     <BroadcastModal view={this.state.view}
+                        handleSendQuestion={this.handleSendQuestion}
                         options={this.props.data}
                         toggle={this.toggleModal}
                         question={this.state.selectedQuestion}

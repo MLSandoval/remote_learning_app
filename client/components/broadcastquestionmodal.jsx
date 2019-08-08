@@ -50,7 +50,7 @@ export default class BroadcastModal extends React.Component {
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-danger" onClick={this.handleDeleteSavedQuestion} >Delete</button>
-                  <button type="button" className="btn btn-primary" onClick={this.props.handleSend}>Send</button>
+                  <button type="button" className="btn btn-primary" onClick={this.props.handleSendQuestion}>Send</button>
                 </div>
               </div>
             </div>
