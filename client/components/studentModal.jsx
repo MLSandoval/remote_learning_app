@@ -19,8 +19,6 @@ export default class StudentModal extends React.Component{
 
 
     render(){
-        console.log("question obj in studentModal: ", this.props.adminQuestion)
-        console.log("toggle modal: ", this.state.broadcast)
         if(this.toggleStudentModal){
             return(
                 <React.Fragment>

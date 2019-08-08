@@ -32,7 +32,7 @@ export default class Video extends React.Component{
     }
 
     toggleModal(event){
-        console.log('toggle modal called.');
+        
         if (this.state.view === '' && event.target.id === 'addButton' || this.state.view === 'saved' && event.target.id === 'addButton'){
             this.setState({ view: 'add' });
         } else if (this.state.view === '' || this.state.view === 'add' && event.target.id === 'savedButton') {
@@ -46,32 +46,29 @@ export default class Video extends React.Component{
     }  
 
     handleQuestionSelect(event) {
-        console.log('handlequestionselect in video, event: ', event);
-        this.setState({
-            selectedQuestion: event
-        })
+        this.setState({selectedQuestion: event});
     }
 
     handleSendQuestion() {
-        console.log('handleSendQuestion in video called, this.state.sentQuestion', this.state.selectedQuestion);
+  
         this.socket.emit('broadcast', this.state.selectedQuestion); //or this.state.sentQuestion
-        this.handleQuestionToBroadcast();
+        // this.handleQuestionToBroadcast();
     }
 
-    handleQuestionToBroadcast(){
-        console.log('handleQuestionToBroadcast called. socket emitting');
-        this.socket.emit('questionToBroadcast', {success: true});
-        this.setState({ displayQuestion: true, sentQuestion: this.state.selectedQuestion });
-        setTimeout(() => { this.setState({ displayQuestion: false, sentQuestion: '' }) }, 30000);
+    handleQuestionToBroadcast(question){
+        console.log('compare question:', question);
+        console.log('compare this.state.selectedQuestion', this.state.selectedQuestion);
+        this.setState({ displayQuestion: true, sentQuestion: question });
+
+        setTimeout(() => { this.setState({ displayQuestion: false, sentQuestion: '' }) }, 7000);
     }
 
     componentDidMount(){
-       
         this.socket = socketIOClient('http://0.0.0.0:3001');
-
-        this.socket.on('questionToBroadcast', this.handleQuestionToBroadcast);
-
-
+        this.socket.on('questionToBroadcast', question =>{
+            console.log('socket on questionToBroadcast pinged correctly, question: ', question);
+            this.handleQuestionToBroadcast(question);
+        });
     }
 
     componentWillUnmount(){

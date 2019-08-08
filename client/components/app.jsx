@@ -30,7 +30,7 @@ class App extends React.Component{
     };
 
     componentDidUpdate(){
-        console.log('app state: ', this.state);
+
         this.deleteAdminQuestion = this.deleteAdminQuestion.bind(this);
     };
 
@@ -48,14 +48,8 @@ class App extends React.Component{
     }
 
     addAdminQuestionToState(newQuestion){
-        console.log('addAdminQuestionToState called. newQuestion: ', newQuestion);
-        console.log('this.state.broadcastquestions: ', this.state.broadcastquestions);
-
         newQuestion.answers = newQuestion.answers.join(',');
-        console.log('addAdminQuestionToState called. newQuestion after join()ß: ', newQuestion);
-
         this.setState({broadcastquestions: this.state.broadcastquestions.concat(newQuestion)});
-        console.log('new question added state: ', this.state.broadcastquestions);
     }
 
 
@@ -75,7 +69,6 @@ class App extends React.Component{
     getUserLoginData(channelName, userType, userName){
         this.setState({'userName': userName});
         this.setState({'userType': userType});
-        console.log('entered getUserLoginData');
         let x = this;
         fetch(`https://api.twitch.tv/helix/users?login=${channelName}`,{
             method: 'GET',
@@ -85,12 +78,8 @@ class App extends React.Component{
         })
             .then(res => res.json())
             .then(res => {
-                console.log('response: ',res.data[0]);
-
                 x.setState({adminTwitchID: res.data[0].id});
                 x.setState({channelName: res.data[0].login});
-                console.log('app state: ', this.state);
-
             })
             .catch(error=>{console.error(error)});
     }
@@ -118,7 +107,6 @@ class App extends React.Component{
         })
             .then(promiseObj => promiseObj.json())
             .then(successObj => {
-                console.log('admin question object: ', successObj);
                 this.setState({
                     broadcastquestions: successObj.data.map(element =>
                         element = { 'value': element.id,
@@ -134,7 +122,7 @@ class App extends React.Component{
 
 
     switchUser(event){
-        console.log('radio button event: ',event);
+
         if (this.state.userType === 'admin'){
             this.setState({ userType: 'student' })
         } else {
