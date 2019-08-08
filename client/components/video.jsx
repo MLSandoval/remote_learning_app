@@ -53,18 +53,15 @@ export default class Video extends React.Component{
     }
 
     handleSendQuestion() {
-        console.log('handleSendQuestion in video called, this.state.sentQuestion', this.state.sentQuestion);
-        
-
-        socket.emit('broadcast', this.state.selectedQuestion); //or this.state.sentQuestion
-
-        
-    
+        console.log('handleSendQuestion in video called, this.state.sentQuestion', this.state.selectedQuestion);
+        // this.socket.emit('broadcast', this.state.selectedQuestion); //or this.state.sentQuestion
+        this.handleQuestionToBroadcast();
     }
 
     handleQuestionToBroadcast(){
-            this.setState({ displayQuestion: true, sentQuestion: this.state.selectedQuestion });
-            setTimeout(() => { this.setState({ displayQuestion: false, sentQuestion: '' }) }, 30000);
+        console.log('handleQuestionToBroadcast called.');
+        this.setState({ displayQuestion: true, sentQuestion: this.state.selectedQuestion });
+        setTimeout(() => { this.setState({ displayQuestion: false, sentQuestion: '' }) }, 30000);
     }
 
     componentDidMount(){

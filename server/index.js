@@ -155,7 +155,6 @@ server.delete('/studentQuestion', (req, res) => {
     let query = 'DELETE FROM ?? WHERE ?? = ?';
     let inserts = ['questionsQueue', 'id', studentQuestionID];
     let sql = mysql.format(query, inserts);
-    console.log('this is the formatted SQL', sql);
     db.query(sql, (error, data) =>  {
       if (!error) {
         const output = {
@@ -169,6 +168,12 @@ server.delete('/studentQuestion', (req, res) => {
 });
 
 //socketio listeners
+server.get('/', (req,res)=>{
+  res.send({succes: true, message: 'socketIO listener success'});
+});
+
+io.on('connection',(socket)=> {console.log('a user has connected!')});
+
 io.on('connection', (socket) => {
   socket.on('broadcast', (question) => {
     console.log('backend socket received. question data: ', question);
@@ -177,4 +182,4 @@ io.on('connection', (socket) => {
 })
 
 http.listen(3001, () => {
-  console.log('Node server listening on port 3001 successfully.');
+  console.log('Node server listening on port 3001 successfully.')});
