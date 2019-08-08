@@ -2,6 +2,7 @@ import React from 'react';
 import Video from './video.jsx';
 import SidePanel from './sidepanel.jsx';
 import Header from './header.jsx';
+import socketIOClient from "socket.io-client";
 
 
 class App extends React.Component{

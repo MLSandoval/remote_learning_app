@@ -1,10 +1,12 @@
 import React from 'react';
 import Select from 'react-select';
 import Answers from './savedquestionanswers';
+import socketIOClient from "socket.io-client";
 
 export default class BroadcastModal extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
+
     this.handleDelete = this.handleDelete.bind(this);
     this.handleDeleteSavedQuestion = this.handleDeleteSavedQuestion.bind(this);
   }
@@ -50,7 +52,7 @@ export default class BroadcastModal extends React.Component {
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-danger" onClick={this.handleDeleteSavedQuestion} >Delete</button>
-                  <button type="button" className="btn btn-primary" onClick={this.props.handleSend}>Send</button>
+                  <button type="button" className="btn btn-primary" onClick={this.props.handleSendQuestion}>Send</button>
                 </div>
               </div>
             </div>

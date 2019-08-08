@@ -1,3 +1,4 @@
+//requires
 const express = require('express');
 const server = express();
 const cors = require('cors');
@@ -6,15 +7,17 @@ const mysql = require('mysql');
 const creds = require('./mysql_credentials.js');
 const db = mysql.createConnection(creds);
 const pubDirectory = path.join(__dirname, '/public');
-console.log('__dirname: ', __dirname);
 
+//socket.IO
+const http = require('http').createServer(server);
+const io = require('socket.io')(http);
+
+//server uses
 server.use(cors());
 server.use(express.urlencoded({ extended: false }));
 server.use(express.static(pubDirectory));
 server.use(express.json());
-server.listen(3001, ()=> {
-    console.log('Listened to port 3001 successfully.');
-});
+
 
 // endpoint to get student questions
 server.get('/getStudentsQuestions',(request, response) => {
@@ -75,7 +78,6 @@ server.delete('/adminQuestion',(request, response) => {
 });
 
 server.post('/addAdminQuestion', (req,res)=>{
-    console.log('req.body:  ', req.body);
     let {correctAnswer, adminID, question} = req.body;
     let ansArray = req.body.answers.split(',');
     let [ans0, ans1, ans2, ans3] = ansArray;
@@ -93,9 +95,8 @@ server.post('/addAdminQuestion', (req,res)=>{
           break;
       }  
     }
-    console.log('question', question);
     
-    // this is meant to accommodate for apostrophes in the question text, but
+    // this^ is meant to accommodate for apostrophes in the question text, but
     // problematic code, gives type error even though im checking that question variable is 
     // a string before calling .search().replace() like i did on the answer strings 
     // question = question.toString().search(regex).replace("/'");
@@ -113,7 +114,6 @@ server.post('/addAdminQuestion', (req,res)=>{
             console.error(error);
             process.exit(1);
         }
-        console.log('questions table insert query on post call:::::::', insertQuestionQuery);
         questionID = results.insertId;
         let insertAnswersQuery = `
           INSERT INTO answerOptions ( question_id, answer )
@@ -135,13 +135,11 @@ server.post('/addAdminQuestion', (req,res)=>{
 
 server.post('/addQuestionQ', (req, res) => {
     let { studentID, question } = req.body;
-    console.log('req.body:::: ', req.body);
     let insertQuestionQQuery = `
         INSERT INTO questionsQueue ( question, studentUser_id)
             VALUES
             ('${question}', ${studentID})
         `;
-    console.log('insert questionsQ query: ', insertQuestionQQuery)
     db.query(insertQuestionQQuery, (error, results, fields) => {
         if (error) {
             console.error(error);
@@ -151,28 +149,14 @@ server.post('/addQuestionQ', (req, res) => {
     })
 });
 
-//single question query by question ID
-// SELECT a.id, a.channelName, a.twitchUser_id, q.question, q.questionOwner_id, ao.question_id,
-// GROUP_CONCAT(ao.answer) AS answers
-// FROM adminUsers AS a
-// JOIN questionsAdmin AS q
-// ON a.id = q.questionOwner_id
-// JOIN answerOptions AS ao
-// ON q.id = ao.question_id AND a.id = q.questionOwner_id
-// WHERE q.id = 4
+//socketio listeners
+io.on('connection', (socket)=>{
+  socket.on('broadcast', (question)=>{
+    console.log('backend socket received. question data: ', question);
+    io.emit('questionToBroadcast', question);
+  });
+})
 
-//grab all questions for an admin user
-// SELECT a.id, a.channelName, a.twitchUser_id, q.questionOwner_id, q.questionOwner_id,
-//     GROUP_CONCAT(q.question) AS questions
-// FROM adminUsers AS a
-// JOIN questionsAdmin AS q
-// ON a.id = q.questionOwner_id
-// WHERE a.id = 1
-
-// SELECT a.id, a.channelName, a.twitchUser_id, q.questionOwner_id, GROUP_CONCAT(q.id) AS questionID,
-//     GROUP_CONCAT(q.question) AS questions
-// FROM adminUsers AS a
-// JOIN questionsAdmin AS q
-// ON a.id = q.questionOwner_id
-
-// WHERE a.id = 1
+http.listen(3001, () => {
+  console.log('Node server listening on port 3001 successfully.');
+});

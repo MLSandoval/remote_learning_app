@@ -75,7 +75,6 @@ body {
 
 .modal{
   display: inline-block;
-  z-index: 64290;
 }
 
 .chat-button{

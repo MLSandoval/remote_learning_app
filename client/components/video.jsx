@@ -3,6 +3,7 @@ import AddAdminQuestionForm from './addAdminQuestionForm.jsx';
 import BroadcastModal from './broadcastquestionmodal';
 import StudentModal from './studentModal';
 import ExpandedQuestionModal from "./expandedQuestionModal"
+import socketIOClient from "socket.io-client";
 
 
 export default class Video extends React.Component{
@@ -13,6 +14,9 @@ export default class Video extends React.Component{
             selectedQuestion: '',
             displayQuestion: false,
             sentQuestion: '',
+            //socket state values
+            response: '',
+            endpoint: '/'
         }
 
         this.handleQuestionSelect = this.handleQuestionSelect.bind(this);
@@ -40,6 +44,42 @@ export default class Video extends React.Component{
         }
     }  
 
+    handleQuestionSelect(event) {
+        console.log('handlequestionselect in video, event: ', event);
+
+        this.setState({
+            selectedQuestion: event
+        })
+    }
+
+    handleSendQuestion() {
+        console.log('handleSendQuestion in video called, this.state.sentQuestion', this.state.sentQuestion);
+        
+
+        socket.emit('broadcast', this.state.selectedQuestion); //or this.state.sentQuestion
+
+        
+    
+    }
+
+    handleQuestionToBroadcast(){
+            this.setState({ displayQuestion: true, sentQuestion: this.state.selectedQuestion });
+            setTimeout(() => { this.setState({ displayQuestion: false, sentQuestion: '' }) }, 30000);
+    }
+
+    componentDidMount(){
+       
+        this.socket = socketIOClient('/');
+
+        this.socket.on('questionToBroadcast', this.handleQuestionToBroadcast);
+
+
+    }
+
+    componentWillUnmount(){
+        this.socket.off('questionToBroadcast');
+    }
+
     renderModalSwitch(){
         if (this.state.view === 'add'){
             return(
@@ -65,6 +105,7 @@ export default class Video extends React.Component{
                         handleSelect={this.handleQuestionSelect}
                         deleteAdminQuestion={this.props.deleteAdminQuestion}
                         resetSelect={this.resetSelect}
+                        handleSendQuestion={this.handleSendQuestion}
                         />
                 </div>
             );
@@ -74,24 +115,6 @@ export default class Video extends React.Component{
             );
         }
     }
-
-
-    handleQuestionSelect(event) {
-        console.log('handlequestionselect in video, event: ', event);
-
-        this.setState({
-            selectedQuestion: event
-        })
-    }
-
-    handleSendQuestion(){
-        this.setState({displayQuestion: true, sentQuestion: this.state.selectedQuestion});
-        setTimeout(() => {this.setState({displayQuestion: false, sentQuestion: ''})}, 5000);
-
-
-
-    }
-
 
     render(){
 
