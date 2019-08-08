@@ -28,7 +28,14 @@ export default class Header extends React.Component {
           <div className="col-10 fullheight">Telegogy</div>
           <div className="col-2 fullheight nopadding" onClick={this.renderLogInModal}>Log In</div>
         </div>
-        <LogIn loginState={this.state.login} close={this.closeLogInModal} loginFunction={this.props.loginFunction}/>
+        <LogIn loginState={this.state.login} 
+                close={this.closeLogInModal} 
+                loginFunction={this.props.loginFunction} 
+                userSelect={this.props.switchUser}
+                setStudentName={this.props.setStudentName}
+                handleChannelNameInput={this.handleChannelNameInput}
+                handleUsernameInput={this.handleUsernameInput}
+                handleSelectUser={this.handleSelectUser}/>
       </div>
     )
   }
