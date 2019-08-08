@@ -18,7 +18,7 @@ class App extends React.Component{
         }
         this.switchUser = this.switchUser.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
-        this.deleteQuestion = this.deleteQuestion.bind(this);
+        this.deleteStudentQuestion = this.deleteStudentQuestion.bind(this);
         this.fetchAdminQuestionData = this.fetchAdminQuestionData.bind(this);
         this.addAdminQuestionToState = this.addAdminQuestionToState.bind(this);
         this.getUserLoginData = this.getUserLoginData.bind(this);
@@ -35,8 +35,6 @@ class App extends React.Component{
 
     deleteAdminQuestion(adminQuestionID){
       const broadcastquestions = this.state.broadcastquestions;
-      console.log('what is broadcastquestions', broadcastquestions);
-
       fetch(`http://localhost:3001/adminQuestion?adminQuestionID=${adminQuestionID}`, {
         method: 'DELETE'
       })
@@ -152,11 +150,17 @@ class App extends React.Component{
         this.setState({ questionQueue: this.state.questionQueue.concat(newQuestion)})
       }
 
-    deleteQuestion(id){
-        let questionArr = this.state.questionQueue.filter(questionObj =>{
-             return questionObj.id !== id;
-        })
-        this.setState({questionQueue:questionArr})
+    deleteStudentQuestion(adminQuestionID){
+        const questionQueue = this.state.questionQueue;
+        fetch(`http://localhost:3001/studentQuestion?studentQuestionID=${adminQuestionID}`, {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({ questionQueue: questionQueue.filter(questionObj => questionObj.id !== adminQuestionID) });
+      })
+      .catch(error=>{console.error(error)});
+
     }
 
     render(){
@@ -184,7 +188,7 @@ class App extends React.Component{
                     <SidePanel userType={this.state.userType}
                                 adminData={[this.state.adminID, this.state.channelName]}
                                 add={this.addQuestion}
-                                delete={this.deleteQuestion}
+                                delete={this.deleteStudentQuestion}
                                 questionQueue={this.state.questionQueue} />
                 </div>
             </div>
