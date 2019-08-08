@@ -30,7 +30,6 @@ class App extends React.Component{
     };
 
     componentDidUpdate(){
-
         this.deleteAdminQuestion = this.deleteAdminQuestion.bind(this);
     };
 
@@ -54,16 +53,16 @@ class App extends React.Component{
 
 
     handleChannelNameInput(event) {
-    this.setState({channelName: event.target.value})
-  }
+        this.setState({channelName: event.target.value})
+    }
 
-  handleUsernameInput(event) {
-    this.setState({userName: event.target.value})
-  }
+    handleUsernameInput(event) {
+        this.setState({userName: event.target.value})
+    }
 
-  handleSelectUser(event) {
-    this.setState({userType: event.target.value})
-  }
+    handleSelectUser(event) {
+        this.setState({userType: event.target.value})
+    }
   
 
     getUserLoginData(channelName, userType, userName){

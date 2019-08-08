@@ -13,10 +13,7 @@ export default class Video extends React.Component{
             view : '',
             selectedQuestion: '',
             displayQuestion: false,
-            sentQuestion: '',
-            //socket state values
-            response: '',
-            endpoint: '/'
+            sentQuestion: ''
         }
 
         this.handleQuestionSelect = this.handleQuestionSelect.bind(this);
@@ -51,8 +48,7 @@ export default class Video extends React.Component{
 
     handleSendQuestion() {
   
-        this.socket.emit('broadcast', this.state.selectedQuestion); //or this.state.sentQuestion
-        // this.handleQuestionToBroadcast();
+        this.socket.emit('broadcast', this.state.selectedQuestion); 
     }
 
     handleQuestionToBroadcast(question){
@@ -64,8 +60,8 @@ export default class Video extends React.Component{
     }
 
     componentDidMount(){
-        // this.socket = socketIOClient('http://0.0.0.0:3001');
-        this.socket = socketIOClient('/');
+        this.socket = socketIOClient('http://0.0.0.0:3001');
+        // this.socket = socketIOClient('/');
         this.socket.on('questionToBroadcast', question =>{
             console.log('socket on questionToBroadcast pinged correctly, question: ', question);
             this.handleQuestionToBroadcast(question);
@@ -87,9 +83,7 @@ export default class Video extends React.Component{
                         adminData={this.props.adminData}
                         setStateCallback={this.toggleModal}
                     />
-                </div>
-                    
-                  
+                </div>   
             );
         }else if(this.state.view === 'saved'){
             return(
