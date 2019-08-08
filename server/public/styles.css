@@ -1,8 +1,16 @@
 .remogy-header {
+<<<<<<< HEAD
   background-image: url("./images/remogy.png");
   /* background-image: url('https://www.sideshow.com/product-asset/903429/feature'); */
   background-size: cover;
   background-position: center;
+=======
+  background-image: url("./images/remogyss.png");
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-color: black;
+>>>>>>> 5ed7185dafdedc0b3c5cc5b22cf722a9a0dbd18e
 }
 
 .question {
@@ -33,7 +41,7 @@
   max-height: 90%;
 }
 .QQheightAndScroll{
-  height: 70vh;
+  height: 80vh;
   overflow: scroll;
 }
 
