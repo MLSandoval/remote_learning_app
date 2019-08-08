@@ -112,7 +112,7 @@ export default class AddAdminQuestionForm extends React.Component{
         console.log("new value ", this.state.selectedAnswer);
         if(this.props.view === 'add'){
             return(
-                <div className="modal bringModalForward centerOnVideo" tabIndex="-1" role="dialog">
+                <div className="modal " tabIndex="-1" role="dialog">
                     <div className="modal-dialog modal-lg" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
