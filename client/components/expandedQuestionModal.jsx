@@ -4,10 +4,14 @@ export default  class ExpandedQuestionModal extends React.Component {
     constructor(props){
         super(props);
         this.toggleView = this.toggleView.bind(this);
+        this.handleDeleteStudentQuestion = this.handleDeleteStudentQuestion.bind(this);
     }
 
     toggleView(){
         this.props.resetSelectedQuestion();
+    }
+    handleDeleteStudentQuestion(){
+      this.props.deleteStudentQuestion(this.props.questionTarget.id);
     }
 
 
@@ -30,6 +34,7 @@ export default  class ExpandedQuestionModal extends React.Component {
                 </div>
                 <div  className="modal-footer">
                     <button type="button"  className="btn btn-secondary" data-dismiss="modal" onClick={this.toggleView}>Close</button>
+                    <button type="button"  className="btn btn-danger" data-dismiss="modal" onClick={this.handleDeleteStudentQuestion}>Delete</button>
                 </div>
                 </div>
             </div>

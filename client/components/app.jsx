@@ -11,18 +11,22 @@ class App extends React.Component{
         this.state = {
             adminID: 1,
             adminTwitchID: null,
-            adminTwitchUsername: '',
+            channelName: '',
             userType: 'admin',
             questionQueue: [],
             broadcastquestions: [],
+            userName: '',
         }
         this.switchUser = this.switchUser.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
-        this.deleteQuestion = this.deleteQuestion.bind(this);
+        this.deleteStudentQuestion = this.deleteStudentQuestion.bind(this);
         this.fetchAdminQuestionData = this.fetchAdminQuestionData.bind(this);
         this.addAdminQuestionToState = this.addAdminQuestionToState.bind(this);
-        this.getAdminUserData = this.getAdminUserData.bind(this);
+        this.getUserLoginData = this.getUserLoginData.bind(this);
         this.deleteAdminQuestion = this.deleteAdminQuestion.bind(this);
+        this.handleChannelNameInput = this.handleChannelNameInput.bind(this);
+        this.handleUsernameInput = this.handleUsernameInput.bind(this);
+        this.handleSelectUser = this.handleSelectUser.bind(this);
     };
 
     componentDidUpdate(){
@@ -32,8 +36,6 @@ class App extends React.Component{
 
     deleteAdminQuestion(adminQuestionID){
       const broadcastquestions = this.state.broadcastquestions;
-      console.log('what is broadcastquestions', broadcastquestions);
-
       fetch(`http://localhost:3001/adminQuestion?adminQuestionID=${adminQuestionID}`, {
         method: 'DELETE'
       })
@@ -56,10 +58,26 @@ class App extends React.Component{
         console.log('new question added state: ', this.state.broadcastquestions);
     }
 
-    getAdminUserData(adminTwitchUsername){
-        console.log('entered getAdminUserData');
+
+    handleChannelNameInput(event) {
+    this.setState({channelName: event.target.value})
+  }
+
+  handleUsernameInput(event) {
+    this.setState({userName: event.target.value})
+  }
+
+  handleSelectUser(event) {
+    this.setState({userType: event.target.value})
+  }
+  
+
+    getUserLoginData(channelName, userType, userName){
+        this.setState({'userName': userName});
+        this.setState({'userType': userType});
+        console.log('entered getUserLoginData');
         let x = this;
-        fetch(`https://api.twitch.tv/helix/users?login=${adminTwitchUsername}`,{
+        fetch(`https://api.twitch.tv/helix/users?login=${channelName}`,{
             method: 'GET',
             headers:{
                 "Client-Id": '1k9829yw8sqkbl0ghhao4ml6zpx33l'
@@ -70,7 +88,7 @@ class App extends React.Component{
                 console.log('response: ',res.data[0]);
 
                 x.setState({adminTwitchID: res.data[0].id});
-                x.setState({adminTwitchUsername: res.data[0].login});
+                x.setState({channelName: res.data[0].login});
                 console.log('app state: ', this.state);
 
             })
@@ -79,13 +97,9 @@ class App extends React.Component{
     componentDidMount() {
         this.fetchAdminQuestionData();
         this.getStudentQuestions();
-        this.getAdminUserData();
-
-
+        this.getUserLoginData();
     }
-    componentDidUpdate() {
-
-    }
+    
     getStudentQuestions() {
 
         fetch('http://localhost:3001/getStudentsQuestions', {
@@ -117,7 +131,10 @@ class App extends React.Component{
             }
             ).catch((error) => { console.error(error) });
     }
-    switchUser(){
+
+
+    switchUser(event){
+        console.log('radio button event: ',event);
         if (this.state.userType === 'admin'){
             this.setState({ userType: 'student' })
         } else {
@@ -125,38 +142,54 @@ class App extends React.Component{
         }
     }
 
+    setuserName(name){
+        this.setState({userName: name});
+    }
+
     addQuestion(question) {
-        let newQuestion = [{ 'id': this.state.questionQueue.length+1, 'question': question, 'author': 'Guest' }];
+        let newQuestion = [{ 'id': this.state.questionQueue.length+1, 'question': question, 'author': this.state.userName }];
         this.setState({ questionQueue: this.state.questionQueue.concat(newQuestion)})
       }
 
-    deleteQuestion(id){
-        let questionArr = this.state.questionQueue.filter(questionObj =>{
-             return questionObj.id !== id;
-        })
-        this.setState({questionQueue:questionArr})
+    deleteStudentQuestion(adminQuestionID){
+        const questionQueue = this.state.questionQueue;
+        fetch(`http://localhost:3001/studentQuestion?studentQuestionID=${adminQuestionID}`, {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({ questionQueue: questionQueue.filter(questionObj => questionObj.id !== adminQuestionID) });
+      })
+      .catch(error=>{console.error(error)});
+
     }
 
     render(){
         return(
             <div id="app" className="container-fluid nopadding">
                 <div className="row" style={{'height':7 + 'vh'}}>
-                    <Header loginFunction={this.getAdminUserData} />
+                    <Header switchUser={this.switchUser} 
+                    loginFunction={this.getUserLoginData} 
+                    setuserName={this.setuserName}
+                    handleChannelNameInput={this.handleChannelNameInput}
+                    handleUsernameInput={this.handleUsernameInput}
+                    handleSelectUser={this.handleSelectUser}
+                    />
                 </div>
                 <div className="row" style={{'height':93 + 'vh'}}>
                     <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
                     <Video userType={this.state.userType}
-                        hostUser={this.state.adminTwitchUsername}
+                        hostUser={this.state.channelName}
                         data={this.state.broadcastquestions}
-                        adminData={[this.state.adminID, this.state.adminTwitchUsername]}
+                        adminData={[this.state.adminID, this.state.channelName]}
                         passQuestionCallback={this.addAdminQuestionToState}
                         deleteAdminQuestion={this.deleteAdminQuestion}
 
                     />
                     <SidePanel userType={this.state.userType}
-                                adminData={[this.state.adminID, this.state.adminTwitchUsername]}
+                                adminData={[this.state.adminID, this.state.channelName]}
                                 add={this.addQuestion}
-                                delete={this.deleteQuestion}
+                                delete={this.deleteStudentQuestion}
                                 questionQueue={this.state.questionQueue} />
                 </div>
             </div>

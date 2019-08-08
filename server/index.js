@@ -38,7 +38,7 @@ server.get('/getStudentsQuestions',(request, response) => {
 });
 
 // endpoint to get admin questions
-server.get('/getAdminQuestions',(request, response) => {
+server.get('/getAdminQuestions',(req, res) => {
   db.connect(function () {
     const query = `SELECT q.id, q.question, q.questionOwner_id as admin_id, GROUP_CONCAt(a.id) AS answer_ids, GROUP_CONCAT(a.answer) as answers
                   FROM questionsAdmin as q
@@ -48,7 +48,7 @@ server.get('/getAdminQuestions',(request, response) => {
                   GROUP BY q.id`;
     db.query(query, function (error, data) {
       if (!error) {
-        response.send({
+        res.send({
           success: true,
           data
         });
@@ -58,9 +58,9 @@ server.get('/getAdminQuestions',(request, response) => {
 });
 
 // endpoint to delete admin question by id
-server.delete('/adminQuestion',(request, response) => {
+server.delete('/adminQuestion',(req, res) => {
   db.connect(function () {
-    const adminQuestionID = parseInt(request.query.adminQuestionID);
+    const adminQuestionID = parseInt(req.query.adminQuestionID);
     const query = `DELETE answerOptions, questionsAdmin
                    FROM answerOptions
                    JOIN questionsAdmin ON questionsAdmin.id = answerOptions.question_id
@@ -71,7 +71,7 @@ server.delete('/adminQuestion',(request, response) => {
           success: true,
           data
         };
-        response.send( output );
+        res.send( output );
       }
     });
   });
@@ -149,9 +149,28 @@ server.post('/addQuestionQ', (req, res) => {
     })
 });
 
+server.delete('/studentQuestion', (req, res) => {
+  db.connect(function () {
+    const { studentQuestionID } = req.query;
+    let query = 'DELETE FROM ?? WHERE ?? = ?';
+    let inserts = ['questionsQueue', 'id', studentQuestionID];
+    let sql = mysql.format(query, inserts);
+    console.log('this is the formatted SQL', sql);
+    db.query(sql, (error, data) =>  {
+      if (!error) {
+        const output = {
+          success: true,
+          data
+        };
+        res.send( output );
+      }
+    });
+  });
+});
+
 //socketio listeners
-io.on('connection', (socket)=>{
-  socket.on('broadcast', (question)=>{
+io.on('connection', (socket) => {
+  socket.on('broadcast', (question) => {
     console.log('backend socket received. question data: ', question);
     io.emit('questionToBroadcast', question);
   });
@@ -159,4 +178,3 @@ io.on('connection', (socket)=>{
 
 http.listen(3001, () => {
   console.log('Node server listening on port 3001 successfully.');
-});
