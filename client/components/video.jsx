@@ -21,6 +21,8 @@ export default class Video extends React.Component{
         this.toggleModal = this.toggleModal.bind(this);
         this.resetSelect = this.resetSelect.bind(this);
         this.handleQuestionToBroadcast = this.handleQuestionToBroadcast.bind(this);
+        this.handleAnswerData = this.handleAnswerData.bind(this);
+        this.handleStudentAnswerClicks = this.handleStudentAnswerClicks.bind(this);
     }
 
     resetSelect(){
@@ -56,20 +58,40 @@ export default class Video extends React.Component{
         console.log('compare this.state.selectedQuestion', this.state.selectedQuestion);
         this.setState({ displayQuestion: true, sentQuestion: question });
 
-        setTimeout(() => { this.setState({ displayQuestion: false, sentQuestion: '' }) }, 7000);
+        // setTimeout(() => { this.setState({ displayQuestion: false, sentQuestion: '' }) }, 25000);
     }
 
+    handleAnswerData(answerData){
+        console.log('handleAnswerData called properly, answerData: ', answerData);
+    }
+
+    handleStudentAnswerClicks(answer){
+        
+        console.log('handleStudentAnswerClicks called, answer: ', answer);
+
+        this.socket.emit('answer', answer);
+
+    }
+    
     componentDidMount(){
         this.socket = socketIOClient('http://0.0.0.0:3001');
         // this.socket = socketIOClient('/');
+
         this.socket.on('questionToBroadcast', question =>{
             console.log('socket on questionToBroadcast pinged correctly, question: ', question);
             this.handleQuestionToBroadcast(question);
+        });
+
+        this.socket.on('answer', (answerData)=>{
+            console.log('socket on answer pinged correctly, answer: ', answer);
+            this.handleAnswerData();
         });
     }
 
     componentWillUnmount(){
         this.socket.off('questionToBroadcast');
+        this.socket.off('answer');
+
     }
 
     renderModalSwitch(){
@@ -130,7 +152,10 @@ export default class Video extends React.Component{
                 return (
                     <div id="video" className="col-10">
                         <iframe src={`https://player.twitch.tv/?channel=${this.props.adminData[1]}&muted=true`} height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}></iframe>
-                        <StudentModal adminQuestion={this.state.sentQuestion} />
+                        <StudentModal 
+                            adminQuestion={this.state.sentQuestion} 
+                            handleStudentAnswerClicks={this.handleStudentAnswerClicks}    
+                        />
                     </div>
                 )
             } else {

@@ -19,6 +19,7 @@ export default class StudentModal extends React.Component{
 
 
     render(){
+        console.log('student modal props: ', this.props);
         if(this.toggleStudentModal){
             return(
                 <React.Fragment>
@@ -29,7 +30,10 @@ export default class StudentModal extends React.Component{
                                 <h5 className="modal-title">{this.props.adminQuestion.label}</h5>
                             </div>
                             <div className="modal-body">
-                                <Answers data={this.props.adminQuestion}></Answers>
+                                <Answers 
+                                    data={this.props.adminQuestion}
+                                    handleStudentAnswerClicks={this.props.handleStudentAnswerClicks}
+                                />
                             </div>
                             </div>
                         </div>
