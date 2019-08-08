@@ -2,10 +2,8 @@ import React from 'react';
 
 export default class Answers extends React.Component {
   render(){
-    console.log(this.props.data);
     if(this.props.data){
       const answers = this.props.data.answers.split(",");
-      console.log('saved questions props: ', this.props);
       return (
         <table>
           <tbody>

@@ -2,7 +2,8 @@ import React from 'react';
 import AddAdminQuestionForm from './addAdminQuestionForm.jsx';
 import BroadcastModal from './broadcastquestionmodal';
 import StudentModal from './studentModal';
-import ExpandedQuestionModal from "./expandedQuestionModal"
+import ExpandedQuestionModal from "./expandedQuestionModal";
+import socketIOClient from "socket.io-client";
 
 
 export default class Video extends React.Component{
@@ -12,13 +13,14 @@ export default class Video extends React.Component{
             view : '',
             selectedQuestion: '',
             displayQuestion: false,
-            sentQuestion: '',
+            sentQuestion: ''
         }
 
         this.handleQuestionSelect = this.handleQuestionSelect.bind(this);
         this.handleSendQuestion = this.handleSendQuestion.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.resetSelect = this.resetSelect.bind(this);
+        this.handleQuestionToBroadcast = this.handleQuestionToBroadcast.bind(this);
     }
 
     resetSelect(){
@@ -27,7 +29,7 @@ export default class Video extends React.Component{
     }
 
     toggleModal(event){
-        console.log('toggle modal called')
+        
         if (this.state.view === '' && event.target.id === 'addButton' || this.state.view === 'saved' && event.target.id === 'addButton'){
             this.setState({ view: 'add' });
         } else if (this.state.view === '' || this.state.view === 'add' && event.target.id === 'savedButton') {
@@ -40,6 +42,36 @@ export default class Video extends React.Component{
         }
     }  
 
+    handleQuestionSelect(event) {
+        this.setState({selectedQuestion: event});
+    }
+
+    handleSendQuestion() {
+  
+        this.socket.emit('broadcast', this.state.selectedQuestion); 
+    }
+
+    handleQuestionToBroadcast(question){
+        console.log('compare question:', question);
+        console.log('compare this.state.selectedQuestion', this.state.selectedQuestion);
+        this.setState({ displayQuestion: true, sentQuestion: question });
+
+        setTimeout(() => { this.setState({ displayQuestion: false, sentQuestion: '' }) }, 7000);
+    }
+
+    componentDidMount(){
+        this.socket = socketIOClient('http://0.0.0.0:3001');
+        // this.socket = socketIOClient('/');
+        this.socket.on('questionToBroadcast', question =>{
+            console.log('socket on questionToBroadcast pinged correctly, question: ', question);
+            this.handleQuestionToBroadcast(question);
+        });
+    }
+
+    componentWillUnmount(){
+        this.socket.off('questionToBroadcast');
+    }
+
     renderModalSwitch(){
         if (this.state.view === 'add'){
             return(
@@ -51,9 +83,7 @@ export default class Video extends React.Component{
                         adminData={this.props.adminData}
                         setStateCallback={this.toggleModal}
                     />
-                </div>
-                    
-                  
+                </div>   
             );
         }else if(this.state.view === 'saved'){
             return(
@@ -75,24 +105,6 @@ export default class Video extends React.Component{
             );
         }
     }
-
-
-    handleQuestionSelect(event) {
-        console.log('handlequestionselect in video, event: ', event);
-
-        this.setState({
-            selectedQuestion: event
-        })
-    }
-
-    handleSendQuestion(){
-        this.setState({displayQuestion: true, sentQuestion: this.state.selectedQuestion});
-        setTimeout(() => {this.setState({displayQuestion: false, sentQuestion: ''})}, 5000);
-
-
-
-    }
-
 
     render(){
 
