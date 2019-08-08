@@ -6,10 +6,6 @@ export default class AdminButtons extends React.Component {
     this.addQuestion= this.addQuestion.bind(this);
   }
 
-  addQuestion() {
-
-  }
-
   render() {
     if(this.props.userType ==="admin") {
       return (

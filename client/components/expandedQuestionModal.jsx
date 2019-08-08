@@ -5,6 +5,7 @@ export default  class ExpandedQuestionModal extends React.Component {
         super(props);
         this.toggleView = this.toggleView.bind(this);
         this.handleDeleteStudentQuestion = this.handleDeleteStudentQuestion.bind(this);
+        this.handleChildClick = this.handleChildClick.bind(this);
     }
 
     toggleView(){
@@ -14,6 +15,9 @@ export default  class ExpandedQuestionModal extends React.Component {
       this.props.deleteStudentQuestion(this.props.questionTarget.id);
     }
 
+    handleChildClick(event) {
+    event.stopPropagation()
+    };
 
     render(){
         console.log("ExpandedQuestionModal: ", this.props.questionTarget)
@@ -21,7 +25,7 @@ export default  class ExpandedQuestionModal extends React.Component {
 
         return (
             <div  className="modal" tabIndex="-1" role="dialog" onClick={this.toggleView}>
-            <div  className="modal-dialog" role="document">
+            <div  className="modal-dialog" role="document" onClick={this.handleChildClick}>
                 <div  className="modal-content">
                 <div  className="modal-header">
                     <h5  className="modal-title">{this.props.questionTarget.author}</h5>
