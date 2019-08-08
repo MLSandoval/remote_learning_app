@@ -64,7 +64,8 @@ export default class Video extends React.Component{
     }
 
     componentDidMount(){
-        this.socket = socketIOClient('http://0.0.0.0:3001');
+        // this.socket = socketIOClient('http://0.0.0.0:3001');
+        this.socket = socketIOClient('/');
         this.socket.on('questionToBroadcast', question =>{
             console.log('socket on questionToBroadcast pinged correctly, question: ', question);
             this.handleQuestionToBroadcast(question);
