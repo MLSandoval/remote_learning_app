@@ -34,36 +34,7 @@ export default class LogIn extends React.Component {
 
   render() {
     if(this.props.loginState) {
-      if(this.state.userType === 'admin'){
-        return (
-          <div className="modal" tabIndex="-1" role="dialog" style={{'zIndex':1600, 'backgroundColor': 'black'}}>
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Log In</h5>
-                </div>
-                <div className="modal-body">
-                  <form>
-                    <label>
-                      Enter channel name:
-                      <input type="text" onChange={this.handleChannelNameInput} value={this.state.channelName} required></input><br/>
-                      Student
-                      <input type="radio" name="userType" value="student" onChange={this.handleSelectUser} required></input><br/>
-                      Admin
-                      <input type="radio" name="userType" value="admin" onChange={this.handleSelectUser}></input><br/>  
-
-                      <input type="submit" className="btn btn-primary" onClick={this.login}></input>
-                    </label>
-                  </form>
-                </div>
-                <div className="modal-footer">
-                </div>
-              </div>
-            </div>
-          </div>
-        )
-      } else {
-        return (
+      return (
           <div className="modal" tabIndex="-1" role="dialog" style={{'zIndex':1600, 'backgroundColor': 'black'}}>
             <div className="modal-dialog" role="document">
               <div className="modal-content">
@@ -92,9 +63,6 @@ export default class LogIn extends React.Component {
             </div>
           </div>
         )
-      }
-      
-
     } else {
         return (
           <div></div>
