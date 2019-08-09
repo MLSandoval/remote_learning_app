@@ -4,17 +4,13 @@ import Answers from "./savedquestionanswers";
 export default class StudentModal extends React.Component{
     constructor(props){
         super(props);
-        this.state = {
-            broadcast: true
-        }
     }
 
     render(){
-        console.log('student modal props: ', this.state.broadcast);
-        if(this.props.adminQuestion !== "" && this.state.broadcast){
+        if(this.props.adminQuestion !== ""){
             return(
                 <React.Fragment>
-                    <div className="modal" tabIndex="-1" onClick={()=>{this.setState({broadcast:false})}}>
+                    <div className="modal" tabIndex="-1" >
                         <div className="modal-dialog modal-lg footer" >
                             <div className="modal-content">
                             <div className="modal-header">
