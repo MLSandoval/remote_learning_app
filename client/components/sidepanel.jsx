@@ -164,10 +164,10 @@ export default class SidePanel extends React.Component {
             </div>
           </div>
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding panel' : 'hide'}>
-            {/* <iframe className="col-lg-12 nopadding"
+            <iframe className="col-lg-12 nopadding"
               frameBorder="0"
               scrolling="no"
-              src={`https://www.twitch.tv/embed/${this.props.adminData[1]}/chat${this.props.theme}`} /> */}
+              src={`https://www.twitch.tv/embed/${this.props.adminData[1]}/chat${this.props.theme}`} />
           </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className={theme === '?darkpopout' ? 'black row col-lg-12 container-fluid nopadding panel lightgrey' : 'row col-lg-12 container-fluid nopadding panel lightgrey'}>

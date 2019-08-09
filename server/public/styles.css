@@ -60,7 +60,7 @@
 }
 .QQheightAndScroll{
   height: 100%;
-  /* overflow: scroll; */
+  overflow: scroll;
 }
 
 .bottomright {
