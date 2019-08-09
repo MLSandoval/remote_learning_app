@@ -131,9 +131,8 @@ export default class Video extends React.Component{
         }
     }
 
-    render(){
+    render() {
         const { view } = this.state;
-
         if (this.props.userType === 'admin') {
             return (
                 <div id="video" className="col-10">
@@ -146,19 +145,19 @@ export default class Video extends React.Component{
                         <div id="savedButton" type="button" className={view === 'saved' ? "btn selectedButton" : 'btn lightButton'} onClick={this.toggleModal}>
                             <i id="savedButton" className="fa fa-list-ul"></i>
                         </div>
-                    </div> 
-                    {this.renderModalSwitch()}    
+                    </div>
+                    {this.renderModalSwitch()}
                     {/* <ExpandedQuestionModal/> */}
                 </div>
             )
         } else {
-            if (this.state.displayQuestion){
+            if (this.state.displayQuestion) {
                 return (
                     <div id="video" className="col-10">
                         <iframe src={`https://player.twitch.tv/?channel=${this.props.adminData[1]}&muted=true`} height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}></iframe>
-                        <StudentModal 
-                            adminQuestion={this.state.sentQuestion} 
-                            handleStudentAnswerClicks={this.handleStudentAnswerClicks}    
+                        <StudentModal
+                            adminQuestion={this.state.sentQuestion}
+                            handleStudentAnswerClicks={this.handleStudentAnswerClicks}
                         />
                     </div>
                 )
