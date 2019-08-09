@@ -23,8 +23,8 @@ export default class SidePanel extends React.Component {
   questionAddSocket(){
     
     let question = this.state.value;
-    console.log('questionAddSocket called. question: ', question);
-    this.socket.emit('addQuestion', question);
+    console.log(' sidepanel questionAddSocket called. question: ', question);
+    this.socket.emit('QQadd', question);
 
   }
 
@@ -99,7 +99,6 @@ export default class SidePanel extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state.view);
   }
 
   resetSelectedQuestion() {
@@ -107,13 +106,16 @@ export default class SidePanel extends React.Component {
   }
 
   componentDidMount(){
-    console.log('sidepanel component did mount:');
     this.socket = socketIOClient('http://0.0.0.0:3001');
 
-    this.socket.on('QQadd', (question)=>{
-
+    this.socket.on('Qsend', (question)=>{
+      console.log('sidepanel component socket listen reached. question: ', question);
       this.handleQuestionAdd(question);
     });
+  }
+
+  componentWillUnmount(){
+    this.socket.off('Qsend');
   }
 
   render() {
@@ -131,10 +133,10 @@ export default class SidePanel extends React.Component {
             </div>
           </div>
           <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding panel' : 'hide'}>
-            <iframe className="col-lg-12 nopadding"
+            {/* <iframe className="col-lg-12 nopadding"
               frameBorder="0"
               scrolling="no"
-              src={`https://www.twitch.tv/embed/${this.props.adminData[1]}/chat${this.props.theme}`} />
+              src={`https://www.twitch.tv/embed/${this.props.adminData[1]}/chat${this.props.theme}`} /> */}
           </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
             <div className={theme === '?darkpopout' ? 'black row col-lg-12 container-fluid nopadding panel lightgrey' : 'row col-lg-12 container-fluid nopadding panel lightgrey'}>

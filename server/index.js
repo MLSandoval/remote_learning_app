@@ -211,6 +211,33 @@ io.on('connection', (socket)=>{
   })
 });
 
+io.on('connection', (socket)=>{
+  socket.on('resetAnswerData', ()=>{
+    questionData= {
+      a: 0,
+      b: 0,
+      c: 0,
+      d: 0
+    };
+  })
+});
+
+//listen for QQ additions
+io.on('connection', (socket)=>{
+  socket.on('QQadd', (question)=>{
+    console.log('backend QQadd socket reached. question: ', question);
+    io.emit('Qsend', question);
+  });
+});
+
+//listen for QQ deletions
+io.on('connection', (socket)=>{
+  socket.on('QQdelete', (questionID)=>{
+    console.log('backend QQadd socket reached. question: ', questionID);
+    io.emit('deleteQQ', questionID);
+  });
+});
+
 http.listen(3001, () => {
   console.log('Node server listening on port 3001 successfully.')
 });
