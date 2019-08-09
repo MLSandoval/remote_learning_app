@@ -5,6 +5,7 @@ import socketIOClient from "socket.io-client";
 export default class SidePanel extends React.Component {
   constructor(props) {
     super(props);
+    // this.id = null;
     this.state = {
       visible: 'chat',
       value: '',
@@ -25,7 +26,7 @@ export default class SidePanel extends React.Component {
     let question = this.state.value;
     console.log(' sidepanel questionAddSocket called. question: ', question);
     
-    this.socket.emit('QQadd', question, this.props.username);
+    // this.socket.emit('QQadd', question, this.props.username);
 
     
 
@@ -47,6 +48,8 @@ export default class SidePanel extends React.Component {
       .then(res => res.json())
       .then(res => {
         console.log('qq add fetch success, res: ', res);
+        // this.id = res.data.newID;
+        this.socket.emit('QQadd', question.question, question.studentUsername, res.data.newID);
       })
       .catch(error => {
         console.error(error);
@@ -55,13 +58,14 @@ export default class SidePanel extends React.Component {
 
   }
 
-  handleQuestionAdd(questionAdd, studentUsername) {
+  handleQuestionAdd(questionAdd, studentUsername, id) {
     //make this dynamic at some point
     //let studentID = 1;//make this the username they enter, change DB to accept string
 
     let question = {
       question: questionAdd,
-      author: studentUsername
+      author: studentUsername,
+      id: id
     }
     this.props.add(question);
 
@@ -139,9 +143,9 @@ export default class SidePanel extends React.Component {
   componentDidMount(){
     this.socket = socketIOClient('http://0.0.0.0:3001');
 
-    this.socket.on('Qsend', (question, studentUsername)=>{
-      console.log('sidepanel component socket listen reached. question: ', question, studentUsername);
-      this.handleQuestionAdd(question, studentUsername);
+    this.socket.on('Qsend', (question, studentUsername, id)=>{
+      console.log('sidepanel component socket listen reached. question: ', question, studentUsername, id);
+      this.handleQuestionAdd(question, studentUsername, id);
     });
   }
 
