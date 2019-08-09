@@ -4,7 +4,7 @@ export default class LogIn extends React.Component {
   constructor() {
     super();
     this.state = {
-      channelName: '',
+      channelName: 'MixMstrMike',
       userName: '',
       userType: 'student'
     }
