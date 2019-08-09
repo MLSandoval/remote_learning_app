@@ -13,6 +13,7 @@
   background-color: #4b366f;
   color: whitesmoke;
   cursor: pointer;
+  -webkit-appearance: none;
 }
 
 .lightButton:hover {
@@ -24,6 +25,7 @@
 .selectedButton {
   background-color: #1b0640;
   color: #e290e4;
+  -webkit-appearance: none;
 }
 
 .selectedButton:hover {
