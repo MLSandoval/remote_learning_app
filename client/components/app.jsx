@@ -14,7 +14,7 @@ class App extends React.Component {
       userType: 'admin',
       questionQueue: [],
       broadcastquestions: [],
-      userName: '',
+      userName: ''
     }
     this.switchUser = this.switchUser.bind(this);
     this.addQuestion = this.addQuestion.bind(this);

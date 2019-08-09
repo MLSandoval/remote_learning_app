@@ -1,6 +1,18 @@
 import React from 'react';
 
 export default class Answers extends React.Component {
+  constructor(props){
+    super(props);
+
+  }
+
+  handleClick(letter){
+
+    this.props.handleStudentAnswerClicks('A')
+
+  }
+
+
   render(){
     console.log('saved question answers props: ', this.props);
     if(this.props.data){
@@ -9,7 +21,7 @@ export default class Answers extends React.Component {
         <table>
           <tbody>
             <tr>
-              <td onClick={()=>{this.props.handleStudentAnswerClicks('A')}}>{answers[0]}</td>
+              <td onClick={()=>{}}>{answers[0]}</td>
               <td onClick={()=>{this.props.handleStudentAnswerClicks('B')}}>{answers[1]}</td>
             </tr>
             <tr>
@@ -24,6 +36,5 @@ export default class Answers extends React.Component {
         <div></div>
       )
     }
-
   }
 }
