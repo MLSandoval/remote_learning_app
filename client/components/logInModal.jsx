@@ -6,12 +6,16 @@ export default class LogIn extends React.Component {
     this.state = {
       channelName: '',
       userName: '',
-      userType: 'admin'
+      userType: 'student'
     }
     this.handleChannelNameInput = this.handleChannelNameInput.bind(this);
     this.handleUsernameInput = this.handleUsernameInput.bind(this);
     this.login = this.login.bind(this);
-    this.handleSelectUser = this.handleSelectUser.bind(this);
+    // this.handleSelectUser = this.handleSelectUser.bind(this);
+  }
+
+  componentDidUpdate() {
+    console.log('login state: ',this.state);
   }
 
   handleChannelNameInput(event) {
@@ -22,9 +26,9 @@ export default class LogIn extends React.Component {
     this.setState({userName: event.target.value})
   }
 
-  handleSelectUser(event) {
-    this.setState({userType: event.target.value})
-  }
+  // handleSelectUser(event) {
+  //   this.setState({userType: event.target.defaultValue});
+  // }
 
   login() {
     this.props.loginFunction(this.state.channelName, this.state.userType, this.state.userName);
@@ -41,21 +45,29 @@ export default class LogIn extends React.Component {
                 <div className="modal-header">
                   <h5 className="modal-title">Log In</h5>
                 </div>
-                <div className="modal-body">
-                  <form>
-                    <label>
+                <div className="modal-body container-fluid">
+                  <div className="row topbotpadding">
+                    <div className="col">
                       Enter channel name:
-                      <input type="text" onChange={this.handleChannelNameInput} value={this.state.channelName} required></input><br/>
+                    </div>
+                    <div className="col">
+                      <input type="text" onChange={this.handleChannelNameInput} value={this.state.channelName} required></input>
+                    </div>
+                  </div>
+                  <div className="row topbotpadding">
+                    <div className="col">
                       Enter username:
-                      <input type='text' onChange={this.handleUsernameInput} value={this.state.userName} required></input><br/>
-                      Student
-                      <input type="radio" name="userType" value="student" onChange={this.handleSelectUser} required></input><br/>
-                      Admin
-                      <input type="radio" name="userType" value="admin" onChange={this.handleSelectUser}></input><br/>  
-
-                      <input type="submit" className="btn btn-primary" onClick={this.login}></input>
-                    </label>
-                  </form>
+                    </div>
+                    <div className="col">
+                      <input type='text' onChange={this.handleUsernameInput} value={this.state.userName} required></input>
+                    </div>
+                  </div>
+                  <div className="row topbotpadding">
+                    <div className="col"></div>
+                    <div className="col">
+                      <input type="Submit" defaultValue="Log In" className="btn btn-secondary" onClick={this.login}></input>
+                    </div>
+                  </div>                    
                 </div>
                 <div className="modal-footer">
                 </div>
