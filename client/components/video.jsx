@@ -82,6 +82,7 @@ export default class Video extends React.Component{
                         callback={this.props.passQuestionCallback}
                         adminData={this.props.adminData}
                         setStateCallback={this.toggleModal}
+                        theme={this.props.theme}
                     />
                 </div>   
             );
@@ -96,6 +97,7 @@ export default class Video extends React.Component{
                         handleSelect={this.handleQuestionSelect}
                         deleteAdminQuestion={this.props.deleteAdminQuestion}
                         resetSelect={this.resetSelect}
+                        theme={this.props.theme}
                         />
                 </div>
             );
@@ -107,6 +109,7 @@ export default class Video extends React.Component{
     }
 
     render(){
+        const { view } = this.state;
 
         if (this.props.userType === 'admin') {
             return (
@@ -114,12 +117,12 @@ export default class Video extends React.Component{
                     <iframe src={`https://player.twitch.tv/?channel=${this.props.adminData[1]}&muted=true`} height="100%" width="100%" frameBorder="0" scrolling="no" allowFullScreen={true}> </iframe>
                     <div className="front btn-group-vertical"
                         style={{ 'bottom': 70 + 'vh', "height": 150 + 'px' }}>
-                        <button id="addButton" type="button" className="btn btn-primary" onClick={this.toggleModal}>
-                            <i id="addButton" className="admin-button fa fa-plus-square-o"></i>
-                        </button>
-                        <button id="savedButton" type="button" className="btn btn-primary" onClick={this.toggleModal}>
-                            <i id="savedButton" className="admin-button fa fa-list-ul"></i>
-                        </button>
+                        <div id="addButton" type="button" className={view === 'add' ? "btn selectedButton" : 'btn lightButton'} onClick={this.toggleModal}>
+                            <i id="addButton" className="fa fa-plus-square-o"></i>
+                        </div>
+                        <div id="savedButton" type="button" className={view === 'saved' ? "btn selectedButton" : 'btn lightButton'} onClick={this.toggleModal}>
+                            <i id="savedButton" className="fa fa-list-ul"></i>
+                        </div>
                     </div> 
                     {this.renderModalSwitch()}    
                     {/* <ExpandedQuestionModal/> */}

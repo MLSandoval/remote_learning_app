@@ -22,10 +22,11 @@ export default class Header extends React.Component {
 
 
   render(){
+    const theme = this.props.theme
     return(
       <div className="row col container-fluid p-0">
-          <div className="col-10  remogy-header"></div>
-          <button className="col-2 btn-link" onClick={this.renderLogInModal}>Login</button>
+          <div className={theme === '?darkpopout' ? 'black col-10 remogy-header' : 'col-10 remogy-header'}></div>
+          <div className={theme === '?darkpopout' ? "black col-2 btn-link" : "col-2 btn-link"} onClick={this.renderLogInModal}>Login</div>
         <LogIn loginState={this.state.login} 
                 close={this.closeLogInModal} 
                 loginFunction={this.props.loginFunction} 
@@ -33,7 +34,8 @@ export default class Header extends React.Component {
                 setStudentName={this.props.setStudentName}
                 handleChannelNameInput={this.handleChannelNameInput}
                 handleUsernameInput={this.handleUsernameInput}
-                handleSelectUser={this.handleSelectUser}/>
+                handleSelectUser={this.handleSelectUser}
+                theme={theme}/>
       </div>
     )
   }

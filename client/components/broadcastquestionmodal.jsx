@@ -34,7 +34,7 @@ export default class BroadcastModal extends React.Component {
         return (
           <div className="modal" tabIndex="-1" role="dialog" onClick={this.props.toggle}>
             <div className="modal-dialog modal-lg" role="document" onClick={this.handleChildClick}>
-              <div className="modal-content">
+              <div className={this.props.theme === '?darkpopout' ? "modal-content darkbutton" : 'modal-content'}>
                 <div className="modal-header">
                   <h5 className="modal-title">Saved Questions</h5>
                   <button type="button" onClick={this.props.toggle} className="close" data-dismiss="modal" aria-label="Close">
@@ -47,6 +47,7 @@ export default class BroadcastModal extends React.Component {
                     options={this.props.options}
                     onChange={this.props.handleSelect}
                     value={this.props.question}
+                    className={this.props.theme ==='?darkpopout' ? 'darkInput' : ''}
                   />
                   <Answers
                     data={this.props.question}
