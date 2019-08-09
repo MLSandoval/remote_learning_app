@@ -226,17 +226,6 @@ io.on('connection', (socket)=>{
   })
 });
 
-io.on('connection', (socket)=>{
-  socket.on('resetAnswerData', ()=>{
-    questionData= {
-      a: 0,
-      b: 0,
-      c: 0,
-      d: 0
-    };
-  })
-});
-
 //listen for QQ additions
 io.on('connection', (socket)=>{
   socket.on('QQadd', (question)=>{
@@ -251,6 +240,12 @@ io.on('connection', (socket)=>{
     console.log('backend QQadd socket reached. question: ', questionID);
     io.emit('deleteQQ', questionID);
   });
+});
+
+io.on('connection', (socket) => {
+  socket.on('resetAnswerData', () => {
+    answerData.datasets[0].data = [0, 0, 0, 0];
+  })
 });
 
 http.listen(3001, () => {
