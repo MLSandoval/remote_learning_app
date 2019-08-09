@@ -1,5 +1,6 @@
 import React from 'react';
 import ExpandedQuestionModal from './expandedQuestionModal';
+import socketIOClient from "socket.io-client";
 
 export default class SidePanel extends React.Component {
   constructor(props) {
@@ -16,19 +17,28 @@ export default class SidePanel extends React.Component {
     this.showQuestionInput = this.showQuestionInput.bind(this);
     this.resetSelectedQuestion = this.resetSelectedQuestion.bind(this);
     this.handleQuestionAdd = this.handleQuestionAdd.bind(this);
+    this.questionAddSocket = this.questionAddSocket.bind(this);
   }
 
-  handleQuestionAdd(event) {
+  questionAddSocket(){
+    
+    let question = this.state.value;
+    console.log(' sidepanel questionAddSocket called. question: ', question);
+    this.socket.emit('QQadd', question);
+
+  }
+
+  handleQuestionAdd(questionAdd) {
     //make this dynamic at some point
     let studentID = 1;
 
-    this.props.add(this.state.value);
+    this.props.add(questionAdd);
 
     let question = {
-      question: this.state.value,
+      question: questionAdd,
       studentID
     };
-    console.log('handleQuestionAdd question: ', question);
+    console.log('handleQuestionAdd (not socket function) question: ', question);
 
     fetch('http://localhost:3001/addQuestionQ', {
       method: "POST",
@@ -54,8 +64,6 @@ export default class SidePanel extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
   }
-
-  
 
   handleChange(event) {
     this.setState({ value: event.target.value })
@@ -91,11 +99,23 @@ export default class SidePanel extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state.view);
   }
 
   resetSelectedQuestion() {
     this.setState({ selectedQuestion: null })
+  }
+
+  componentDidMount(){
+    this.socket = socketIOClient('http://0.0.0.0:3001');
+
+    this.socket.on('Qsend', (question)=>{
+      console.log('sidepanel component socket listen reached. question: ', question);
+      this.handleQuestionAdd(question);
+    });
+  }
+
+  componentWillUnmount(){
+    this.socket.off('Qsend');
   }
 
   render() {
@@ -135,7 +155,7 @@ export default class SidePanel extends React.Component {
                       placeholder="Enter question" />
                   </label>
                   </div>
-                  <button className={theme === '?darkpopout' ? "darkInput col-lg-2 p-0" : 'col-lg-2 p-0'} type="submit" onClick={this.handleQuestionAdd} style={{ 'height': '28px'}}>
+                  <button className={theme === '?darkpopout' ? "darkInput col-lg-2 p-0" : 'col-lg-2 p-0'} type="submit" onClick={this.questionAddSocket} style={{ 'height': '28px'}}>
                     &gt;
                   </button>
                 </div>

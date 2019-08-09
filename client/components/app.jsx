@@ -28,6 +28,7 @@ class App extends React.Component {
     this.handleUsernameInput = this.handleUsernameInput.bind(this);
     this.handleSelectUser = this.handleSelectUser.bind(this);
     this.switchTheme = this.switchTheme.bind(this);
+    this.socketToDeleteQQ = this.socketToDeleteQQ.bind(this);
   };
 
   componentDidUpdate() {
@@ -84,12 +85,6 @@ class App extends React.Component {
         })
         .catch(error=>{console.error(error)});
     }
-
-    componentDidMount() {
-        this.fetchAdminQuestionData();
-        this.getStudentQuestions();
-        this.getUserLoginData();
-    }
     
     getStudentQuestions() {
 
@@ -145,25 +140,43 @@ class App extends React.Component {
   }
 
   deleteStudentQuestion(adminQuestionID) {
-      const questionQueue = this.state.questionQueue;
-      fetch(`http://localhost:3001/studentQuestion?studentQuestionID=${adminQuestionID}`, {
-      method: 'DELETE'
-      })
-      .then(res => res.json())
-      .then(res => {
-          this.setState({ questionQueue: questionQueue.filter(questionObj => questionObj.id !== adminQuestionID) });
-      })
-      .catch(error => { console.error(error) });
+    console.log('app deleteStudentQuestion reached, adminQuestionID: ', adminQuestionID);
 
+    const questionQueue = this.state.questionQueue;
+    fetch(`http://localhost:3001/studentQuestion?studentQuestionID=${adminQuestionID}`, {
+    method: 'DELETE'
+    })
+    .then(res => res.json())
+    .then(res => {
+        this.setState({ questionQueue: questionQueue.filter(questionObj => questionObj.id !== adminQuestionID) });
+    })
+    .catch(error => { console.error(error) });
   }
 
-    switchTheme() {
-      if (this.state.theme === '?darkpopout'){
-            this.setState({ theme: '' })
-        } else {
-            this.setState({ theme: '?darkpopout' })
-        }
-    }
+  switchTheme() {
+    if (this.state.theme === '?darkpopout'){
+          this.setState({ theme: '' })
+      } else {
+          this.setState({ theme: '?darkpopout' })
+      }
+  }
+
+  socketToDeleteQQ(questionID){
+    console.log(' app socketToDeleteQQ reached, questionID', questionID);
+    this.socket.emit('QQdelete', questionID);
+  }
+
+  componentDidMount(){
+    this.fetchAdminQuestionData();
+    this.getStudentQuestions();
+    this.getUserLoginData();
+
+    this.socket = socketIOClient('http://0.0.0.0:3001');
+    this.socket.on('deleteQQ', (questionID)=>{
+      console.log('app socket to delete QQ question reached, question to delete: ', questionID);
+      this.deleteStudentQuestion(questionID);
+    });
+  }
 
   render() {
     return (
@@ -191,7 +204,7 @@ class App extends React.Component {
           <SidePanel userType={this.state.userType}
             adminData={[this.state.adminID, this.state.channelName]}
             add={this.addQuestion}
-            delete={this.deleteStudentQuestion}
+            delete={this.socketToDeleteQQ}
             questionQueue={this.state.questionQueue} 
             theme={this.state.theme}/>
         </div>

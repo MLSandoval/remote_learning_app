@@ -19,6 +19,7 @@ export default class BroadcastModal extends React.Component {
 
   componentWillUnmount(){
     this.props.hideChart();
+    this.socket.emit('resetAnswerData');
   }
 
   renderAnswerData(){
@@ -32,8 +33,6 @@ export default class BroadcastModal extends React.Component {
           return null;
         }
   }
-
-
 
   handleDeleteSavedQuestion(){
     if (this.props.question) {
@@ -59,7 +58,12 @@ export default class BroadcastModal extends React.Component {
   sendButton(event){
     // this.props.toggle(event);
     this.props.handleSendQuestion();
-}
+  }
+
+  componentDidMount(){
+    this.socket = socketIOClient('0.0.0.0:3001');
+
+  }
 
   render() {
     console.log("modal is clicked: ", this.props.toggle);
