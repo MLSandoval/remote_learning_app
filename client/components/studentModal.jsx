@@ -18,6 +18,7 @@ export default class StudentModal extends React.Component{
                             </div>
                             <div className="modal-body">
                                 <Answers 
+                                    theme={this.props.theme}
                                     data={this.props.adminQuestion}
                                     handleStudentAnswerClicks={this.props.handleStudentAnswerClicks}
                                 />

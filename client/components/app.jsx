@@ -135,7 +135,7 @@ class App extends React.Component {
   }
 
   addQuestion(question) {
-      let newQuestion = [{ 'id': this.state.questionQueue.length + 1, 'question': question, 'author': this.state.userName }];
+      let newQuestion = [{ 'id': this.state.questionQueue.length + 1, 'question': question.question, 'author': question.author }];
       this.setState({ questionQueue: this.state.questionQueue.concat(newQuestion) })
   }
 
@@ -201,12 +201,16 @@ class App extends React.Component {
             deleteAdminQuestion={this.deleteAdminQuestion}
             theme={this.state.theme}
           />
-          <SidePanel userType={this.state.userType}
+          <SidePanel 
+            userType={this.state.userType}
             adminData={[this.state.adminID, this.state.channelName]}
             add={this.addQuestion}
             delete={this.socketToDeleteQQ}
             questionQueue={this.state.questionQueue} 
-            theme={this.state.theme}/>
+            theme={this.state.theme}
+            username={this.state.userName}
+          />
+            
         </div>
       </div>
     )

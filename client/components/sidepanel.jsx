@@ -24,21 +24,15 @@ export default class SidePanel extends React.Component {
     
     let question = this.state.value;
     console.log(' sidepanel questionAddSocket called. question: ', question);
-    this.socket.emit('QQadd', question);
+    
+    this.socket.emit('QQadd', question, this.props.username);
 
-  }
+    
 
-  handleQuestionAdd(questionAdd) {
-    //make this dynamic at some point
-    let studentID = 1;
-
-    this.props.add(questionAdd);
-
-    let question = {
-      question: questionAdd,
-      studentID
+     question = {
+      question: question,
+      studentUsername: this.props.username // make username
     };
-    console.log('handleQuestionAdd (not socket function) question: ', question);
 
     fetch('http://localhost:3001/addQuestionQ', {
       method: "POST",
@@ -47,7 +41,7 @@ export default class SidePanel extends React.Component {
       },
       body: JSON.stringify({
         question: question.question,
-        studentID: question.studentID
+        studentUsername: question.studentUsername
       })
     })
       .then(res => res.json())
@@ -57,6 +51,43 @@ export default class SidePanel extends React.Component {
       .catch(error => {
         console.error(error);
       });
+
+
+  }
+
+  handleQuestionAdd(questionAdd, studentUsername) {
+    //make this dynamic at some point
+    //let studentID = 1;//make this the username they enter, change DB to accept string
+
+    let question = {
+      question: questionAdd,
+      author: studentUsername
+    }
+    this.props.add(question);
+
+    // let question = {
+    //   question: questionAdd,
+    //   studentID
+    // };
+    // console.log('handleQuestionAdd (not socket function) question: ', question);
+
+    // fetch('http://localhost:3001/addQuestionQ', {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({
+    //     question: question.question,
+    //     studentID: question.studentID
+    //   })
+    // })
+    //   .then(res => res.json())
+    //   .then(res => {
+    //     console.log('qq add fetch success, res: ', res);
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
 
     this.setState({ value: '' });
   }
@@ -79,7 +110,7 @@ export default class SidePanel extends React.Component {
   appendQuestionDivs() {
     if (this.props.userType === 'student') {
       var questionDivs = this.props.questionQueue.map(x =>
-        <li className={this.props.theme === '?darkpopout' ? 'darkbutton list-group-item text-truncate' : 'list-group-item text-truncate'} id={x.id} key={x.id} id={x.id} key={x.id}>
+        <li className={this.props.theme === '?darkpopout' ? 'darkbutton list-group-item text-truncate' : 'list-group-item text-truncate'} id={x.id} key={x.id}>
           {x.question} - {x.author}
         </li>)
       return questionDivs;
@@ -108,9 +139,9 @@ export default class SidePanel extends React.Component {
   componentDidMount(){
     this.socket = socketIOClient('http://0.0.0.0:3001');
 
-    this.socket.on('Qsend', (question)=>{
-      console.log('sidepanel component socket listen reached. question: ', question);
-      this.handleQuestionAdd(question);
+    this.socket.on('Qsend', (question, studentUsername)=>{
+      console.log('sidepanel component socket listen reached. question: ', question, studentUsername);
+      this.handleQuestionAdd(question, studentUsername);
     });
   }
 
