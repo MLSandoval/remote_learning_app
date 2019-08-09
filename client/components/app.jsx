@@ -102,58 +102,58 @@ class App extends React.Component {
     }
 
     fetchAdminQuestionData() {
-        fetch('http://localhost:3001/getAdminQuestions',{
-            method: 'GET'
-        })
-        .then(promiseObj => promiseObj.json())
-        .then(successObj => {
-            this.setState({
-                broadcastquestions: successObj.data.map(element =>
-                    element = { 
-                        'value': element.id,
-                        'label': element.question,
-                        'admin_id': element.admin_id,
-                        'answer_ids': element.answer_ids,
-                        'answers': element.answers 
-                    }
-                )
-            })
-        })
-        .catch(error=>{
-            console.error(error);
-        });
+      fetch('http://localhost:3001/getAdminQuestions',{
+          method: 'GET'
+      })
+      .then(promiseObj => promiseObj.json())
+      .then(successObj => {
+          this.setState({
+              broadcastquestions: successObj.data.map(element =>
+                  element = { 
+                      'value': element.id,
+                      'label': element.question,
+                      'admin_id': element.admin_id,
+                      'answer_ids': element.answer_ids,
+                      'answers': element.answers 
+                  }
+              )
+          })
+      })
+      .catch(error=>{
+          console.error(error);
+      });
   }
 
 
-    switchUser(event){
-        if (this.state.userType === 'admin'){
-            this.setState({ userType: 'student' })
-        } else {
-            this.setState({ userType: 'admin' })
-        }
-    }
+  switchUser(event){
+      if (this.state.userType === 'admin'){
+          this.setState({ userType: 'student' })
+      } else {
+          this.setState({ userType: 'admin' })
+      }
+  }
 
-    setuserName(name) {
-        this.setState({ userName: name });
-    }
+  setuserName(name) {
+      this.setState({ userName: name });
+  }
 
-    addQuestion(question) {
-        let newQuestion = [{ 'id': this.state.questionQueue.length + 1, 'question': question, 'author': this.state.userName }];
-        this.setState({ questionQueue: this.state.questionQueue.concat(newQuestion) })
-    }
+  addQuestion(question) {
+      let newQuestion = [{ 'id': this.state.questionQueue.length + 1, 'question': question, 'author': this.state.userName }];
+      this.setState({ questionQueue: this.state.questionQueue.concat(newQuestion) })
+  }
 
-    deleteStudentQuestion(adminQuestionID) {
-        const questionQueue = this.state.questionQueue;
-        fetch(`http://localhost:3001/studentQuestion?studentQuestionID=${adminQuestionID}`, {
-        method: 'DELETE'
-        })
-        .then(res => res.json())
-        .then(res => {
-            this.setState({ questionQueue: questionQueue.filter(questionObj => questionObj.id !== adminQuestionID) });
-        })
-        .catch(error => { console.error(error) });
+  deleteStudentQuestion(adminQuestionID) {
+      const questionQueue = this.state.questionQueue;
+      fetch(`http://localhost:3001/studentQuestion?studentQuestionID=${adminQuestionID}`, {
+      method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(res => {
+          this.setState({ questionQueue: questionQueue.filter(questionObj => questionObj.id !== adminQuestionID) });
+      })
+      .catch(error => { console.error(error) });
 
-    }
+  }
 
     switchTheme() {
       if (this.state.theme === '?darkpopout'){

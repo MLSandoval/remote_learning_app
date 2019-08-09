@@ -48,13 +48,6 @@
 
 .hide {display: none;}
 
-
-/* i {
-  position: absolute;
-  right: 10%;
-  cursor: pointer;
-} */
-
 .nopadding {
   padding: 0;
 }
@@ -143,10 +136,6 @@ label {
   width:100%;
 }
 
-.dropdown {
-  overflow: scroll;
-}
-
 table {
   width: 100%;
 }
@@ -179,11 +168,14 @@ td {
   z-index: 1502;
 }
 
-.modal-lg{
-  max-width: 74.5%;
+.admin-button {
+  height: 10%;
+  width: 10%;
+  background-color: '#4CAF50';
+  display: block;
+  font-size: 16px;
 }
 
-.dropdown-menu {
-  position: relative;
-  display:inline-flex;
+.modal-lg{
+  max-width: 74.5%;
 }

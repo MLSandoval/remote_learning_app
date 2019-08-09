@@ -174,11 +174,41 @@ server.get('/', (req,res)=>{
 
 io.on('connection',(socket)=> {console.log('a user has connected!')});
 
+//listen for broadcast question, send it back to front end to reach all listeners
 io.on('connection', (socket) => {
   socket.on('broadcast', (question) => {
     console.log('backend socket received. question data: ', question);
     io.emit('questionToBroadcast', question);
   });
+});
+
+let questionData = {
+  a: 0,
+  b:0,
+  c:0,
+  d:0
+};
+
+//listen for question reponses, send back to front end to trigger render that shows answers
+io.on('connection', (socket)=>{
+  socket.on('answerData', (answer)=>{
+    console.log('student answer received, data: ', answer);
+    switch(answer){
+      case 'A': questionData.a++;
+        break;
+      case 'B': questionData.b++;
+        break;
+      case 'C': questionData.c++;
+        break;
+      case 'D': questionData.d++;
+        break;
+      default: console.error('Question answer data not sent/stored properly.');
+    };
+    console.log('questionData after increment: ');
+    console.log(questionData);
+
+    io.emit('answer', questionData);
+  })
 });
 
 http.listen(3001, () => {

@@ -43,11 +43,10 @@ export default class BroadcastModal extends React.Component {
                 </div>
                 <div className="modal-body">
                   <Select
-                    style={{ 'width': 100 + '%' }}
+                    style={{ 'width': 100 + '%', 'color': 'black'}}
                     options={this.props.options}
                     onChange={this.props.handleSelect}
                     value={this.props.question}
-                    className={this.props.theme ==='?darkpopout' ? 'darkInput' : ''}
                   />
                   <Answers
                     data={this.props.question}

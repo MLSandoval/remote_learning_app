@@ -9,7 +9,8 @@ export default class AddAdminQuestionForm extends React.Component{
             answerB: '',
             answerC : '',
             answerD: '',
-            selectedAnswer: ''
+            selectedAnswer: 'Set Answer',
+            dropDownClass: ''
         }
         this.handleQuestionInput = this.handleQuestionInput.bind(this);
         this.handleReset = this.handleReset.bind(this);
@@ -17,6 +18,7 @@ export default class AddAdminQuestionForm extends React.Component{
         this.handleAnswerInput = this.handleAnswerInput.bind(this);
         this.handleSelectedAnswer =this.handleSelectedAnswer.bind(this);
         this.handleChildClick = this.handleChildClick.bind(this);
+        this.indicateKey = this.indicateKey.bind(this);
     }
 
     storeQuestionData(){
@@ -107,16 +109,36 @@ export default class AddAdminQuestionForm extends React.Component{
         event.preventDefault()
         let targetAnswer = event.target.id;
         this.setState({selectedAnswer:targetAnswer});
+        this.toggleDropDown();
     }
 
     handleChildClick(event){
         event.stopPropagation();
       }
 
+    toggleDropDown(){
+        const current = this.state.dropDownClass;
+        const next = current === 'show' ? '' : 'show';
+
+        this.setState({
+            dropDownClass: next
+        });
+    }
+
+    indicateKey(){
+        if(this.state.selectedAnswer === "key") {
+            return this.state.selectedAnswer;
+        } else {
+            return this.state.selectedAnswer; 
+        }
+    }
+    
+
     render() {
+        
         if(this.props.view === 'add'){
             return(
-                <div className="modal " tabIndex="-1" role="dialog" onClick={this.props.toggle}>
+                <div className="modal" tabIndex="-1" role="dialog" onClick={this.props.toggle}>
                     <div className="modal-dialog modal-lg" role="document" onClick={this.handleChildClick}>
                         <div className={this.props.theme === '?darkpopout' ? "modal-content darkbutton" : 'modal-content'}>
                             <div className="modal-header">
@@ -185,21 +207,22 @@ export default class AddAdminQuestionForm extends React.Component{
                                     </div>
                                 </form>
                             </div>
-                            <div className="modal-footer">
-                                    <div className="dropdown">
-                                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Key
-                                        </button>
-                                            <div className="dropdown-menu" aria-labelledby="dropdownMenu2" >
-                                                <a id="A" className="dropdown-item" type="button" value="this.state.selectedAnswer" onClick={this.handleSelectedAnswer}>A</a>
-                                                <a id="B" className="dropdown-item" type="button" value="this.state.selectedAnswer" onClick={this.handleSelectedAnswer}>B</a>
-                                                <a id="C" className="dropdown-item" type="button" value="this.state.selectedAnswer" onClick={this.handleSelectedAnswer}>C</a>
-                                                <a id="D" className="dropdown-item" type="button" value="this.state.selectedAnswer" onClick={this.handleSelectedAnswer}>D</a>
-                                            </div>
-                                    </div>
-                                <button type="submit" className="btn btn-success" data-dismiss="modal" value="Submit" onClick={this.storeQuestionData}>Add</button>
-                                <button type="button" className="btn btn-danger" onClick= {this.handleReset} >Reset</button>
-                                <button type="button" className="btn btn-primary">Send</button>
+                            <div className="modal-footer container justify-content-between">
+                                <div className="dropdown">
+                                    <button onClick={this.toggleDropDown.bind(this)} className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {this.indicateKey()}
+                                    </button>
+                                        <div className={`dropdown-menu ${this.state.dropDownClass}`} aria-labelledby="dropdownMenu2" >
+                                            <a id="A" className="dropdown-item" type="button" value="this.state.selectedAnswer" onClick={this.handleSelectedAnswer}>A</a>
+                                            <a id="B" className="dropdown-item" type="button" value="this.state.selectedAnswer" onClick={this.handleSelectedAnswer}>B</a>
+                                            <a id="C" className="dropdown-item" type="button" value="this.state.selectedAnswer" onClick={this.handleSelectedAnswer}>C</a>
+                                            <a id="D" className="dropdown-item" type="button" value="this.state.selectedAnswer" onClick={this.handleSelectedAnswer}>D</a>
+                                        </div>
+                                </div>
+                                <div>
+                                    <button type="button" className="btn btn-danger mr-3" onClick= {this.handleReset}>Reset</button>
+                                    <button type="submit" className="btn btn-success" data-dismiss="modal" value="Submit" onClick={this.storeQuestionData}>Add</button>
+                                </div>                               
                             </div>
                         </div>
                     </div>
