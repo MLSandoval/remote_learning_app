@@ -22,10 +22,9 @@ server.use(express.json());
 // endpoint to get student questions
 server.get('/getStudentsQuestions',(request, response) => {
   db.connect(function () {
-    const query = `SELECT questionsQueue.id, questionsQueue.question, studentUsers.twitchUserName as author
+    const query = `SELECT questionsQueue.id, questionsQueue.question, questionsQueue.studentUser_id as author
                    FROM questionsQueue
-                   JOIN studentUsers
-                   ON questionsQueue.studentUser_id = studentUsers.id`;
+                   `;
     db.query(query, function (error, data) {
       if (!error) {
         response.send({
@@ -134,11 +133,11 @@ server.post('/addAdminQuestion', (req,res)=>{
 });
 
 server.post('/addQuestionQ', (req, res) => {
-    let { studentID, question } = req.body;
+    let { studentUsername, question } = req.body;
     let insertQuestionQQuery = `
         INSERT INTO questionsQueue ( question, studentUser_id)
             VALUES
-            ('${question}', ${studentID})
+            ('${question}', '${studentUsername}')
         `;
     db.query(insertQuestionQQuery, (error, results, fields) => {
         if (error) {
@@ -228,9 +227,9 @@ io.on('connection', (socket)=>{
 
 //listen for QQ additions
 io.on('connection', (socket)=>{
-  socket.on('QQadd', (question)=>{
-    console.log('backend QQadd socket reached. question: ', question);
-    io.emit('Qsend', question);
+  socket.on('QQadd', (question, studentUsername)=>{
+    console.log('backend QQadd socket reached. question: ', question, studentUsername);
+    io.emit('Qsend', question, studentUsername);
   });
 });
 

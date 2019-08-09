@@ -14,12 +14,12 @@ export default class Answers extends React.Component {
         <table>
           <tbody>
             <tr>
-              <td onClick={() => { this.props.handleStudentAnswerClicks('A'); }}>{answers[0]}</td>
-              <td onClick={()=>{this.props.handleStudentAnswerClicks('B')}}>{answers[1]}</td>
+              <td className="btn btn-outline-secondary lightButton" onClick={() => { this.props.handleStudentAnswerClicks('A'); }}>{answers[0]}</td>
+              <td className="btn btn-outline-secondary lightButton" onClick={()=>{this.props.handleStudentAnswerClicks('B')}}>{answers[1]}</td>
             </tr>
             <tr>
-              <td onClick={() => { this.props.handleStudentAnswerClicks('C') }}>{answers[2]}</td>
-              <td onClick={() => { this.props.handleStudentAnswerClicks('D') }}>{answers[3]}</td>
+              <td className="btn btn-outline-secondary lightButton" onClick={() => { this.props.handleStudentAnswerClicks('C') }}>{answers[2]}</td>
+              <td className="btn btn-outline-secondary lightButton" onClick={() => { this.props.handleStudentAnswerClicks('D') }}>{answers[3]}</td>
             </tr>
           </tbody>
         </table>

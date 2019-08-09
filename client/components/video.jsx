@@ -175,6 +175,7 @@ export default class Video extends React.Component{
                         <StudentModal
                             adminQuestion={this.state.sentQuestion}
                             handleStudentAnswerClicks={this.handleStudentAnswerClicks}
+                            theme={this.props.theme}
                         />
                     </div>
                 )
