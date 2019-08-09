@@ -29,7 +29,7 @@ export default  class ExpandedQuestionModal extends React.Component {
         return (
             <div  className="modal" tabIndex="-1" role="dialog" onClick={this.toggleView}>
             <div  className="modal-dialog" role="document" onClick={this.handleChildClick}>
-                <div  className="modal-content">
+                <div  className={this.props.theme === '?darkpopout' ? "modal-content darkbutton" : 'modal-content'}>
                 <div  className="modal-header">
                     <h5  className="modal-title">{this.props.questionTarget.author}</h5>
                     <button type="button"  className="close" data-dismiss="modal" aria-label="Close">

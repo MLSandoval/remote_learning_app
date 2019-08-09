@@ -140,7 +140,7 @@ export default class AddAdminQuestionForm extends React.Component{
             return(
                 <div className="modal" tabIndex="-1" role="dialog" onClick={this.props.toggle}>
                     <div className="modal-dialog modal-lg" role="document" onClick={this.handleChildClick}>
-                        <div className="modal-content">
+                        <div className={this.props.theme === '?darkpopout' ? "modal-content darkbutton" : 'modal-content'}>
                             <div className="modal-header">
                                 <h5 className="modal-title">New Question</h5>
                                 <button type="button" onClick={this.props.toggle} className="close" data-dismiss="modal" aria-label="Close">
@@ -151,7 +151,7 @@ export default class AddAdminQuestionForm extends React.Component{
                                 <form>
                                     <div className="form-group">
                                         <input type="text"
-                                            className="form-control form-control-lg"
+                                            className={this.props.theme ==='?darkpopout' ? 'darkInput form-control form-control-lg' : 'form-control form-control-lg'}
                                             placeholder="Enter Question"
                                             onChange={this.handleQuestionInput}
                                             value={this.state.question}
@@ -160,7 +160,7 @@ export default class AddAdminQuestionForm extends React.Component{
                                     <div>
                                         <label>A:
                                             <input id="A"
-                                                className="form-control form-control-sm"
+                                                className={this.props.theme ==='?darkpopout' ? 'darkInput form-control form-control-sm' : 'form-control form-control-sm'}
                                                 type="text"
                                                 name="name"
                                                 onChange={this.handleAnswerInput}
@@ -172,7 +172,7 @@ export default class AddAdminQuestionForm extends React.Component{
                                     <div>
                                         <label>B:
                                             <input id="B"
-                                                className="form-control form-control-sm"
+                                                className={this.props.theme ==='?darkpopout' ? 'darkInput form-control form-control-sm' : 'form-control form-control-sm'}
                                                 type="text"
                                                 name="name"
                                                 onChange={this.handleAnswerInput}
@@ -184,7 +184,7 @@ export default class AddAdminQuestionForm extends React.Component{
                                     <div>
                                         <label>C:
                                             <input id="C"
-                                                className="form-control form-control-sm"
+                                                className={this.props.theme ==='?darkpopout' ? 'darkInput form-control form-control-sm' : 'form-control form-control-sm'}
                                                 type="text"
                                                 name="name"
                                                 onChange={this.handleAnswerInput}
@@ -196,7 +196,7 @@ export default class AddAdminQuestionForm extends React.Component{
                                     <div>
                                         <label>D:
                                             <input id="D"
-                                                className="form-control form-control-sm"
+                                                className={this.props.theme ==='?darkpopout' ? 'darkInput form-control form-control-sm' : 'form-control form-control-sm'}
                                                 type="text"
                                                 name="name"
                                                 onChange={this.handleAnswerInput}
