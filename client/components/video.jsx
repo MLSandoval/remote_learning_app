@@ -15,6 +15,7 @@ export default class Video extends React.Component{
             selectedQuestion: '',
             displayQuestion: false,
             sentQuestion: '',
+            viewChart: false,
             answerData: {
               labels: [],
               datasets: [
@@ -32,6 +33,11 @@ export default class Video extends React.Component{
         this.handleQuestionToBroadcast = this.handleQuestionToBroadcast.bind(this);
         this.handleAnswerData = this.handleAnswerData.bind(this);
         this.handleStudentAnswerClicks = this.handleStudentAnswerClicks.bind(this);
+        this.hideChart = this.hideChart.bind(this);
+    }
+
+    hideChart(){
+      this.setState({ viewChart: false });
     }
 
     resetSelect(){
@@ -73,7 +79,10 @@ export default class Video extends React.Component{
     handleAnswerData(answerData){
         //setState from here for updating the graph, answerData is the object
         console.log('handleAnswerData called properly, answerData: ', answerData);
-        this.setState({ answerData: answerData });
+        this.setState({ 
+          answerData: answerData,
+          viewChart: true
+         });
     }
 
     handleStudentAnswerClicks(answer){
@@ -91,6 +100,7 @@ export default class Video extends React.Component{
         this.socket.on('questionToBroadcast', question =>{
             console.log('socket on questionToBroadcast pinged correctly, question: ', question);
             this.handleQuestionToBroadcast(question);
+
         });
 
         this.socket.on('answer', (answerData)=>{
@@ -130,6 +140,8 @@ export default class Video extends React.Component{
                         deleteAdminQuestion={this.props.deleteAdminQuestion}
                         resetSelect={this.resetSelect}
                         answerData={this.state.answerData}
+                        hideChart={this.hideChart}
+                        viewChart={this.state.viewChart}
                         />
                 </div>
             );

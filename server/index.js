@@ -194,11 +194,11 @@ var answerData = {
   datasets: [
     {
       label: 'Answers',
-      backgroundColor: 'rgba(255,99,132,0.2)',
-      borderColor: 'rgba(255,99,132,1)',
+      backgroundColor: 'rgba(154, 18, 179, 0.2)',
+      borderColor: 'rgba(154, 18, 179, 1)',
       borderWidth: 1,
-      hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-      hoverBorderColor: 'rgba(255,99,132,1)',
+      hoverBackgroundColor: 'rgba(102, 51, 153, 0.4)',
+      hoverBorderColor: 'rgba(102, 51, 153, 1)',
       data: [0, 0, 0, 0]
     }
   ]

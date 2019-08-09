@@ -15,11 +15,15 @@ export default class BroadcastModal extends React.Component {
     // this.renderAnswerData = this.renderAnswerData.bind(this);
   }
 
+  componentWillUnmount(){
+    this.props.hideChart();
+  }
+
   renderAnswerData(){
     console.log('answerData started', this.props.answerData);
-    if(this.props.answerData.datasets[0].data.length){
+    // if(this.props.answerData.datasets[0].data.length){
+      if(this.props.viewChart){
         return (<div className=''>
-          {/* <h2>Horizontal Bar Example</h2> */}
           <HorizontalBar data={this.props.answerData}/>
         </div>);
         } else {
@@ -48,7 +52,7 @@ export default class BroadcastModal extends React.Component {
         return (
           <div className="modal" tabIndex="-1" role="dialog" onClick={this.props.toggle}>
             <div className="modal-dialog modal-lg" role="document" onClick={this.handleChildClick}>
-              <div className="modal-content">
+              <div className="modal-content remogy-broadcast-modal">
                 <div className="modal-header">
                   <h5 className="modal-title">Saved Questions</h5>
                   <button type="button" onClick={this.props.toggle} className="close" data-dismiss="modal" aria-label="Close">
