@@ -190,3 +190,37 @@ td {
 .remogy-broadcast-modal {
   width: 54%;
 }
+
+.textShadowWhite{
+  
+  text-shadow:
+   2px 2px 0 rgb(255, 255, 255),  
+  2px 2px 0 rgb(255, 255, 255),
+    2px2px 0 rgb(255, 255, 255),
+    2px2px 0 rgb(255, 255, 255);
+}
+.textShadowBlack {
+  
+  text-shadow:
+   2px 2px 0 #000,  
+  2px 2px 0 #000,
+    2px2px 0 #000,
+    2px2px 0 #000;
+}
+
+.darkStyleUser{
+  text-align: center;
+  color:rgb(133, 63, 247);
+  font-size: 2rem;
+  
+}
+
+.lightStyleUser{
+  text-align: center;
+  color: rgb(133, 63, 247);
+  font-size: 2rem;
+}
+
+.verticalAlign{
+  vertical-align: middle;
+}
