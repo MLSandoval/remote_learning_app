@@ -2,6 +2,8 @@ import React from 'react';
 import Select from 'react-select';
 import Answers from './savedquestionanswers';
 import socketIOClient from "socket.io-client";
+import {HorizontalBar} from 'react-chartjs-2';
+
 
 export default class BroadcastModal extends React.Component {
   constructor(props) {
@@ -10,8 +12,20 @@ export default class BroadcastModal extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleDeleteSavedQuestion = this.handleDeleteSavedQuestion.bind(this);
     this.handleChildClick = this.handleChildClick.bind(this);
+    // this.renderAnswerData = this.renderAnswerData.bind(this);
   }
 
+  renderAnswerData(){
+    console.log('answerData started', this.props.answerData);
+    if(this.props.answerData.datasets[0].data.length){
+        return (<div className=''>
+          {/* <h2>Horizontal Bar Example</h2> */}
+          <HorizontalBar data={this.props.answerData}/>
+        </div>);
+        } else {
+          return null;
+        }
+  }
 
   handleDelete(){
     this.setState({});
@@ -51,6 +65,7 @@ export default class BroadcastModal extends React.Component {
                   <Answers
                     data={this.props.question}
                   />
+                  {this.renderAnswerData()}
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-danger" onClick={this.handleDeleteSavedQuestion} >Delete</button>

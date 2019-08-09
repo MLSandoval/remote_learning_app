@@ -4,6 +4,7 @@ import BroadcastModal from './broadcastquestionmodal';
 import StudentModal from './studentModal';
 import ExpandedQuestionModal from "./expandedQuestionModal";
 import socketIOClient from "socket.io-client";
+import {HorizontalBar} from 'react-chartjs-2';
 
 
 export default class Video extends React.Component{
@@ -13,7 +14,15 @@ export default class Video extends React.Component{
             view : '',
             selectedQuestion: '',
             displayQuestion: false,
-            sentQuestion: ''
+            sentQuestion: '',
+            answerData: {
+              labels: [],
+              datasets: [
+                {
+                  data: []
+                }
+              ]
+            }
         }
 
         this.handleQuestionSelect = this.handleQuestionSelect.bind(this);
@@ -64,6 +73,7 @@ export default class Video extends React.Component{
     handleAnswerData(answerData){
         //setState from here for updating the graph, answerData is the object
         console.log('handleAnswerData called properly, answerData: ', answerData);
+        this.setState({ answerData: answerData });
     }
 
     handleStudentAnswerClicks(answer){
@@ -119,6 +129,7 @@ export default class Video extends React.Component{
                         handleSelect={this.handleQuestionSelect}
                         deleteAdminQuestion={this.props.deleteAdminQuestion}
                         resetSelect={this.resetSelect}
+                        answerData={this.state.answerData}
                         />
                 </div>
             );
