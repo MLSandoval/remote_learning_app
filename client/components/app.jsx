@@ -190,6 +190,7 @@ class App extends React.Component {
             handleUsernameInput={this.handleUsernameInput}
             handleSelectUser={this.handleSelectUser}
             theme={this.state.theme}
+            user={this.state.userName}
           />
         </div>
         <div className="row" style={{ 'height': 93 + 'vh' }}>
