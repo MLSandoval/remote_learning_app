@@ -9,22 +9,13 @@ export default class StudentModal extends React.Component{
         }
     }
 
-    toggleStudentModal(){
-        if(this.state.broadcast){
-            this.setState({broadcast:false})
-        }else{
-            this.setState({broadcast:true})
-        }
-    }
-
-
     render(){
-        console.log('student modal props: ', this.props);
-        if(this.toggleStudentModal){
+        console.log('student modal props: ', this.state.broadcast);
+        if(this.props.adminQuestion !== "" && this.state.broadcast){
             return(
                 <React.Fragment>
-                    <div className="modal" tabIndex="-1">
-                        <div className="modal-dialog modal-lg footer">
+                    <div className="modal" tabIndex="-1" onClick={()=>{this.setState({broadcast:false})}}>
+                        <div className="modal-dialog modal-lg footer" >
                             <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">{this.props.adminQuestion.label}</h5>
@@ -41,8 +32,9 @@ export default class StudentModal extends React.Component{
                 </React.Fragment>
             )
         } else {
+            return(
             <React.Fragment/>
+            )
         }
-
     }
 }
