@@ -191,7 +191,7 @@ let questionData = {
 
 //listen for question reponses, send back to front end to trigger render that shows answers
 io.on('connection', (socket)=>{
-  socket.on('answer', (answer)=>{
+  socket.on('answerData', (answer)=>{
     console.log('student answer received, data: ', answer);
     switch(answer){
       case 'A': questionData.a++;
@@ -207,7 +207,7 @@ io.on('connection', (socket)=>{
     console.log('questionData after increment: ');
     console.log(questionData);
 
-    io.emit('answerData', questionData);
+    io.emit('answer', questionData);
   })
 });
 

@@ -62,6 +62,7 @@ export default class Video extends React.Component{
     }
 
     handleAnswerData(answerData){
+        //setState from here for updating the graph, answerData is the object
         console.log('handleAnswerData called properly, answerData: ', answerData);
     }
 
@@ -69,7 +70,7 @@ export default class Video extends React.Component{
         
         console.log('handleStudentAnswerClicks called, answer: ', answer);
 
-        this.socket.emit('answer', answer);
+        this.socket.emit('answerData', answer);
 
     }
     
@@ -83,8 +84,8 @@ export default class Video extends React.Component{
         });
 
         this.socket.on('answer', (answerData)=>{
-            console.log('socket on answer pinged correctly, answer: ', answer);
-            this.handleAnswerData();
+            console.log('socket on answer pinged correctly, answer: ', answerData);
+            this.handleAnswerData(answerData);
         });
     }
 
