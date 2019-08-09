@@ -65,7 +65,7 @@ export default class LogIn extends React.Component {
                   <div className="row topbotpadding">
                     <div className="col"></div>
                     <div className="col">
-                      <input type="Submit" defaultValue="Log In" className="btn btn-secondary" onClick={this.login}></input>
+                      <button type="submit" defaultValue="Log In" className="btn btn-secondary" onClick={this.login}>Log In</button>
                     </div>
                   </div>                    
                 </div>
