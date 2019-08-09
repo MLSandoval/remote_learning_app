@@ -6,7 +6,7 @@ export default class LogIn extends React.Component {
     this.state = {
       channelName: '',
       userName: '',
-      userType: 'Student'
+      userType: 'student'
     }
     this.handleChannelNameInput = this.handleChannelNameInput.bind(this);
     this.handleUsernameInput = this.handleUsernameInput.bind(this);
