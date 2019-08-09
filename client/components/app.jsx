@@ -11,7 +11,7 @@ class App extends React.Component {
       adminID: 1,
       adminTwitchID: null,
       channelName: '',
-      userType: 'admin',
+      userType: '',
       questionQueue: [],
       broadcastquestions: [],
       userName: '',
@@ -67,6 +67,8 @@ class App extends React.Component {
     }
   
     getUserLoginData(channelName, userType, userName){
+
+      console.log('channelName: ',channelName,'userType: ',userType,'userName: ',userName);
         this.setState({'userName': userName});
         this.setState({'userType': userType});
         let x = this;
@@ -180,7 +182,7 @@ class App extends React.Component {
     return (
       <div id="app" className="container-fluid p-0">
         <i className="fas fa-moon clickable" style={{ 'position': 'absolute', 'height': 15 + 'px', 'top': 10 + 'px','left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchTheme}></i>
-        <div className="row top">
+        <div className={this.state.theme === '?darkpopout' ? "black row top" : "row top"}>
           <Header switchUser={this.switchUser}
             loginFunction={this.getUserLoginData}
             setuserName={this.setuserName}

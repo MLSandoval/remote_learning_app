@@ -5,14 +5,13 @@ export default class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      login: false
+      login: true
     }
     this.renderLogInModal = this.renderLogInModal.bind(this);
     this.closeLogInModal = this.closeLogInModal.bind(this);
   }
 
   renderLogInModal() {
-    console.log(this);
     this.setState({login: true});
   }
 
@@ -26,7 +25,8 @@ export default class Header extends React.Component {
     return(
       <div className="row col container-fluid p-0">
           <div className={theme === '?darkpopout' ? 'black col-10 remogy-header' : 'col-10 remogy-header'}></div>
-          <div className={theme === '?darkpopout' ? "black col-2 btn-link" : "col-2 btn-link"} onClick={this.renderLogInModal}>Login</div>
+          <div className={theme === '?darkpopout' ? "black d-inline-flex" : "d-inline-flex"} style={{ 'width': '5px' }} onClick={this.props.switchUser}></div>
+          <div className={theme === '?darkpopout' ? "black col btn-link" : "col btn-link"} onClick={this.renderLogInModal}>Login</div>
         <LogIn loginState={this.state.login} 
                 close={this.closeLogInModal} 
                 loginFunction={this.props.loginFunction} 
