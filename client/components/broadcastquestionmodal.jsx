@@ -10,6 +10,8 @@ export default class BroadcastModal extends React.Component {
     this.handleDeleteButton = this.handleDeleteButton.bind(this);
     this.handleDeleteSavedQuestion = this.handleDeleteSavedQuestion.bind(this);
     this.handleChildClick = this.handleChildClick.bind(this);
+    this.deleteButton = this.deleteButton.bind(this);
+    this.sendButton = this.sendButton.bind(this);
   }
 
 
@@ -30,6 +32,16 @@ export default class BroadcastModal extends React.Component {
     this.handleDeleteSavedQuestion();
     this.props.toggle(event);
   }
+  
+  deleteButton(event){
+    this.props.toggle(event);
+    this.handleDeleteButton();
+  }
+
+  sendButton(event){
+    this.props.toggle(event);
+    this.props.handleSendQuestion();
+}
 
   render() {
     console.log("modal is clicked: ", this.props.toggle);
@@ -56,8 +68,8 @@ export default class BroadcastModal extends React.Component {
                   />
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-danger" onClick={this.handleDeleteButton}>Delete</button>
-                  <button type="button" className="btn btn-primary" onClick={this.props.handleSendQuestion}>Send</button>
+                  <button type="button" className="btn btn-danger" onClick={this.deleteButton}>Delete</button>
+                  <button type="button" className="btn btn-primary" onClick={this.sendButton}>Send</button>
                 </div>
               </div>
             </div>
