@@ -173,7 +173,6 @@ class App extends React.Component {
             adminData={[this.state.adminID, this.state.channelName]}
             passQuestionCallback={this.addAdminQuestionToState}
             deleteAdminQuestion={this.deleteAdminQuestion}
-
           />
           <SidePanel userType={this.state.userType}
             adminData={[this.state.adminID, this.state.channelName]}

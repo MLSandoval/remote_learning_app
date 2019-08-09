@@ -7,15 +7,13 @@ export default class BroadcastModal extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleDelete = this.handleDelete.bind(this);
+    this.handleDeleteButton = this.handleDeleteButton.bind(this);
     this.handleDeleteSavedQuestion = this.handleDeleteSavedQuestion.bind(this);
     this.handleChildClick = this.handleChildClick.bind(this);
   }
 
 
-  handleDelete(){
-    this.setState({});
-  }
+
 
   handleDeleteSavedQuestion(){
     if (this.props.question) {
@@ -28,8 +26,13 @@ export default class BroadcastModal extends React.Component {
     event.stopPropagation();
   }
 
+  handleDeleteButton(event){
+    this.handleDeleteSavedQuestion();
+    this.props.toggle(event);
+  }
+
   render() {
-    console.log("modal is clicked: ", this.props.view, this.props.options.length);
+    console.log("modal is clicked: ", this.props.toggle);
     if (this.props.view === "saved" && this.props.options.length !== 0){
         return (
           <div className="modal" tabIndex="-1" role="dialog" onClick={this.props.toggle}>
@@ -53,7 +56,7 @@ export default class BroadcastModal extends React.Component {
                   />
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-danger" onClick={this.handleDeleteSavedQuestion} >Delete</button>
+                  <button type="button" className="btn btn-danger" onClick={this.handleDeleteButton}>Delete</button>
                   <button type="button" className="btn btn-primary" onClick={this.props.handleSendQuestion}>Send</button>
                 </div>
               </div>

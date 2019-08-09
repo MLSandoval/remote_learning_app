@@ -58,7 +58,7 @@ export default class Video extends React.Component{
         console.log('compare this.state.selectedQuestion', this.state.selectedQuestion);
         this.setState({ displayQuestion: true, sentQuestion: question });
 
-        // setTimeout(() => { this.setState({ displayQuestion: false, sentQuestion: '' }) }, 25000);
+         //setTimeout(() => { this.setState({ displayQuestion: false, sentQuestion: '' }) }, 25000);
     }
 
     handleAnswerData(answerData){
