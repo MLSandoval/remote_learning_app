@@ -1,5 +1,6 @@
 import React from 'react';
 import ExpandedQuestionModal from './expandedQuestionModal';
+import socketIOClient from "socket.io-client";
 
 export default class SidePanel extends React.Component {
   constructor(props) {
@@ -89,6 +90,15 @@ export default class SidePanel extends React.Component {
 
   resetSelectedQuestion() {
     this.setState({ selectedQuestion: null })
+  }
+
+  componentDidMount(){
+    console.log('sidepanel component did mount:');
+    this.socket = socketIOClient('http://0.0.0.0:3001');
+
+    this.socket.on('QQadd', (question)=>{
+      this.handle
+    });
   }
 
   render() {
