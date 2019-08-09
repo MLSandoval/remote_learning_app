@@ -5,7 +5,7 @@ export default class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      login: false
+      login: true
     }
     this.renderLogInModal = this.renderLogInModal.bind(this);
     this.closeLogInModal = this.closeLogInModal.bind(this);

@@ -11,7 +11,7 @@ class App extends React.Component {
       adminID: 1,
       adminTwitchID: null,
       channelName: '',
-      userType: 'admin',
+      userType: '',
       questionQueue: [],
       broadcastquestions: [],
       userName: '',
@@ -66,6 +66,8 @@ class App extends React.Component {
     }
   
     getUserLoginData(channelName, userType, userName){
+
+      console.log('channelName: ',channelName,'userType: ',userType,'userName: ',userName);
         this.setState({'userName': userName});
         this.setState({'userType': userType});
         let x = this;
