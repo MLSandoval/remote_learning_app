@@ -15,6 +15,7 @@ class App extends React.Component {
       questionQueue: [],
       broadcastquestions: [],
       userName: '',
+      theme: ''
     }
     this.switchUser = this.switchUser.bind(this);
     this.addQuestion = this.addQuestion.bind(this);
@@ -26,6 +27,7 @@ class App extends React.Component {
     this.handleChannelNameInput = this.handleChannelNameInput.bind(this);
     this.handleUsernameInput = this.handleUsernameInput.bind(this);
     this.handleSelectUser = this.handleSelectUser.bind(this);
+    this.switchTheme = this.switchTheme.bind(this);
   };
 
   componentDidUpdate() {
@@ -153,33 +155,44 @@ class App extends React.Component {
 
   }
 
+    switchTheme() {
+      if (this.state.theme === '?darkpopout'){
+            this.setState({ theme: '' })
+        } else {
+            this.setState({ theme: '?darkpopout' })
+        }
+    }
+
   render() {
     return (
       <div id="app" className="container-fluid p-0">
-        <div className="row" style={{ 'height': 7 + 'vh' }}>
+        <i className="fas fa-moon clickable" style={{ 'position': 'absolute', 'height': 15 + 'px', 'top': 10 + 'px','left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchTheme}></i>
+        <div className="row top">
           <Header switchUser={this.switchUser}
             loginFunction={this.getUserLoginData}
             setuserName={this.setuserName}
             handleChannelNameInput={this.handleChannelNameInput}
             handleUsernameInput={this.handleUsernameInput}
             handleSelectUser={this.handleSelectUser}
+            theme={this.state.theme}
           />
         </div>
         <div className="row" style={{ 'height': 93 + 'vh' }}>
-          <button style={{ 'position': 'absolute', 'height': 15 + 'px', 'left': 10 + 'px', 'zIndex': 10 }} onClick={this.switchUser}></button>
           <Video userType={this.state.userType}
             hostUser={this.state.channelName}
             data={this.state.broadcastquestions}
             adminData={[this.state.adminID, this.state.channelName]}
             passQuestionCallback={this.addAdminQuestionToState}
             deleteAdminQuestion={this.deleteAdminQuestion}
+            theme={this.state.theme}
 
           />
           <SidePanel userType={this.state.userType}
             adminData={[this.state.adminID, this.state.channelName]}
             add={this.addQuestion}
             delete={this.deleteStudentQuestion}
-            questionQueue={this.state.questionQueue} />
+            questionQueue={this.state.questionQueue} 
+            theme={this.state.theme}/>
         </div>
       </div>
     )
