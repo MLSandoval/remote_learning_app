@@ -16,14 +16,7 @@ export default class Video extends React.Component{
             displayQuestion: false,
             sentQuestion: '',
             viewChart: false,
-            answerData: {
-              labels: [],
-              datasets: [
-                {
-                  data: []
-                }
-              ]
-            }
+            answerData: null
         }
 
         this.handleQuestionSelect = this.handleQuestionSelect.bind(this);
