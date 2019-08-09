@@ -17,19 +17,28 @@ export default class SidePanel extends React.Component {
     this.showQuestionInput = this.showQuestionInput.bind(this);
     this.resetSelectedQuestion = this.resetSelectedQuestion.bind(this);
     this.handleQuestionAdd = this.handleQuestionAdd.bind(this);
+    this.questionAddSocket = this.questionAddSocket.bind(this);
   }
 
-  handleQuestionAdd(event) {
+  questionAddSocket(){
+    
+    let question = this.state.value;
+    console.log('questionAddSocket called. question: ', question);
+    this.socket.emit('addQuestion', question);
+
+  }
+
+  handleQuestionAdd(questionAdd) {
     //make this dynamic at some point
     let studentID = 1;
 
-    this.props.add(this.state.value);
+    this.props.add(questionAdd);
 
     let question = {
-      question: this.state.value,
+      question: questionAdd,
       studentID
     };
-    console.log('handleQuestionAdd question: ', question);
+    console.log('handleQuestionAdd (not socket function) question: ', question);
 
     fetch('http://localhost:3001/addQuestionQ', {
       method: "POST",
@@ -65,17 +74,18 @@ export default class SidePanel extends React.Component {
       this.setState({ visible: nextActive });
     }
   }
+  
 
   appendQuestionDivs() {
     if (this.props.userType === 'student') {
       var questionDivs = this.props.questionQueue.map(x =>
-        <li className="list-group-item text-truncate" id={x.id} key={x.id}>
+        <li className={this.props.theme === '?darkpopout' ? 'darkbutton list-group-item text-truncate' : 'list-group-item text-truncate'} id={x.id} key={x.id} id={x.id} key={x.id}>
           {x.question} - {x.author}
         </li>)
       return questionDivs;
     } else {
       var questionDivs = this.props.questionQueue.map(x =>
-        <li onClick={() => { { this.showQuestionInput(x) } }} className="list-group-item text-truncate" id={x.id} key={x.id}>
+        <li onClick={() => { { this.showQuestionInput(x) } }} className={this.props.theme === '?darkpopout' ? 'darkbutton list-group-item text-truncate' : 'list-group-item text-truncate'} id={x.id} key={x.id}>
           {x.question} - {x.author}
         </li>
       );
@@ -88,6 +98,10 @@ export default class SidePanel extends React.Component {
     console.log("Inside question divs: ", data);
   }
 
+  componentDidUpdate() {
+    console.log(this.state.view);
+  }
+
   resetSelectedQuestion() {
     this.setState({ selectedQuestion: null })
   }
@@ -97,53 +111,52 @@ export default class SidePanel extends React.Component {
     this.socket = socketIOClient('http://0.0.0.0:3001');
 
     this.socket.on('QQadd', (question)=>{
-      this.handle
+
+      this.handleQuestionAdd(question);
     });
   }
 
   render() {
+    const { theme } = this.props;
     const { visible } = this.state;
     if (this.props.userType === 'student') {
       return (
         <div id="sidepanel" className="col-2 container-fluid nopadding fullheight">
-          <div className="row btn-group btn-group-justified col-lg-12 nopadding" style={{ 'height': 8 + 'vh' }}>
-            <div id="chat_button" className="btn btn-primary" onClick={() => this.setView('chat')}>
+          <div className={theme === '?darkpopout' ? 'black row btn-group btn-group-justified col-lg-12 nopadding top' : 'row btn-group btn-group-justified col-lg-12 nopadding top'}>
+            <div id="chat_button" className={visible === 'chat' ? 'btn selectedButton' : 'btn lightButton'} onClick={() => this.setView('chat')}>
               <i className="fa fa-comment-o middle" aria-hidden="true"></i>
             </div>
-            <div id="queue_button" className="btn btn-primary" onClick={() => this.setView('queue')}>
+            <div id="queue_button" className={visible === 'queue' ? 'btn selectedButton' : 'btn lightButton'} onClick={() => this.setView('queue')}>
               <i className="fa fa-question middle" aria-hidden="true"></i>
             </div>
           </div>
-          <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding h-100' : 'hide'}>
+          <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding panel' : 'hide'}>
             <iframe className="col-lg-12 nopadding"
               frameBorder="0"
               scrolling="no"
-              // id="mixmstrmike"
-              src={`https://www.twitch.tv/embed/${this.props.adminData[1]}/chat`} />
+              src={`https://www.twitch.tv/embed/${this.props.adminData[1]}/chat${this.props.theme}`} />
           </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
-            <div className="row col-lg-12 container-fluid nopadding">
+            <div className={theme === '?darkpopout' ? 'black row col-lg-12 container-fluid nopadding panel lightgrey' : 'row col-lg-12 container-fluid nopadding panel lightgrey'}>
               <div className="col-lg-12 nopadding fullheight QQheightAndScroll">
-                {this.appendQuestionDivs()}</div>
-              <form className="col-lg-12 row container-fluid" onSubmit={this.handleSubmit}>
-                <div className="col-lg-11">
+                {this.appendQuestionDivs()}
+              </div>
+              <form className="col-lg-12 container-fluid bottomright" onSubmit={this.handleSubmit}>
+                <div className="row">
+                  <div className="col-lg-10 p-0">
                   <label>
                     <input
-                      className="p-0"
+                      className={theme === '?darkpopout' ? "darkInput col-lg-12 p-0" : "col-lg-12 p-0"}
                       type="text"
                       value={this.state.value}
                       onChange={this.handleChange}
                       placeholder="Enter question" />
                   </label>
-                </div>
-                {/* <button
-                  className="col-lg-1 nopadding"
-                  type="submit"
-                  value="+"
-                  onClick={this.handleQuestionAdd} /> */}
-                  <button className="p-0" type="submit" onClick={this.handleQuestionAdd} style={{ 'height': '28px'}}>
-                    +
+                  </div>
+                  <button className={theme === '?darkpopout' ? "darkInput col-lg-2 p-0" : 'col-lg-2 p-0'} type="submit" onClick={this.questionAddSocket} style={{ 'height': '28px'}}>
+                    &gt;
                   </button>
+                </div>
               </form>
             </div>
           </div>
@@ -152,26 +165,24 @@ export default class SidePanel extends React.Component {
     } else {
       return (
         <div id="sidepanel" className="col-2 container-fluid nopadding fullheight">
-          <div className="row btn-group btn-group-justified col-lg-12 nopadding" style={{ 'height': 8 + 'vh' }}>
-            <div id="chat_button" className="btn btn-primary" onClick={() => this.setView('chat')}>
+          <div className={theme === '?darkpopout' ? 'black row btn-group btn-group-justified col-lg-12 nopadding top' : 'row btn-group btn-group-justified col-lg-12 nopadding top'}>
+            <div id="chat_button" className={visible === 'chat' ? 'btn selectedButton' : 'btn lightButton'} onClick={() => this.setView('chat')}>
               <i className="fa fa-comment-o middle" aria-hidden="true"></i>
             </div>
-            <div id="queue_button" className="btn btn-primary" onClick={() => this.setView('queue')}>
+            <div id="queue_button" className={visible === 'queue' ? 'btn selectedButton' : 'btn lightButton'} onClick={() => this.setView('queue')}>
               <i className="fa fa-question middle" aria-hidden="true"></i>
             </div>
           </div>
 
-          <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding h-100' : 'hide'}>
+          <div id="chat_container" className={visible === 'chat' ? 'row col-lg-12 nopadding panel' : 'hide'}>
             <iframe className="col-lg-12 nopadding"
               frameBorder="0"
               scrolling="yes"
-              // id="mixmstrmike"
-              src={`https://www.twitch.tv/embed/${this.props.adminData[1]}/chat`} />
+              src={`https://www.twitch.tv/embed/${this.props.adminData[1]}/chat${this.props.theme}`} />
           </div>
           <div id="queue" className={visible === 'queue' ? '' : 'hide'}>
-            <div className="row col-lg-12 container-fluid nopadding">
-              <div className="col-lg-12 nopadding QQheightAndScroll"
-                style={{ 'height': 76 + 'vh', 'overflow': 'scroll' }}>
+            <div className={theme === '?darkpopout' ? 'black row col-lg-12 container-fluid nopadding panel lightgrey' : 'row col-lg-12 container-fluid nopadding panel lightgrey'}>
+              <div className="col-lg-12 nopadding QQheightAndScroll">
                 {this.appendQuestionDivs()}
               </div>
               {this.state.selectedQuestion &&
@@ -179,6 +190,7 @@ export default class SidePanel extends React.Component {
                   resetSelectedQuestion={this.resetSelectedQuestion}
                   questionTarget={this.state.selectedQuestion}
                   deleteStudentQuestion={this.props.delete}
+                  theme={this.props.theme}
                 />}
             </div>
           </div>

@@ -6,6 +6,7 @@ export default  class ExpandedQuestionModal extends React.Component {
         this.toggleView = this.toggleView.bind(this);
         this.handleDeleteStudentQuestion = this.handleDeleteStudentQuestion.bind(this);
         this.handleChildClick = this.handleChildClick.bind(this);
+        this.handleDeleteButton = this.handleDeleteButton.bind(this);
     }
 
   toggleView() {
@@ -14,19 +15,21 @@ export default  class ExpandedQuestionModal extends React.Component {
   handleDeleteStudentQuestion() {
     this.props.deleteStudentQuestion(this.props.questionTarget.id);
   }
-
-    handleChildClick(event) {
-    event.stopPropagation()
-    };
+  
+  handleChildClick(event) {
+      event.stopPropagation();
+    }
+    
+    handleDeleteButton(){
+        this.toggleView()
+        this.handleDeleteStudentQuestion()
+    }
 
     render(){
-        console.log("ExpandedQuestionModal: ", this.props.questionTarget)
-
-
         return (
             <div  className="modal" tabIndex="-1" role="dialog" onClick={this.toggleView}>
             <div  className="modal-dialog" role="document" onClick={this.handleChildClick}>
-                <div  className="modal-content">
+                <div  className={this.props.theme === '?darkpopout' ? "modal-content darkbutton" : 'modal-content'}>
                 <div  className="modal-header">
                     <h5  className="modal-title">{this.props.questionTarget.author}</h5>
                     <button type="button"  className="close" data-dismiss="modal" aria-label="Close">
@@ -37,8 +40,7 @@ export default  class ExpandedQuestionModal extends React.Component {
                     <p>{this.props.questionTarget.question}</p>
                 </div>
                 <div  className="modal-footer">
-                    {/* <button type="button"  className="btn btn-secondary" data-dismiss="modal" onClick={this.toggleView}>Close</button> */}
-                    <button type="button"  className="btn btn-danger" data-dismiss="modal" onClick={this.handleDeleteStudentQuestion}>Delete</button>
+                    <button type="button"  className="btn btn-danger" data-dismiss="modal" onClick={this.handleDeleteButton}>Delete</button>
                 </div>
                 </div>
             </div>

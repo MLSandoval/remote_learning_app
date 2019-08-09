@@ -7,15 +7,15 @@ export default class BroadcastModal extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleDelete = this.handleDelete.bind(this);
+    this.handleDeleteButton = this.handleDeleteButton.bind(this);
     this.handleDeleteSavedQuestion = this.handleDeleteSavedQuestion.bind(this);
     this.handleChildClick = this.handleChildClick.bind(this);
+    this.deleteButton = this.deleteButton.bind(this);
+    this.sendButton = this.sendButton.bind(this);
   }
 
 
-  handleDelete(){
-    this.setState({});
-  }
+
 
   handleDeleteSavedQuestion(){
     if (this.props.question) {
@@ -28,13 +28,28 @@ export default class BroadcastModal extends React.Component {
     event.stopPropagation();
   }
 
+  handleDeleteButton(event){
+    this.handleDeleteSavedQuestion();
+    this.props.toggle(event);
+  }
+  
+  deleteButton(event){
+    this.props.toggle(event);
+    this.handleDeleteButton();
+  }
+
+  sendButton(event){
+    this.props.toggle(event);
+    this.props.handleSendQuestion();
+}
+
   render() {
-    console.log("modal is clicked: ", this.props.view, this.props.options.length);
+    console.log("modal is clicked: ", this.props.toggle);
     if (this.props.view === "saved" && this.props.options.length !== 0){
         return (
           <div className="modal" tabIndex="-1" role="dialog" onClick={this.props.toggle}>
             <div className="modal-dialog modal-lg" role="document" onClick={this.handleChildClick}>
-              <div className="modal-content">
+              <div className={this.props.theme === '?darkpopout' ? "modal-content darkbutton" : 'modal-content'}>
                 <div className="modal-header">
                   <h5 className="modal-title">Saved Questions</h5>
                   <button type="button" onClick={this.props.toggle} className="close" data-dismiss="modal" aria-label="Close">
@@ -43,7 +58,7 @@ export default class BroadcastModal extends React.Component {
                 </div>
                 <div className="modal-body">
                   <Select
-                    style={{ 'width': 100 + '%' }}
+                    style={{ 'width': 100 + '%', 'color': 'black'}}
                     options={this.props.options}
                     onChange={this.props.handleSelect}
                     value={this.props.question}
@@ -53,8 +68,8 @@ export default class BroadcastModal extends React.Component {
                   />
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-danger" onClick={this.handleDeleteSavedQuestion} >Delete</button>
-                  <button type="button" className="btn btn-primary" onClick={this.props.handleSendQuestion}>Send</button>
+                  <button type="button" className="btn btn-danger" onClick={this.deleteButton}>Delete</button>
+                  <button type="button" className="btn btn-primary" onClick={this.sendButton}>Send</button>
                 </div>
               </div>
             </div>

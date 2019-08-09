@@ -3,8 +3,40 @@
   background-size: contain;
   background-position: right;
   background-repeat: no-repeat;
-  background-color: black;
 }
+
+.lightgrey {
+  background-color: lightgrey;
+}
+
+.lightButton {
+  background-color: #4b366f;
+  color: whitesmoke;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+.lightButton:hover {
+  background-color: #4b366f;
+  color: #e290e4;
+  cursor: pointer;
+}
+
+.selectedButton {
+  background-color: #1b0640;
+  color: #e290e4;
+  -webkit-appearance: none;
+}
+
+.selectedButton:hover {
+  color: #e290e4;
+}
+
+.darkInput {
+  background-color: black;
+  color: white;
+}
+
 
 .question {
   height: 6vh;
@@ -18,24 +50,23 @@
 
 .hide {display: none;}
 
-
-/* i {
-  position: absolute;
-  right: 10%;
-  cursor: pointer;
-} */
-
 .nopadding {
   padding: 0;
 }
 
 .fullheight {
-  height: 90%;
-  max-height: 90%;
+  height: 100%;
+  /* max-height: 90%; */
 }
 .QQheightAndScroll{
-  height: 80vh;
-  overflow: scroll;
+  height: 100%;
+  /* overflow: scroll; */
+}
+
+.bottomright {
+  position: absolute;
+  top: 83vh;
+  /* width: 90%; */
 }
 
 .login {
@@ -44,15 +75,6 @@
 
 .norightpadding {
   padding-right: 0;
-}
-
-.loginbutton {
-  background-color: darkgrey;
-  border: 1px solid black;
-}
-
-.loginbutton:active {
-  background-color: dimgrey;
 }
 
 body {
@@ -67,6 +89,15 @@ body {
   border: 1 px solid black;
 }
 
+.black {
+  background-color: #0e0e11;
+}
+
+.darkbutton {
+  color: #bfbfbf;
+  background-color: #242226;
+}
+
 .button.button4{
   position: absolute;
   top: 50%;
@@ -74,6 +105,14 @@ body {
   font-size: 16px;
   cursor: pointer;
   z-index:1051;
+}
+
+.top {
+  height: 7vh;
+}
+
+.body {
+  height: 93vh:
 }
 
 .middle {
@@ -85,30 +124,18 @@ body {
   display: inline-block;
 }
 
-.chat-button{
-  background-color: deepskyblue;
-  cursor: pointer;
-  border: 1 px solid black;
-}
-
 .header{
   width: 100%;
   height: 100%;
   background-color: white;
 }
 
-.queue-button{
-  background-color: darkorange;
-  cursor: pointer;
-  border: 1 px solid black;
+.panel {
+  height: 86vh;
 }
 
 label {
   width:100%;
-}
-
-.dropdown {
-  overflow: scroll;
 }
 
 table {
@@ -146,7 +173,6 @@ td {
 .admin-button {
   height: 10%;
   width: 10%;
-  /* position: 'absolute'; */
   background-color: '#4CAF50';
   display: block;
   font-size: 16px;
@@ -154,9 +180,4 @@ td {
 
 .modal-lg{
   max-width: 74.5%;
-}
-
-.dropdown-menu {
-  position: relative;
-  display:inline-flex;
 }
