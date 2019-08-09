@@ -189,25 +189,40 @@ let questionData = {
   d:0
 };
 
+var answerData = {
+  labels: ['A', 'B', 'C', 'D'],
+  datasets: [
+    {
+      label: 'Answers',
+      backgroundColor: 'rgba(154, 18, 179, 0.2)',
+      borderColor: 'rgba(154, 18, 179, 1)',
+      borderWidth: 1,
+      hoverBackgroundColor: 'rgba(102, 51, 153, 0.4)',
+      hoverBorderColor: 'rgba(102, 51, 153, 1)',
+      data: [0, 0, 0, 0]
+    }
+  ]
+};
+
 //listen for question reponses, send back to front end to trigger render that shows answers
 io.on('connection', (socket)=>{
   socket.on('answerData', (answer)=>{
     console.log('student answer received, data: ', answer);
     switch(answer){
-      case 'A': questionData.a++;
+      case 'A': answerData.datasets[0].data[0] += 1;
         break;
-      case 'B': questionData.b++;
+      case 'B': answerData.datasets[0].data[1] += 1;
         break;
-      case 'C': questionData.c++;
+      case 'C': answerData.datasets[0].data[2] += 1;
         break;
-      case 'D': questionData.d++;
+      case 'D': answerData.datasets[0].data[3] += 1;
         break;
       default: console.error('Question answer data not sent/stored properly.');
     };
     console.log('questionData after increment: ');
-    console.log(questionData);
+    console.log(answerData);
 
-    io.emit('answer', questionData);
+    io.emit('answer', answerData);
   })
 });
 
