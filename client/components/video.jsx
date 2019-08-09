@@ -81,8 +81,9 @@ export default class Video extends React.Component{
     handleStudentAnswerClicks(answer){
         
         console.log('handleStudentAnswerClicks called, answer: ', answer);
-
+        
         this.socket.emit('answerData', answer);
+        this.setState({ displayQuestion: false});
 
     }
     
