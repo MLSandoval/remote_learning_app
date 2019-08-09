@@ -1,7 +1,7 @@
 .remogy-header {
-  background-image: url("./images/remogyss.png");
+  background-image: url("./images/remogypurple.png");
   background-size: contain;
-  background-position: right;
+  background-position: center;
   background-repeat: no-repeat;
 }
 
@@ -180,4 +180,8 @@ td {
 
 .modal-lg{
   max-width: 74.5%;
+}
+
+.remogy-broadcast-modal {
+  width: 54%;
 }
