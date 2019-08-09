@@ -144,7 +144,7 @@ server.post('/addQuestionQ', (req, res) => {
             console.error(error);
             process.exit(1);
         }
-        res.send({success: true, data:{message: 'question added'}})
+        res.send({success: true, data:{newID: results.insertId}});
     })
 });
 
@@ -227,16 +227,16 @@ io.on('connection', (socket)=>{
 
 //listen for QQ additions
 io.on('connection', (socket)=>{
-  socket.on('QQadd', (question, studentUsername)=>{
-    console.log('backend QQadd socket reached. question: ', question, studentUsername);
-    io.emit('Qsend', question, studentUsername);
+  socket.on('QQadd', (question, studentUsername, id)=>{
+    console.log('backend QQadd socket reached. question: ', question, studentUsername, id);
+    io.emit('Qsend', question, studentUsername, id);
   });
 });
 
 //listen for QQ deletions
 io.on('connection', (socket)=>{
   socket.on('QQdelete', (questionID)=>{
-    console.log('backend QQadd socket reached. question: ', questionID);
+    console.log('backend QQdelete socket reached. question: ', questionID);
     io.emit('deleteQQ', questionID);
   });
 });

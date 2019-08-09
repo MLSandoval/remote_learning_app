@@ -135,7 +135,7 @@ class App extends React.Component {
   }
 
   addQuestion(question) {
-      let newQuestion = [{ 'id': this.state.questionQueue.length + 1, 'question': question.question, 'author': question.author }];
+      let newQuestion = [{ 'id': question.id, 'question': question.question, 'author': question.author }];
       this.setState({ questionQueue: this.state.questionQueue.concat(newQuestion) })
   }
 
