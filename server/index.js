@@ -76,21 +76,22 @@ server.delete('/adminQuestion',(req, res) => {
   });
 });
 
+// endpoint to add admin question
 server.post('/addAdminQuestion', (req,res)=>{
     let {correctAnswer, adminID, question} = req.body;
     let ansArray = req.body.answers.split(',');
     let [ans0, ans1, ans2, ans3] = ansArray;
     let regex = /(['])/g;
-    //this regex stuff is to accommodate apostraphes into the mysql queries
+ 
     for(let index = 0; index > 4; i++){
       switch(index){
-        case 0: ans0 = ans0.search(regex).replace("/'");
+        case 0: ans0 = ans0.search(regex).replace("\'");
           break;
-        case 1: ans1 = ans1.search(regex).replace("/'");
+        case 1: ans1 = ans1.search(regex).replace("\'");
           break;
-        case 2: ans2 = ans2.search(regex).replace("/'");
+        case 2: ans2 = ans2.search(regex).replace("\'");
           break;
-        case 3: ans3 = ans3.search(regex).replace("/'");
+        case 3: ans3 = ans3.search(regex).replace("\'");
           break;
       }  
     }
