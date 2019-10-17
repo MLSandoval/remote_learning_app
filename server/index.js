@@ -77,7 +77,7 @@ server.delete('/adminQuestion',(req, res) => {
 });
 
 // endpoint to add admin question
-server.post('/addAdminQuestion', (req,res)=>{
+server.post('/addAdminQuestion', (req,res, next)=>{
     let {correctAnswer, adminID, question} = req.body;
     let ansArray = req.body.answers.split(',');
     let [ans0, ans1, ans2, ans3] = ansArray;
@@ -133,7 +133,7 @@ server.post('/addAdminQuestion', (req,res)=>{
     })
 });
 
-server.post('/addQuestionQ', (req, res) => {
+server.post('/addQuestionQ', (req, res, next) => {
     let { studentUsername, question } = req.body;
     let insertQuestionQQuery = `
         INSERT INTO questionsQueue ( question, studentUser_id)
@@ -149,7 +149,7 @@ server.post('/addQuestionQ', (req, res) => {
     })
 });
 
-server.delete('/studentQuestion', (req, res) => {
+server.delete('/studentQuestion', (req, res, next) => {
   db.connect(function () {
     const { studentQuestionID } = req.query;
     let query = 'DELETE FROM ?? WHERE ?? = ?';
@@ -168,7 +168,7 @@ server.delete('/studentQuestion', (req, res) => {
 });
 
 //socketio listeners
-server.get('/', (req,res)=>{
+server.get('/', (req,res, next)=>{
   res.send({succes: true, message: 'socketIO listener success'});
 });
 
@@ -189,6 +189,7 @@ let questionData = {
   d:0
 };
 
+//js chart data object
 var answerData = {
   labels: ['A', 'B', 'C', 'D'],
   datasets: [
@@ -247,6 +248,14 @@ io.on('connection', (socket) => {
     answerData.datasets[0].data = [0, 0, 0, 0];
   })
 });
+
+//express error handling
+server.use((err, req, res, next)=>{
+  console.error();
+
+  res.status(500).send('Internal server error.');
+
+})
 
 http.listen(3001, () => {
   console.log('Node server listening on port 3001 successfully.')
