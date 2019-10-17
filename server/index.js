@@ -32,6 +32,7 @@ server.get('/getStudentsQuestions',(request, response) => {
           data
         });
       }
+      next(error);
     });
   });
 });
@@ -51,6 +52,7 @@ server.get('/getAdminQuestions',(req, res) => {
           success: true,
           data
         });
+        next(error);
       }
     });
   });
@@ -58,8 +60,13 @@ server.get('/getAdminQuestions',(req, res) => {
 
 // endpoint to delete admin question by id
 server.delete('/adminQuestion',(req, res) => {
+  if (!req.query.adminQuestionID)
+    next('Must provide admin question ID to delete.')
+  const adminQuestionID = parseInt(req.query.adminQuestionID);
+  if (typeof adminQuestionID === NaN)
+    next('Admin question ID must be a number.');
+
   db.connect(function () {
-    const adminQuestionID = parseInt(req.query.adminQuestionID);
     const query = `DELETE answerOptions, questionsAdmin
                    FROM answerOptions
                    JOIN questionsAdmin ON questionsAdmin.id = answerOptions.question_id
@@ -72,6 +79,7 @@ server.delete('/adminQuestion',(req, res) => {
         };
         res.send( output );
       }
+      next(error);
     });
   });
 });
@@ -253,7 +261,7 @@ io.on('connection', (socket) => {
 server.use((err, req, res, next)=>{
   console.error();
 
-  res.status(500).send('Internal server error.');
+  res.status(500).send('Internal server error: ', err);
 
 })
 
