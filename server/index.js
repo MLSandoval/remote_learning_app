@@ -2,9 +2,10 @@
 const express = require('express');
 const server = express();
 const cors = require('cors');
+const ServerError = require('./error');
 const path = require('path');
 const mysql = require('mysql');
-const creds = require('./mysql_credentials.js');
+const creds = require('./mysql_credentials');
 const db = mysql.createConnection(creds);
 const pubDirectory = path.join(__dirname, '/public');
 
@@ -12,15 +13,13 @@ const pubDirectory = path.join(__dirname, '/public');
 const http = require('http').createServer(server);
 const io = require('socket.io')(http);
 
-//server uses
 server.use(cors());
 server.use(express.urlencoded({ extended: false }));
 server.use(express.static(pubDirectory));
 server.use(express.json());
 
-
 // endpoint to get student questions
-server.get('/getStudentsQuestions',(request, response) => {
+server.get('/getStudentsQuestions',(request, response, next) => {
   db.connect(function () {
     const query = `SELECT questionsQueue.id, questionsQueue.question, questionsQueue.studentUser_id as author
                    FROM questionsQueue
@@ -38,7 +37,7 @@ server.get('/getStudentsQuestions',(request, response) => {
 });
 
 // endpoint to get admin questions
-server.get('/getAdminQuestions',(req, res) => {
+server.get('/getAdminQuestions',(req, res, next) => {
   db.connect(function () {
     const query = `SELECT q.id, q.question, q.questionOwner_id as admin_id, GROUP_CONCAt(a.id) AS answer_ids, GROUP_CONCAT(a.answer) as answers
                   FROM questionsAdmin as q
@@ -52,14 +51,14 @@ server.get('/getAdminQuestions',(req, res) => {
           success: true,
           data
         });
-        next(error);
       }
+      next(error);
     });
   });
 });
 
 // endpoint to delete admin question by id
-server.delete('/adminQuestion',(req, res) => {
+server.delete('/adminQuestion',(req, res, next) => {
   if (!req.query.adminQuestionID)
     next('Must provide admin question ID to delete.')
   const adminQuestionID = parseInt(req.query.adminQuestionID);
@@ -86,59 +85,48 @@ server.delete('/adminQuestion',(req, res) => {
 
 // endpoint to add admin question
 server.post('/addAdminQuestion', (req,res, next)=>{
-    let {correctAnswer, adminID, question} = req.body;
-    let ansArray = req.body.answers.split(',');
-    let [ans0, ans1, ans2, ans3] = ansArray;
-    let regex = /(['])/g;
- 
-    for(let index = 0; index > 4; i++){
-      switch(index){
-        case 0: ans0 = ans0.search(regex).replace("\'");
-          break;
-        case 1: ans1 = ans1.search(regex).replace("\'");
-          break;
-        case 2: ans2 = ans2.search(regex).replace("\'");
-          break;
-        case 3: ans3 = ans3.search(regex).replace("\'");
-          break;
-      }  
-    }
-    
-    // this^ is meant to accommodate for apostrophes in the question text, but
-    // problematic code, gives type error even though im checking that question variable is 
-    // a string before calling .search().replace() like i did on the answer strings 
-    // question = question.toString().search(regex).replace("/'");
-    
+  if(!req.body.correctAnswer ) next('Must provide correct answer in request body.');
+  if(!req.body.adminID) next('Must provide admin ID of question in request body.');
+  if(!req.body.question) next('Must provide question text in request body.');
+  if(!req.body.answers) next('Must provide 4 answers options.');
 
-    let questionID;
-    let firstAnswerID;
-    let insertQuestionQuery = `
-        INSERT INTO questionsAdmin ( question, questionOwner_id, correctAnswer )
-            VALUES
-            ('${question}', ${adminID}, '${correctAnswer}')
-        `;
-    db.query(insertQuestionQuery, (error, results, fields)=>{
-        if (error) {
-            console.error(error);
-            process.exit(1);
-        }
-        questionID = results.insertId;
-        let insertAnswersQuery = `
-          INSERT INTO answerOptions ( question_id, answer )
-            VALUES (${questionID}, "${ans0}"),
-                (${questionID}, "${ans1}"),
-                (${questionID}, "${ans2}"),
-                (${questionID}, "${ans3}")
-        `;
-        db.query(insertAnswersQuery, (error, results, fields) => {
-            if (error) {
-                console.error(error);
-                process.exit(1);
-            }
-            firstAnswerID = results.insertId;
-            res.send({success: 'true', questionID, firstAnswerID});
-        });
-    })
+  let {correctAnswer, adminID, question} = req.body;
+  let ansArray = req.body.answers.split(',');
+  let [ans0, ans1, ans2, ans3] = ansArray;
+  let questionID;
+  let firstAnswerID;
+  let insertQuestionQuery = `
+      INSERT INTO questionsAdmin ( question, questionOwner_id, correctAnswer )
+          VALUES
+          (?, ?, ?)
+      `;
+  let params1 = [question, adminID, correctAnswer];
+  console.log('params1: ', params1)
+  db.query(insertQuestionQuery, params1, (error, results, fields)=>{
+      if (error) {
+          console.error(error);
+          next(error);
+      }
+
+      questionID = results.insertId;
+      let insertAnswersQuery = `
+        INSERT INTO answerOptions ( question_id, answer )
+          VALUES (?, ?),
+              (?, ?),
+              (?, ?),
+              (?, ?)
+      `;
+      let params2= [questionID, ans0, questionID, ans1, questionID, ans2, questionID, ans3];
+      console.log('params2: ', params2 );
+      db.query(insertAnswersQuery, params2, (error, results, fields) => {
+          if (error) {
+              console.error(error);
+              next(error);
+          }
+          firstAnswerID = results.insertId;
+          res.send({success: 'true', questionID, firstAnswerID});
+      });
+  })
 });
 
 server.post('/addQuestionQ', (req, res, next) => {
@@ -261,8 +249,13 @@ io.on('connection', (socket) => {
 server.use((err, req, res, next)=>{
   console.error();
 
-  res.status(500).send('Internal server error: ', err);
+  if(next === 'route'){
+    console.error(err);
+    res.status(500).send('Internal server error: ');
+  }
+    
 
+  res.status(400).send(next);
 })
 
 http.listen(3001, () => {
