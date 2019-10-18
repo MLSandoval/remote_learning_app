@@ -1,3 +1,10 @@
+//There isn't a section of code I am particularly proud of,
+// backend scripts are fairly straightforward and are achieved through 
+//good diligence.
+
+//However, I am proud of the organization of this script, and the use
+// of socket.io.
+
 const express = require('express');
 const server = express();
 const cors = require('cors');
