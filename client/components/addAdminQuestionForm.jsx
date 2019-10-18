@@ -66,6 +66,7 @@ export default class AddAdminQuestionForm extends React.Component{
                 this.props.callback(FrontEndQuestionObj);
             })
             .catch(error=>{
+                console.log('Add admin question catch error.');
                 console.error(error);
             });
         }  

@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Learning-Fuze/519_student_teacher_interactivity#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "chart.js": "^2.8.0",
     "express": "^4.17.1",
     "mysql": "^2.17.1",
