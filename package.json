@@ -1,0 +1,46 @@
+{
+  "name": "519_student_teacher_interactivity",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./server/index.js",
+    "nodemon": "nodemon ./server/index.js",
+    "dev": "webpack-dev-server",
+    "build": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Learning-Fuze/519_student_teacher_interactivity.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Learning-Fuze/519_student_teacher_interactivity/issues"
+  },
+  "homepage": "https://github.com/Learning-Fuze/519_student_teacher_interactivity#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chart.js": "^2.8.0",
+    "express": "^4.17.1",
+    "mysql": "^2.17.1",
+    "react": "^16.8.6",
+    "react-chartjs-2": "^2.7.6",
+    "react-dom": "^16.8.6",
+    "react-select": "^3.0.4",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "babel-loader": "^8.0.6",
+    "cors": "^2.8.5",
+    "nodemon": "^1.19.1",
+    "webpack": "^4.36.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
+  }
+}

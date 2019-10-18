@@ -1,0 +1,226 @@
+.remogy-header {
+  background-image: url("./images/remogypurple.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.lightgrey {
+  background-color: lightgrey;
+}
+
+.lightButton {
+  background-color: #4b366f;
+  color: whitesmoke;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+.lightButton:hover {
+  background-color: #4b366f;
+  color: #e290e4;
+  cursor: pointer;
+}
+
+.selectedButton {
+  background-color: #1b0640;
+  color: #e290e4;
+  -webkit-appearance: none;
+}
+
+.selectedButton:hover {
+  color: #e290e4;
+}
+
+.darkInput {
+  background-color: black;
+  color: white;
+}
+
+
+.question {
+  height: 6vh;
+  width: 100%;
+  background-color: whitesmoke;
+  line-height: 1;
+  border:1px groove grey;
+  padding-left: 1vw;
+  text-overflow: ellipsis;
+}
+
+.hide {display: none;}
+
+.nopadding {
+  padding: 0;
+}
+
+.fullheight {
+  height: 100%;
+  /* max-height: 90%; */
+}
+.QQheightAndScroll{
+  height: 100%;
+  overflow: scroll;
+}
+
+.bottomright {
+  position: absolute;
+  top: 83vh;
+  /* width: 90%; */
+}
+
+.login {
+  background-color: darkgrey;
+}
+
+.norightpadding {
+  padding-right: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.border {
+  border: 1 px solid black;
+}
+
+.black {
+  background-color: #0e0e11;
+}
+
+.darkbutton {
+  color: #bfbfbf;
+  background-color: #242226;
+}
+
+.button.button4{
+  position: absolute;
+  top: 50%;
+  right: 90%;
+  font-size: 16px;
+  cursor: pointer;
+  z-index:1051;
+}
+
+.top {
+  height: 7vh;
+}
+
+.body {
+  height: 93vh:
+}
+
+.middle {
+  left: 5%;
+  top: 40%;
+}
+
+.modal{
+  display: inline-block;
+}
+
+.header{
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+.panel {
+  height: 86vh;
+}
+
+
+.topbotpadding {
+  padding: 2vh 0 2vh 0;
+}
+
+label {
+  width:100%;
+}
+
+table {
+  width: 100%;
+}
+
+td {
+  width: 50%;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  border: 1px solid lightgrey;
+  padding: 5%;
+}
+
+.student {
+  z-index:69;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.column {
+  float: left;
+  padding: 10px;
+}
+
+.front {
+  z-index: 1502;
+}
+
+.admin-button {
+  height: 10%;
+  width: 10%;
+  background-color: '#4CAF50';
+  display: block;
+  font-size: 16px;
+}
+
+.modal-lg{
+  max-width: 74.5%;
+}
+
+.remogy-broadcast-modal {
+  width: 54%;
+}
+
+.textShadowWhite{
+  
+  text-shadow:
+   2px 2px 0 rgb(255, 255, 255),  
+  2px 2px 0 rgb(255, 255, 255),
+    2px2px 0 rgb(255, 255, 255),
+    2px2px 0 rgb(255, 255, 255);
+}
+.textShadowBlack {
+  
+  text-shadow:
+   2px 2px 0 #000,  
+  2px 2px 0 #000,
+    2px2px 0 #000,
+    2px2px 0 #000;
+}
+
+.darkStyleUser{
+  text-align: center;
+  color:rgb(133, 63, 247);
+  font-size: 2rem;
+  
+}
+
+.lightStyleUser{
+  text-align: center;
+  color: rgb(133, 63, 247);
+  font-size: 2rem;
+}
+
+.verticalAlign{
+  vertical-align: middle;
+}
