@@ -1,4 +1,3 @@
-//requires
 const express = require('express');
 const server = express();
 const cors = require('cors');
@@ -9,17 +8,13 @@ const creds = require('./mysql_credentials');
 const db = mysql.createPool(creds);
 const pubDirectory = path.join(__dirname, '/public');
 const bodyParser = require('body-parser');
-
-//socket.IO
 const http = require('http').createServer(server);
 const io = require('socket.io')(http);
-
 server.use(bodyParser.json());
 server.use(cors());
 server.use(express.static(pubDirectory));
 server.use(express.json());
 
-// endpoint to get student questions
 server.get('/students-questions',(req, res, next) => {
   const query = `
     SELECT questionsQueue.id, questionsQueue.question, questionsQueue.studentUserId as author
@@ -36,7 +31,6 @@ server.get('/students-questions',(req, res, next) => {
   });
 });
 
-// endpoint to get admin questions
 server.get('/admin-questions', (req, res, next) => {
   const {adminID} = req.body || 1;
   if(!adminID) return next(new ServerError('Must provide admin ID', 400));
@@ -48,6 +42,7 @@ server.get('/admin-questions', (req, res, next) => {
       WHERE q.questionOwnerId = ?
       GROUP BY q.id`;
   const params = [adminID];
+
   db.query(query, params, (error, data) => {
     if (error) {
       console.error(error);
@@ -61,7 +56,6 @@ server.get('/admin-questions', (req, res, next) => {
   });
 });
 
-// endpoint to delete admin question by id
 server.delete('/admin-question', (req, res, next) => {
   let adminQuestionID = req.query.adminQuestionID;
   if (!adminQuestionID) return next(new ServerError('Must provide question ID for deletion.', 400));
@@ -73,6 +67,7 @@ server.delete('/admin-question', (req, res, next) => {
       JOIN questionsAdmin ON questionsAdmin.id = answerOptions.questionId
       WHERE questionsAdmin.id = ?`;
   let params = [adminQuestionID];
+
   db.query(query, params, (error, data) => {
     if (error) {
       console.error(error);
@@ -86,13 +81,11 @@ server.delete('/admin-question', (req, res, next) => {
   });
 });
 
-// endpoint to add admin question
 server.post('/admin-question', (req,res, next)=>{
   if(!req.body.correctAnswer ) return next(new ServerError('Must select correct answer.', 400));
   if(!req.body.adminID) return next(new ServerError('Must provide admin ID.', 400));
   if(!req.body.question) return next(new ServerError('Must provide question text.', 400));
   if(!req.body.answers) return next(new ServerError('Must provide 4 answers options.', 400));
-
   const {correctAnswer, adminID, question} = req.body;
   const ansArray = req.body.answers.split(',');
   const [ans0, ans1, ans2, ans3] = ansArray;
@@ -101,6 +94,7 @@ server.post('/admin-question', (req,res, next)=>{
     INSERT INTO questionsAdmin ( question, questionOwnerId, correctAnswer )
       VALUES (?, ?, ?)`;
   const params1 = [question, adminID, correctAnswer];
+
   db.query(query1, params1, (error, data)=>{
     if (error) {
       console.error(error);
@@ -114,12 +108,13 @@ server.post('/admin-question', (req,res, next)=>{
           (?, ?),
           (?, ?)`;
     const params2= [questionID, ans0, questionID, ans1, questionID, ans2, questionID, ans3];
+
     db.query(query2, params2, (error, data) => {
       if (error) {
         console.error(error);
         next(new ServerError('Internal server error.', 500));
       }
-      let firstAnswerID = data.insertId;
+      const firstAnswerID = data.insertId;
       const output = {
         success: true,
         questionID,
@@ -139,10 +134,11 @@ server.post('/student-question', (req, res, next) => {
       VALUES
       (?, ?)`;
   const params = [question, studentUsername];
+
   db.query(query, params, (error, data) => {
     if (error) {
       console.error(error);
-      process.exit(1);
+      next(new ServerError('Internal server error.', 400));
     }
     const output = {
       success: true,
@@ -161,6 +157,7 @@ server.delete('/student-question', (req, res, next) => {
     DELETE FROM questionsQueue 
       WHERE id = ?`;
   const params = [studentQuestionID]; 
+
   db.query(query, params, (error, data) =>  {
     if (error) {
       console.error(error);
@@ -174,11 +171,9 @@ server.delete('/student-question', (req, res, next) => {
   });
 });
 
-
-//socketio endpoints
+//socket.io block
 io.on('connection', (socket) => {console.log('A client has connected!')});
 
-//broadcast question endpoint
 server.post('/broadcast', (req, res, next) =>{
   const question = req.body.question;
   if(!question) return new ServerError('Must select question to broadcast.', 400);
@@ -192,7 +187,6 @@ let questionData = {
   d:0
 };
 
-//required object for ChartJS
 const answerChartData = {
   labels: ['A', 'B', 'C', 'D'],
   datasets: [
